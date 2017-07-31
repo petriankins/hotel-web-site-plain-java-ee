@@ -48,7 +48,7 @@
         </dependency>
     </dependencies>
      <build>
-        <finalName>employees-app</finalName>
+        <finalName>hotel-project</finalName>
         <resources>
             <resource>
                 <directory>src/main/webapp</directory>
@@ -74,10 +74,10 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <finalName>employees-app-${project.version}</finalName>
+                    <finalName>hotel-project-${project.version}</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>com.example.employees.Main</mainClass>
+                            <mainClass>com.epam.javalab.hotelproject.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
