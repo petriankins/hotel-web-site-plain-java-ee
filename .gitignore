@@ -1,0 +1,8 @@
+#Build & Compilation results
+*.class
+bin/
+target/
+
+#IDEA garbage
+.idea/
+*.iml
