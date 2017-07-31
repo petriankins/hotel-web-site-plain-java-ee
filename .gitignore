@@ -6,3 +6,6 @@ target/
 #IDEA garbage
 .idea/
 *.iml
+
+#TomcatEE build
+tomcat.8080/
