@@ -27,7 +27,12 @@ public class LoginController extends HttpServlet {
         String login = req.getParameter("login");
         String pass = req.getParameter("password");
 
-        System.out.println(login);
-        System.out.println(pass);
+        if (login != null || !login.isEmpty()) {
+            System.out.println(login);
+        }
+
+        if (pass != null || !pass.isEmpty()) {
+            System.out.println(pass);
+        }
     }
 }
