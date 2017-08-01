@@ -6,10 +6,12 @@
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <p><a class="btn btn-primary btn-md" role="button" href="/login">Log In</a></p>
-    <p><a class="btn btn-primary btn-md" role="button" href="/registration">Sign Up!</a></p>
+    <a class="btn btn-primary btn-md" role="button" href="/login">Log In</a>
+    <a class="btn btn-primary btn-md" role="button" href="/registration">Sign Up!</a>
 </nav>
+<br>
 <div class="jumbotron">
     <div class="container">
         <h1>Welcome!</h1>
