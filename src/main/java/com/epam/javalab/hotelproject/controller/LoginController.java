@@ -12,7 +12,7 @@ import java.io.PrintWriter;
         name = "UserServlet",
         urlPatterns = {"/login"}
 )
-public class UserController extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,6 +22,17 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
 
+        String login = req.getParameter("login");
+        String pass = req.getParameter("password");
+
+        if (login != null || !login.isEmpty()) {
+            System.out.println(login);
+        }
+
+        if (pass != null || !pass.isEmpty()) {
+            System.out.println(pass);
+        }
     }
 }
