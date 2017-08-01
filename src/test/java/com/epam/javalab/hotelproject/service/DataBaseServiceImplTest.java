@@ -6,14 +6,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import static org.junit.Assert.*;
-
-public class DataBaseServiceTest {
-    DataBaseService dataBaseService = DataBaseService.getInstance();
+public class DataBaseServiceImplTest {
+    DataBaseServiceImpl dataBaseServiceImpl = DataBaseServiceImpl.getInstance();
 
     @Test
     public void test() throws Exception {
-        Connection connection = dataBaseService.takeConnection();
+        Connection connection = dataBaseServiceImpl.takeConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.test");
         while (resultSet.next()) {
