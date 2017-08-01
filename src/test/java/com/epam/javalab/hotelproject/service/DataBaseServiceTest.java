@@ -13,7 +13,7 @@ public class DataBaseServiceTest {
 
     @Test
     public void test() throws Exception {
-        DataBaseService.PooledConnection connection = dataBaseService.takeConnection();
+        Connection connection = dataBaseService.takeConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.test");
         while (resultSet.next()) {
