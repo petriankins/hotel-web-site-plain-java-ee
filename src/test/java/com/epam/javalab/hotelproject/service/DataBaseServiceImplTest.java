@@ -6,18 +6,20 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import static org.junit.Assert.*;
-
-public class DataBaseServiceTest {
-    DataBaseService dataBaseService = DataBaseService.getInstance();
+public class DataBaseServiceImplTest {
+    DataBaseServiceImpl dataBaseServiceImpl = DataBaseServiceImpl.getInstance();
 
     @Test
     public void test() throws Exception {
-        DataBaseService.PooledConnection connection = dataBaseService.takeConnection();
+        Connection connection = dataBaseServiceImpl.takeConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.test");
         while (resultSet.next()) {
             System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2));
         }
+        resultSet.close();
+        statement.close();
+        dataBaseServiceImpl.closeConnection(connection);
+        dataBaseServiceImpl.dispose();
     }
 }
