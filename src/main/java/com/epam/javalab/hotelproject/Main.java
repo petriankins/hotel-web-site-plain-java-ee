@@ -19,6 +19,5 @@ public class Main {
         tomcat.addWebapp(contextPath, appBase);
         tomcat.start();
         tomcat.getServer().await();
-
     }
 }

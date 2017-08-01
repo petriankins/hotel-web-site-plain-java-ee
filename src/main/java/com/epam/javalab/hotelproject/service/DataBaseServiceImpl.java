@@ -9,8 +9,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
 public class DataBaseServiceImpl implements DataBaseService {
-    private BlockingQueue<PooledConnection> connectionQueue;
-    private BlockingQueue<PooledConnection> givenAwayConnection;
+    private BlockingQueue<Connection> connectionQueue;
+    private BlockingQueue<Connection> givenAwayConnection;
 
     private String driverName = "com.mysql.jdbc.Driver";
     private String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11188080";
@@ -23,8 +23,8 @@ public class DataBaseServiceImpl implements DataBaseService {
         Locale.setDefault(Locale.ENGLISH);
         try {
             Class.forName(driverName);
-            connectionQueue = new ArrayBlockingQueue<PooledConnection>(poolSize);
-            givenAwayConnection = new ArrayBlockingQueue<PooledConnection>(poolSize);
+            connectionQueue = new ArrayBlockingQueue<>(poolSize);
+            givenAwayConnection = new ArrayBlockingQueue<>(poolSize);
             for (int i = 0; i < poolSize; i++) {
                 PooledConnection pooledConnection = new PooledConnection(DriverManager.getConnection(url, user, password));
                 connectionQueue.add(pooledConnection);
@@ -40,13 +40,13 @@ public class DataBaseServiceImpl implements DataBaseService {
         return instance;
     }
 
-    private void closeConnectionsQueue(BlockingQueue<PooledConnection> queue) throws SQLException {
-        PooledConnection pooledConnection;
-        while ((pooledConnection = queue.poll()) != null) {
-            if (!pooledConnection.getAutoCommit()) {
-                pooledConnection.commit();
+    private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
+        Connection connection;
+        while ((connection = queue.poll()) != null) {
+            if (!connection.getAutoCommit()) {
+                connection.commit();
             }
-            pooledConnection.reallyClose();
+            ((PooledConnection) connection).reallyClose();
         }
     }
 
@@ -64,14 +64,14 @@ public class DataBaseServiceImpl implements DataBaseService {
     }
 
     public Connection takeConnection() {
-        PooledConnection pooledConnection = null;
+        Connection connection = null;
         try {
-            pooledConnection = connectionQueue.take();
-            givenAwayConnection.add(pooledConnection);
+            connection = connectionQueue.take();
+            givenAwayConnection.add(connection);
         } catch (InterruptedException e) {
             //TODO
         }
-        return pooledConnection;
+        return connection;
 
     }
 

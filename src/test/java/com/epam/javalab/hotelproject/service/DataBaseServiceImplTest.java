@@ -17,5 +17,9 @@ public class DataBaseServiceImplTest {
         while (resultSet.next()) {
             System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2));
         }
+        resultSet.close();
+        statement.close();
+        dataBaseServiceImpl.closeConnection(connection);
+        dataBaseServiceImpl.dispose();
     }
 }
