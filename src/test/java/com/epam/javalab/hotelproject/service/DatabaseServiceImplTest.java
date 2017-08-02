@@ -6,8 +6,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DataBaseServiceImplTest {
-    DataBaseServiceImpl dataBaseServiceImpl = DataBaseServiceImpl.getInstance();
+public class DatabaseServiceImplTest {
+    DatabaseServiceImpl dataBaseServiceImpl = DatabaseServiceImpl.getInstance();
 
     @Test
     public void test() throws Exception {
