@@ -3,6 +3,8 @@ package com.epam.javalab.hotelproject.repository;
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
+import com.epam.javalab.hotelproject.service.DatabaseService;
+import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
 import com.epam.javalab.hotelproject.utils.Validator;
 
 import java.sql.*;
@@ -88,11 +90,12 @@ public class UserRepository implements UserDAO {
         if (Validator.validateUserBean(user)) {
             try (Connection connection = databaseService.takeConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(
-                    "UPDATE `sql11188080`.`users` SET (`password`, `first_name`, `last_name`) VALUES (?, ?, ?) WHERE `email` = `?`")) {
+                    "UPDATE `sql11188080`.`users` SET `password`= ?, `first_name` = ?, `last_name` = ? WHERE `email` = ?")) {
                 preparedStatement.setString(1,user.getPassword());
                 preparedStatement.setString(2, user.getName());
                 preparedStatement.setString(3, user.getLastName());
                 preparedStatement.setString(4, user.getLogin());
+                return preparedStatement.executeUpdate() == 1 ? true : false;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -105,9 +108,10 @@ public class UserRepository implements UserDAO {
         if (Validator.validateUserBean(user)) {
             try (Connection connection = databaseService.takeConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(
-                    "DELETE `sql11188080`.`users` WHERE `email` = `?`"
+                    "DELETE FROM `sql11188080`.`users` WHERE email = ?"
             )) {
                 preparedStatement.setString(1, user.getLogin());
+                return preparedStatement.executeUpdate() == 1 ? true : false;
             } catch (SQLException e) {
                 e.printStackTrace();
             }

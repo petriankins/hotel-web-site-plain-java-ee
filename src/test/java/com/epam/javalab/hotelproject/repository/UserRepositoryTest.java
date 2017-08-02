@@ -3,6 +3,8 @@ package com.epam.javalab.hotelproject.repository;
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
+import com.epam.javalab.hotelproject.service.DatabaseService;
+import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
