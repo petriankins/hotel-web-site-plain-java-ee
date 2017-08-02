@@ -18,9 +18,12 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class UserRepositoryTest {
-    private       DataBaseService dataBaseService = DataBaseServiceImpl.getInstance();
-    private       UserDAO         userDAO         = new UserRepository();
-    public static User            referenceUser   = new User("my name", "my last name", "aaa@aaa.com", "mypassword");
+    private DataBaseService dataBaseService = DataBaseServiceImpl.getInstance();
+    private UserDAO         userDAO         = new UserRepository();
+
+    public User createReferenceUser() {
+        return new User("my name", "my last name", "aaa@aaa.com", "mypassword");
+    }
 
     @Before
     public void insertUsers() {
@@ -51,6 +54,7 @@ public class UserRepositoryTest {
 
     @Test
     public void findByLogin() throws Exception {
+        User referenceUser = createReferenceUser();
         User user = userDAO.findByLogin("aaa@aaa.com");
         assertThat(user.getLogin(), is(referenceUser.getLogin()));
         assertThat(user.getPassword(), is(referenceUser.getPassword()));
@@ -70,6 +74,7 @@ public class UserRepositoryTest {
 
     @Test
     public void updateUser() throws Exception {
+        User referenceUser = createReferenceUser();
         referenceUser.setPassword("myNewPassword");
         assertThat(userDAO.updateUser(referenceUser), is(true));
         assertThat(referenceUser.getPassword(), is(userDAO.findByLogin(referenceUser.getLogin()).getPassword()));
@@ -77,6 +82,7 @@ public class UserRepositoryTest {
 
     @Test
     public void deleteUser() throws Exception {
+        User referenceUser = createReferenceUser();
         assertThat(userDAO.deleteUser(referenceUser), is(true));
         assertThat(userDAO.findByLogin(referenceUser.getLogin()), is((new User()).getLogin()));
     }
