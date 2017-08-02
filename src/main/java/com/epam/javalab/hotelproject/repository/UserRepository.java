@@ -86,11 +86,33 @@ public class UserRepository implements UserDAO {
 
     @Override
     public boolean updateUser(User user) {
+        if (Validator.validateUserBean(user)) {
+            try (Connection connection = dataBaseService.takeConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE `sql11188080`.`users` SET (`password`, `first_name`, `last_name`) VALUES (?, ?, ?) WHERE `email` = `?`")) {
+                preparedStatement.setString(1,user.getPassword());
+                preparedStatement.setString(2, user.getName());
+                preparedStatement.setString(3, user.getLastName());
+                preparedStatement.setString(4, user.getLogin());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return false;
     }
 
     @Override
     public boolean deleteUser(User user) {
+        if (Validator.validateUserBean(user)) {
+            try (Connection connection = dataBaseService.takeConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "DELETE `sql11188080`.`users` WHERE `email` = `?`"
+            )) {
+                preparedStatement.setString(1, user.getLogin());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return false;
     }
 }
