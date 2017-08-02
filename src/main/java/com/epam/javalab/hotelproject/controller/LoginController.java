@@ -27,6 +27,12 @@ public class LoginController extends HttpServlet {
         String login = req.getParameter("login");
         String pass = req.getParameter("password");
 
+        String adminLogin = "admin";
+        String adminPass = "password";
+
+        if (login.equals(adminLogin)) {
+
+        }
         if (login != null || !login.isEmpty()) {
             System.out.println(login);
         }
@@ -34,5 +40,7 @@ public class LoginController extends HttpServlet {
         if (pass != null || !pass.isEmpty()) {
             System.out.println(pass);
         }
+
+        if (login.equals(""))
     }
 }
