@@ -84,6 +84,6 @@ public class UserRepositoryTest {
     public void deleteUser() throws Exception {
         User referenceUser = createReferenceUser();
         assertThat(userDAO.deleteUser(referenceUser), is(true));
-        assertThat(userDAO.findByLogin(referenceUser.getLogin()), is((new User()).getLogin()));
+        assertThat(userDAO.findByLogin(referenceUser.getLogin()).getLogin(), is((new User()).getLogin()));
     }
 }
