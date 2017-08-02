@@ -21,7 +21,8 @@ public class UserRepository implements UserDAO {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.users");) {
             while (resultSet.next()) {
-                users.add(new User(resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("password"), resultSet.getString("email")));
+                users.add(new User(resultSet.getString("first_name"), resultSet.getString("last_name"),
+                                   resultSet.getString("password"), resultSet.getString("email")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,12 +41,14 @@ public class UserRepository implements UserDAO {
         }
         ResultSet resultSet = null;
         try (Connection connection = dataBaseService.takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM sql11188080.users WHERE email = ?");
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT * FROM sql11188080.users WHERE email = ?");
         ) {
             preparedStatement.setString(1, login);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
-                User user = new User(resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getString("email"), resultSet.getString("password"));
+                User user = new User(resultSet.getString("first_name"), resultSet.getString("last_name"),
+                                     resultSet.getString("email"), resultSet.getString("password"));
 
                 return user;
             }
@@ -67,7 +70,8 @@ public class UserRepository implements UserDAO {
     public boolean insertUser(User user) {
         if (Validator.validateUserBean(user)) {
             try (Connection connection = dataBaseService.takeConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO 'sql11188080'.'users' ('email', 'password', 'first_name', 'last_name') VALUES (?, ?, ?, ?)")) {
+                 PreparedStatement preparedStatement = connection.prepareStatement(
+                         "INSERT INTO `sql11188080`.`users` (`email`, `password`, `first_name`, `last_name`) VALUES (?, ?, ?, ?)")) {
                 preparedStatement.setString(1, user.getLogin());
                 preparedStatement.setString(2, user.getPassword());
                 preparedStatement.setString(3, user.getName());
