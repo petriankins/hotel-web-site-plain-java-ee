@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Окно логина</title>
@@ -7,6 +8,11 @@
 </head>
 <body>
 <div class="container">
+    <c:if test="${not empty message}">
+        <div class="alert alert-danger">
+                ${message}
+        </div>
+    </c:if>
     <form style="width:200px" action="/login" method="post">
         <div class="form-group">
             <label>Login</label>

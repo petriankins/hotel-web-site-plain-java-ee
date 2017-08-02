@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: maxim
@@ -38,6 +39,11 @@
     </div>
 </nav>
 <div class="container">
+    <c:if test="${not empty message}">
+        <div class="alert alert-success">
+                ${message}
+        </div>
+    </c:if>
     <form style="width: 400px" action="/order" method="post">
         <h2>Book!</h2>
         <label>How many beds?</label>
