@@ -22,7 +22,7 @@
             <td>#</td>
             <td>Customer name</td>
             <td>Email</td>
-            <td>Bads</td>
+            <td>Beds</td>
             <td>Stars</td>
             <td>Check-in date</td>
             <td>Check-out date</td>

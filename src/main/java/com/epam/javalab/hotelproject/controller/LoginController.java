@@ -20,7 +20,6 @@ import java.io.PrintWriter;
 )
 public class LoginController extends HttpServlet {
     private UserService userService = new UserService();
-    private UserDAO userDAO = new UserRepository();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
