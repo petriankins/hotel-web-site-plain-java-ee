@@ -3,7 +3,7 @@ package com.epam.javalab.hotelproject.service;
 
 import java.sql.Connection;
 
-public interface DataBaseService {
+public interface DatabaseService {
     Connection takeConnection();
 
     void closeConnection(Connection connection);
