@@ -10,7 +10,7 @@
     <form style="width:200px" action="/login" method="post">
         <div class="form-group">
             <label>Login</label>
-            <input type="text" name="login" class="form-control" placeholder="Login">
+            <input type="email" name="login" class="form-control" placeholder="Type your email">
         </div>
         <div class="form-group">
             <label>Password</label>
