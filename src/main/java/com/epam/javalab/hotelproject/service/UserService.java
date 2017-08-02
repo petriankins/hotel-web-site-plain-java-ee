@@ -5,6 +5,8 @@ import com.epam.javalab.hotelproject.repository.UserDAO;
 import com.epam.javalab.hotelproject.repository.UserRepository;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
+
 /**
  * Provides API for actions with users such as: Register, Authorize
  *
@@ -55,15 +57,5 @@ public class UserService {
     }
 
     // TODO what about email?
-    private boolean validateUserBean(User user) {
-        if (user.getLogin() == null || user.getPassword() == null) {
-            return false;
-        }
 
-        if (user.getLogin().isEmpty() || user.getPassword().isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }
 }
