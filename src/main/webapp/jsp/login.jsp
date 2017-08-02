@@ -6,14 +6,18 @@
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-<form>
-    Login: <input type="text" name="login"/>
-    Password: <input type="text" name="pass"/>
-    <input type="submit" value="Log in"/>
-
-</form>
-<form action="/registration" method="get">
-    <input type="submit" value="Sign up"/>
-</form>
+<div class="container">
+    <form style="width:200px" action="/login" method="post">
+        <div class="form-group">
+            <label>Login</label>
+            <input type="text" name="login" class="form-control" placeholder="Login">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-md">Log In</button>
+    </form>
+</div>
 </body>
 </html>
