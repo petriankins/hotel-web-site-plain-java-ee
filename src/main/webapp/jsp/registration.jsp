@@ -37,7 +37,7 @@
             <label>Password:</label>
             <input type="password" name="password" class="form-control" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary btn-md">Sign Up</button>
+        <p><a class="btn btn-primary btn-md" href="/order" role="button">Sign up</a></p>
     </form>
 </div>
 </body>
