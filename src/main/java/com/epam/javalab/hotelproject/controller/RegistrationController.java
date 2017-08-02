@@ -25,8 +25,6 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //req.getRequestDispatcher("/jsp/registration.jsp").forward(req, resp);
-
         String firstName = req.getParameter("name");
         String lastName = req.getParameter("lastName");
         String login = req.getParameter("login");
