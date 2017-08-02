@@ -8,18 +8,18 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
-public class DataBaseServiceImpl implements DataBaseService {
+public class DatabaseServiceImpl implements DatabaseService {
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConnection;
 
-    private String driverName = "com.mysql.jdbc.Driver";
-    private String url = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11188080";
-    private String user = "sql11188080";
-    private String password = "WFJLwRnBBE";
-    private int poolSize = 5;
-    private static final DataBaseServiceImpl instance = new DataBaseServiceImpl();
+    private              String              driverName = "com.mysql.jdbc.Driver";
+    private              String              url        = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11188080";
+    private              String              user       = "sql11188080";
+    private              String              password   = "WFJLwRnBBE";
+    private              int                 poolSize   = 5;
+    private static final DatabaseServiceImpl instance   = new DatabaseServiceImpl();
 
-    private DataBaseServiceImpl() {
+    private DatabaseServiceImpl() {
         Locale.setDefault(Locale.ENGLISH);
         try {
             Class.forName(driverName);
@@ -36,7 +36,7 @@ public class DataBaseServiceImpl implements DataBaseService {
         }
     }
 
-    public static DataBaseServiceImpl getInstance() {
+    public static DatabaseServiceImpl getInstance() {
         return instance;
     }
 
