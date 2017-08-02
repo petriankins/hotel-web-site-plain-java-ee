@@ -103,6 +103,16 @@ public class UserRepository implements UserDAO {
 
     @Override
     public boolean deleteUser(User user) {
+        if (Validator.validateUserBean(user)) {
+            try (Connection connection = dataBaseService.takeConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "DELETE `sql11188080`.`users` WHERE `email` = `?`"
+            )) {
+                preparedStatement.setString(1, user.getLogin());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return false;
     }
 }
