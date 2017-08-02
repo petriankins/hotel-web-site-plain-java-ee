@@ -36,7 +36,7 @@ public class UserRepositoryTest {
     public void clearUsers() {
         try (Connection connection = dataBaseService.takeConnection();
              Statement statement = connection.createStatement();) {
-            statement.executeUpdate("DELETE FROM sql11188080.users;");
+            statement.executeUpdate("DELETE FROM sql11188080.users WHERE email != 'info@hotel.project';");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,8 +58,17 @@ public class UserRepositoryTest {
 
     @Test
     public void insertUser() throws Exception {
-        assertThat(userDAO.insertUser(new User("new name", "new last name", "new login", "new password")), is(true));
+        User newUser = new User("new name", "new last name", "new login", "new password");
+        assertThat(userDAO.insertUser(newUser), is(true));
+        User user = userDAO.findByLogin("new login");
+        assertThat(user.getName(), is(newUser.getName()));
+        assertThat(user.getLastName(), is(newUser.getLastName()));
+        assertThat(user.getLogin(), is(newUser.getLogin()));
+        assertThat(user.getPassword(), is(newUser.getPassword()));
+    }
 
+    @Test
+    public void updateUser() throws Exception {
 
     }
 }
