@@ -3,15 +3,18 @@ package com.epam.javalab.hotelproject.model;
 public class User {
     private int id;
     private String name;
-    private String password;
     private String login;
-    private String email;
+    private String password;
+    private String lastName;
 
-    public User(String name, String password, String login, String email) {
+    public User(String name, String lastName, String login, String password) {
         this.name = name;
-        this.password = password;
+        this.lastName = lastName;
         this.login = login;
-        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
     }
 
     public int getId() {
@@ -24,6 +27,14 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setName(String name) {
@@ -44,13 +55,5 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }
