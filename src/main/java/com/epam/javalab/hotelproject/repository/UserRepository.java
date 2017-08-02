@@ -1,23 +1,24 @@
 package com.epam.javalab.hotelproject.repository;
 
 import com.epam.javalab.hotelproject.model.User;
-import com.epam.javalab.hotelproject.service.DataBaseService;
-import com.epam.javalab.hotelproject.service.DataBaseServiceImpl;
+import com.epam.javalab.hotelproject.service.DatabaseService;
+import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
+import com.epam.javalab.hotelproject.service.DatabaseService;
+import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
 import com.epam.javalab.hotelproject.utils.Validator;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 // TODO
 public class UserRepository implements UserDAO {
-    DataBaseService dataBaseService = DataBaseServiceImpl.getInstance();
+    DatabaseService databaseService = DatabaseServiceImpl.getInstance();
 
     @Override
     public List<User> findAll() {
         List users = new ArrayList();
-        try (Connection connection = dataBaseService.takeConnection();
+        try (Connection connection = databaseService.takeConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.users");) {
             while (resultSet.next()) {
@@ -40,7 +41,7 @@ public class UserRepository implements UserDAO {
             return emptyUser();
         }
         ResultSet resultSet = null;
-        try (Connection connection = dataBaseService.takeConnection();
+        try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "SELECT * FROM sql11188080.users WHERE email = ?");
         ) {
@@ -69,7 +70,7 @@ public class UserRepository implements UserDAO {
     @Override
     public boolean insertUser(User user) {
         if (Validator.validateUserBean(user)) {
-            try (Connection connection = dataBaseService.takeConnection();
+            try (Connection connection = databaseService.takeConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(
                          "INSERT INTO `sql11188080`.`users` (`email`, `password`, `first_name`, `last_name`) VALUES (?, ?, ?, ?)")) {
                 preparedStatement.setString(1, user.getLogin());
@@ -87,8 +88,8 @@ public class UserRepository implements UserDAO {
     @Override
     public boolean updateUser(User user) {
         if (Validator.validateUserBean(user)) {
-            try (Connection connection = dataBaseService.takeConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            try (Connection connection = databaseService.takeConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(
                     "UPDATE `sql11188080`.`users` SET `password`= ?, `first_name` = ?, `last_name` = ? WHERE `email` = ?")) {
                 preparedStatement.setString(1,user.getPassword());
                 preparedStatement.setString(2, user.getName());
@@ -105,8 +106,8 @@ public class UserRepository implements UserDAO {
     @Override
     public boolean deleteUser(User user) {
         if (Validator.validateUserBean(user)) {
-            try (Connection connection = dataBaseService.takeConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            try (Connection connection = databaseService.takeConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(
                     "DELETE FROM `sql11188080`.`users` WHERE email = ?"
             )) {
                 preparedStatement.setString(1, user.getLogin());
