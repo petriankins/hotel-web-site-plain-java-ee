@@ -11,17 +11,19 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="#"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-right">
-                <button type="submit" class="btn btn-success">Sign in</button>
+                <a class="btn btn-success btn-md" href="/registration" role="button">Sign up</a>
+                <a class="btn btn-success btn-md" href="/login" role="button">Sign in</a>
             </form>
         </div><!--/.navbar-collapse -->
     </div>
@@ -31,12 +33,11 @@
             ${message}
     </div>
 </c:if>
-
 <div class="jumbotron">
     <div class="container">
         <h1>Welcome!</h1>
         <p>Wanna book a room? Sign up!</p>
-        <p><a class="btn btn-primary btn-lg" href="/registration" role="button">Sign up &raquo;</a></p>
+        <p><a class="btn btn-success btn-lg" href="/registration" role="button">Sign up &raquo;</a></p>
     </div>
 </div>
 </body>
