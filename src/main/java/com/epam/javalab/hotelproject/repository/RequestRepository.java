@@ -27,12 +27,39 @@ public class RequestRepository implements RequestDAO {
             e.printStackTrace();
 
         }
+
         return requests;
     }
 
     @Override
     public Request findByNumber(int number) {
+        if (number == 0) {
+            return emptyRequest();
+        }
+        ResultSet resultSet = null;
+        try (Connection connection = databaseService.takeConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT FROM sql11188080.requests WHERE `number` = ?")) {
+            preparedStatement.setInt(1, number);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.first()) {
+                return new Request(resultSet.getInt("number"), resultSet.getInt("user_id"),
+                        resultSet.getInt("beds"), resultSet.getInt("class_id"),
+                        new java.util.Date(resultSet.getDate("date_from").getTime()), new java.util.Date(resultSet.getDate("date_to").getTime()),
+                        resultSet.getString("comments"));
+            }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null && !resultSet.isClosed()) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
@@ -90,5 +117,8 @@ public class RequestRepository implements RequestDAO {
 
         }
         return false;
+    }
+    private Request emptyRequest() {
+        return new Request();
     }
 }
