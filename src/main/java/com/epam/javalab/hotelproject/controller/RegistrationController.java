@@ -2,6 +2,7 @@ package com.epam.javalab.hotelproject.controller;
 
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.UserService;
+import com.epam.javalab.hotelproject.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +17,7 @@ import java.io.IOException;
 )
 public class RegistrationController extends HttpServlet {
 
-    private UserService userService = new UserService();
+    private UserService userService = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

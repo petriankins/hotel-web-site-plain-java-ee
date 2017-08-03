@@ -1,9 +1,8 @@
 package com.epam.javalab.hotelproject.controller;
 
 import com.epam.javalab.hotelproject.model.User;
-import com.epam.javalab.hotelproject.repository.UserDAO;
-import com.epam.javalab.hotelproject.repository.UserRepository;
 import com.epam.javalab.hotelproject.service.UserService;
+import com.epam.javalab.hotelproject.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,14 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(
         name = "UserServlet",
         urlPatterns = {"/login"}
 )
 public class LoginController extends HttpServlet {
-    private UserService userService = new UserService();
+    private UserService userService = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

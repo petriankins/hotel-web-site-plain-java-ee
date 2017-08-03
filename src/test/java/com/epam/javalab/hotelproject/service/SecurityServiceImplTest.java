@@ -6,15 +6,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
-public class SecurityServiceTest {
-    SecurityService securityService = new SecurityService();
+public class SecurityServiceImplTest {
+    SecurityServiceImpl securityServiceImpl = new SecurityServiceImpl();
     @Test
     public void hash() throws Exception {
         String password = "asdfdhsdhsdfmgasmdglamsodmalsdmlakf33";
-        String hashedPassword = securityService.hash(password);
-        assertThat(hashedPassword, is(securityService.hash(password)));
+        String hashedPassword = securityServiceImpl.hash(password);
+        assertThat(hashedPassword, is(securityServiceImpl.hash(password)));
         password = "aoijgojasodmfaspn21jsj";
-        assertThat(hashedPassword, not(securityService.hash(password)));
+        assertThat(hashedPassword, not(securityServiceImpl.hash(password)));
     }
 
 
