@@ -3,8 +3,6 @@ package com.epam.javalab.hotelproject.repository;
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
-import com.epam.javalab.hotelproject.service.DatabaseService;
-import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
 import com.epam.javalab.hotelproject.utils.Validator;
 
 import java.sql.*;
@@ -22,7 +20,7 @@ public class UserRepository implements UserDAO {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.users");) {
             while (resultSet.next()) {
-                users.add(new User(resultSet.getString("first_name"), resultSet.getString("last_name"),
+                users.add(new User(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
                                    resultSet.getString("password"), resultSet.getString("email")));
             }
         } catch (SQLException e) {
@@ -48,7 +46,7 @@ public class UserRepository implements UserDAO {
             preparedStatement.setString(1, login);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
-                User user = new User(resultSet.getString("first_name"), resultSet.getString("last_name"),
+                User user = new User(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
                                      resultSet.getString("email"), resultSet.getString("password"));
 
                 return user;

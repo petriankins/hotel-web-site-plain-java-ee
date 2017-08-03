@@ -19,7 +19,7 @@ public class RequestRepository implements RequestDAO {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.requests");) {
             while (resultSet.next()) {
-                requests.add(new Request(resultSet.getInt("number"), resultSet.getInt("user_id"),
+                requests.add(new Request(resultSet.getInt("id"), resultSet.getInt("number"), resultSet.getInt("id_user"),
                         resultSet.getInt("beds"), resultSet.getInt("id_class"), resultSet.getDate("date_from"),
                         resultSet.getDate("date_to"), resultSet.getString("comments")));
             }
@@ -38,12 +38,12 @@ public class RequestRepository implements RequestDAO {
         }
         ResultSet resultSet = null;
         try (Connection connection = databaseService.takeConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT FROM sql11188080.requests WHERE `number` = ?")) {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM sql11188080.requests WHERE number = ?")) {
             preparedStatement.setInt(1, number);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
-                return new Request(resultSet.getInt("number"), resultSet.getInt("user_id"),
-                        resultSet.getInt("beds"), resultSet.getInt("class_id"),
+                return new Request(resultSet.getInt("id"), resultSet.getInt("number"), resultSet.getInt("id_user"),
+                        resultSet.getInt("beds"), resultSet.getInt("id_class"),
                         new java.util.Date(resultSet.getDate("date_from").getTime()), new java.util.Date(resultSet.getDate("date_to").getTime()),
                         resultSet.getString("comments"));
             }
@@ -67,7 +67,7 @@ public class RequestRepository implements RequestDAO {
     public boolean insertRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
             try (Connection connection = databaseService.takeConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `sql11188080`.`requests` (`number`, `user_id`, `beds`, `id_class`, `date_from`, `date_to`, `comments`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+                 PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `sql11188080`.`requests` (`number`, `id_user`, `beds`, `id_class`, `date_from`, `date_to`, `comments`) VALUES (?, ?, ?, ?, ?, ?, ?);")) {
                 preparedStatement.setInt(1, request.getNumber());
                 preparedStatement.setInt(2, request.getUserId());
                 preparedStatement.setInt(3, request.getBeds());
@@ -88,7 +88,7 @@ public class RequestRepository implements RequestDAO {
     public boolean updateRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
             try (Connection connection = databaseService.takeConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `sql11188080`.`requests` SET `user_id` = ?, `beds` = ?, `id_class` = ?, `date_from` = ?, `date_to` = ?, `comments` = ? WHERE `nuber` = ?")){
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `sql11188080`.`requests` SET `id_user` = ?, `beds` = ?, `id_class` = ?, `date_from` = ?, `date_to` = ?, `comments` = ? WHERE number = ?")){
                 preparedStatement.setInt(1, request.getUserId());
                 preparedStatement.setInt(2, request.getBeds());
                 preparedStatement.setInt(3, request.getClassID());
@@ -108,7 +108,7 @@ public class RequestRepository implements RequestDAO {
     public boolean deleteRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
             try (Connection connection = databaseService.takeConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `sql11188080`.`requests` WHERE `number` = ?")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM sql11188080.requests WHERE number = ?")) {
                 preparedStatement.setInt(1, request.getNumber());
                 return preparedStatement.executeUpdate() == 1 ? true : false;
             } catch (SQLException e) {

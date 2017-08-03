@@ -1,89 +1,99 @@
 package com.epam.javalab.hotelproject.repository;
 
 import com.epam.javalab.hotelproject.model.User;
-import com.epam.javalab.hotelproject.service.DatabaseService;
-import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
-import com.epam.javalab.hotelproject.service.DatabaseService;
-import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 public class UserRepositoryTest {
-    private DatabaseService databaseService = DatabaseServiceImpl.getInstance();
-    private UserDAO         userDAO         = new UserRepository();
+    UserDAO userDAO = new UserRepository();
 
-    public User createReferenceUser() {
-        return new User("my name", "my last name", "aaa@aaa.com", "mypassword");
-    }
+    Map<String, User> users;
 
     @Before
-    public void insertUsers() {
-        try (Connection connection = databaseService.takeConnection();
-             Statement statement = connection.createStatement();) {
-            statement.executeUpdate(
-                    "INSERT INTO `sql11188080`.`users` (`email`, `password`, `first_name`, `last_name`) VALUES ('aaa@aaa.com','mypassword','my name', 'my last name');");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void setUp() throws Exception {
+        users = new HashMap<>();
+        addUserToMap(users, new User("Vasya", "Pupkin", "vasya@cool.ru", "MyPassword"));
+        addUserToMap(users, new User("Nikitia", "Popkin", "nikitos@cool.ru", "nikitaKRUT"));
+        addUserToMap(users, new User("Vika", "Ivanova", "nikavika@cool.ru", "VikaBarbie"));
+
+        users.forEach((k, v) -> userDAO.insertUser(v));
+    }
+
+    private void addUserToMap(Map<String, User> map, User user) {
+        map.put(user.getLogin(), user);
+    }
+
+    private boolean compareUsers(User user1, User user2) {
+        if (!user1.getLogin().equals(user2.getLogin())) return false;
+        if (!user1.getPassword().equals(user2.getPassword())) return false;
+        if (!user1.getName().equals(user2.getName())) return false;
+        if (!user1.getLastName().equals(user2.getLastName())) return false;
+
+        return true;
     }
 
     @After
-    public void clearUsers() {
-        try (Connection connection = databaseService.takeConnection();
-             Statement statement = connection.createStatement();) {
-            statement.executeUpdate("DELETE FROM sql11188080.users WHERE email != 'info@hotel.project';");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void tearDown() throws Exception {
+        users.forEach((k, v) -> userDAO.deleteUser(v));
     }
 
     @Test
-    public void findAllUsers() throws Exception {
-        List<User> users = userDAO.findAll();
-        assertThat(users.size(), is(2));
+    public void findAll() throws Exception {
+        List<User> allUsers = userDAO.findAll();
+        assertThat(allUsers.size(), is((users.size() + 1)));
+        for (User user : allUsers) {
+            assertThat(users.get(user.getLogin()), not(null));
+            assertThat(compareUsers(users.get(user.getLogin()), user), is(true));
+        }
     }
 
     @Test
     public void findByLogin() throws Exception {
-        User referenceUser = createReferenceUser();
-        User user = userDAO.findByLogin("aaa@aaa.com");
-        assertThat(user.getLogin(), is(referenceUser.getLogin()));
-        assertThat(user.getPassword(), is(referenceUser.getPassword()));
-        assertThat(user.getName(), is(referenceUser.getName()));
+        users.forEach((k, v) -> {
+            User user = userDAO.findByLogin(v.getLogin());
+            assertThat(compareUsers(v, user), is(true));
+        });
     }
 
     @Test
     public void insertUser() throws Exception {
-        User newUser = new User("new name", "new last name", "new login", "new password");
+        User newUser = makeTestUser();
         assertThat(userDAO.insertUser(newUser), is(true));
-        User user = userDAO.findByLogin("new login");
-        assertThat(user.getName(), is(newUser.getName()));
-        assertThat(user.getLastName(), is(newUser.getLastName()));
-        assertThat(user.getLogin(), is(newUser.getLogin()));
-        assertThat(user.getPassword(), is(newUser.getPassword()));
+        User storedUser = userDAO.findByLogin(newUser.getLogin());
+        assertThat(compareUsers(newUser, storedUser), is(true));
+        assertThat(storedUser.getId(), not(0));
+    }
+
+    private User makeTestUser() {
+        return new User("Kolayn4ik", "4etkiy", "kolya@yandex.ru", "kolyavsemoget");
     }
 
     @Test
     public void updateUser() throws Exception {
-        User referenceUser = createReferenceUser();
-        referenceUser.setPassword("myNewPassword");
-        assertThat(userDAO.updateUser(referenceUser), is(true));
-        assertThat(referenceUser.getPassword(), is(userDAO.findByLogin(referenceUser.getLogin()).getPassword()));
+        users.forEach((k, v) -> {
+            v.setName("We all clones now");
+            assertThat(userDAO.updateUser(v), is(true));
+        });
+        users.forEach((k, v) -> assertThat(compareUsers(userDAO.findByLogin(v.getLogin()), v), is(true)));
     }
 
     @Test
     public void deleteUser() throws Exception {
-        User referenceUser = createReferenceUser();
-        assertThat(userDAO.deleteUser(referenceUser), is(true));
-        assertThat(userDAO.findByLogin(referenceUser.getLogin()).getLogin(), is((new User()).getLogin()));
+        User newUser = makeTestUser();
+        userDAO.insertUser(newUser);
+        assertThat(compareUsers(userDAO.findByLogin(newUser.getLogin()), newUser), is(true));
+        assertThat(userDAO.deleteUser(newUser), is(true));
+        assertThat(compareUsers(userDAO.findByLogin(newUser.getLogin()), newUser), is(false));
     }
 }

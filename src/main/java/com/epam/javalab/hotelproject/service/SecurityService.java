@@ -1,9 +1,17 @@
 package com.epam.javalab.hotelproject.service;
 
 import com.epam.javalab.hotelproject.model.User;
+import com.epam.javalab.hotelproject.repository.UserDAO;
+import com.epam.javalab.hotelproject.repository.UserRepository;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.Arrays;
+
 
 public interface SecurityService {
-    String hash(String password);
+    public String hash(String password);
 
-    boolean authorize(User user);
+    public boolean authorize(User user);
 }
