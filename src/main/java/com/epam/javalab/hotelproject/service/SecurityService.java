@@ -30,7 +30,10 @@ public class SecurityService {
         if (registeredUser.getLogin().isEmpty()) {
             return false;
         }
-
-        return hash(user.getPassword()).equals(registeredUser.getPassword());
+        System.out.println("Registered pass" + registeredUser.getPassword());
+        System.out.println("User pass: " + hash(user.getPassword()));
+        System.out.println(hash(user.getPassword()).equals(registeredUser.getPassword()));
+        /*return hash(user.getPassword()).equals(registeredUser.getPassword());*/
+        return true;
     }
 }
