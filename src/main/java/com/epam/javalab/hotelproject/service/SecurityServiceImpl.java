@@ -9,9 +9,20 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
+/**
+ * Provides API fo hashing password and suthorization
+ *
+ * @author Maksim Starshinov, Sergei Petriankin
+ * @version 1.0
+ */
+
 public class SecurityServiceImpl implements SecurityService {
     private UserDAO userDAO = new UserRepository();
 
+    /**
+     * @param password
+     * @return hashed password using MD5 algorithm
+     */
     public String hash(String password) {
         String result = password;
         try {
@@ -25,12 +36,17 @@ public class SecurityServiceImpl implements SecurityService {
         return result;
     }
 
+    /**
+     * @param user
+     * @return <code>true</code> if such user is is already registered
+     */
     public boolean authorize(User user) {
         User registeredUser = userDAO.findByLogin(user.getLogin());
         if (registeredUser.getLogin().isEmpty()) {
             return false;
         }
-
         return hash(user.getPassword()).equals(registeredUser.getPassword());
+
+
     }
 }
