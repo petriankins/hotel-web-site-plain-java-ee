@@ -8,15 +8,31 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
+/**
+ * Provides Connection pool for work with database and API for it.
+ * @author Maksim Starshinov, Sergei Petriankin
+ * @version 1.0
+ */
 public class DatabaseServiceImpl implements DatabaseService {
+    /**
+     * Array of available connections from Connection pool
+     */
     private BlockingQueue<Connection> connectionQueue;
+    /**
+     * Array of busy connections from Connection pool
+     */
     private BlockingQueue<Connection> givenAwayConnection;
-
+    /**
+     * JDBC driver for MySQL
+     */
     private              String              driverName = "com.mysql.jdbc.Driver";
     private              String              url        = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11188080";
     private              String              user       = "sql11188080";
     private              String              password   = "WFJLwRnBBE";
     private              int                 poolSize   = 5;
+    /**
+     * Singleton instance of Connection pool
+     */
     private static final DatabaseServiceImpl instance   = new DatabaseServiceImpl();
 
     private DatabaseServiceImpl() {
@@ -36,10 +52,19 @@ public class DatabaseServiceImpl implements DatabaseService {
         }
     }
 
+    /**
+     * Fabric method
+     * @return singleton instance of DB Service
+     */
     public static DatabaseServiceImpl getInstance() {
         return instance;
     }
 
+    /**
+     * Util method that allows to commit whatever is in connections and clean the queue of them.
+     * @param queue
+     * @throws SQLException
+     */
     private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
         Connection connection;
         while ((connection = queue.poll()) != null) {
@@ -50,6 +75,9 @@ public class DatabaseServiceImpl implements DatabaseService {
         }
     }
 
+    /**
+     * Cleans both queue of available connections and busy connections in connection pool
+     */
     private void clearConnectionQueue() {
         try {
             closeConnectionsQueue(connectionQueue);
@@ -59,9 +87,10 @@ public class DatabaseServiceImpl implements DatabaseService {
         }
     }
 
-    public void dispose() {
-        clearConnectionQueue();
-    }
+    /**
+     * Gives connection and mark it as busy by passing from the list of available connections to the list of busy collections
+     * @return connection
+     */
 
     public Connection takeConnection() {
         Connection connection = null;
@@ -115,6 +144,9 @@ public class DatabaseServiceImpl implements DatabaseService {
         }
     }
 
+    /**
+     * Basic connection class with extra functionality
+     */
 
     private class PooledConnection implements Connection {
         private Connection connection;
@@ -124,6 +156,10 @@ public class DatabaseServiceImpl implements DatabaseService {
             this.connection.setAutoCommit(true);
         }
 
+        /**
+         * Completely close the connection.
+         * @throws SQLException
+         */
         public void reallyClose() throws SQLException {
             connection.close();
         }
@@ -143,6 +179,10 @@ public class DatabaseServiceImpl implements DatabaseService {
             connection.rollback();
         }
 
+        /**
+         * Mark connection as free by passing it from Busy connection to Free connections array.
+         * @throws SQLException
+         */
         @Override
         public void close() throws SQLException {
             if (connection.isClosed()) {

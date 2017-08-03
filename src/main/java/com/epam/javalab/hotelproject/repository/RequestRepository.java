@@ -38,12 +38,12 @@ public class RequestRepository implements RequestDAO {
         }
         ResultSet resultSet = null;
         try (Connection connection = databaseService.takeConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT FROM sql11188080.requests WHERE number = ?")) {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM sql11188080.requests WHERE number = ?")) {
             preparedStatement.setInt(1, number);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
                 return new Request(resultSet.getInt("id"), resultSet.getInt("number"), resultSet.getInt("id_user"),
-                        resultSet.getInt("beds"), resultSet.getInt("class_id"),
+                        resultSet.getInt("beds"), resultSet.getInt("id_class"),
                         new java.util.Date(resultSet.getDate("date_from").getTime()), new java.util.Date(resultSet.getDate("date_to").getTime()),
                         resultSet.getString("comments"));
             }

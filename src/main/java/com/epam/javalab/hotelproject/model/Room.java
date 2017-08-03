@@ -1,5 +1,6 @@
 package com.epam.javalab.hotelproject.model;
 
+
 public class Room {
     private int id;
     private int number;
