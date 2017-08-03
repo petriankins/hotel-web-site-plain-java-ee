@@ -36,6 +36,7 @@ public class RegistrationController extends HttpServlet {
             userService.authorize(user);
             message = "You have been successfully registered!";
             req.setAttribute("message", message);
+            resp.sendRedirect("/order");
 
         } else {
             message = "Something has gone wrong! Try again.";
