@@ -57,6 +57,9 @@
         <br>
         <button type="submit" class="btn btn-primary btn-md">Reserve!</button>
     </form>
+    <form action="Logout">
+        <button type="submit" class="btn btn-primary btn-md">Logout</button>
+    </form>
 </div>
 
 </body>

@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(
@@ -14,7 +15,15 @@ import java.io.IOException;
 public class AdministratorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/administrator.jsp").forward(req, resp);
+        HttpSession session = req.getSession();
+
+        if(session.getAttribute("login") != null){
+            req.getRequestDispatcher("/jsp/administrator.jsp").forward(req, resp);
+        } else {
+
+            resp.sendRedirect("/login");
+        }
+       // req.getRequestDispatcher("/jsp/administrator.jsp").forward(req, resp);
     }
 
     @Override
