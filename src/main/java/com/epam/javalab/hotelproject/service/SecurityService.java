@@ -5,6 +5,7 @@ import com.epam.javalab.hotelproject.repository.UserDAO;
 import com.epam.javalab.hotelproject.repository.UserRepository;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
@@ -17,7 +18,7 @@ public class SecurityService {
             byte[] bytesOfMessage = password.getBytes("UTF-8");
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] theDigest = md.digest(bytesOfMessage);
-            result = Arrays.toString(theDigest);
+            result = new String(theDigest, StandardCharsets.UTF_8);
         } catch (Exception e) {
             //TODO log4j
         }
