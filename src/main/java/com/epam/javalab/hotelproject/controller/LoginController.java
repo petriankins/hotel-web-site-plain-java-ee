@@ -37,7 +37,7 @@ public class LoginController extends HttpServlet {
         if (userService.authorize(user)) {
             HttpSession session = req.getSession();
             session.setAttribute("login", login);
-            resp.sendRedirect("/administrator");
+            resp.sendRedirect("/");
         } else {
             message = "Password or login is wrong";
             req.setAttribute("message", message);

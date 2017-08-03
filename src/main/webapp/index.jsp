@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Home Page</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.с1min.css">
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -36,8 +36,21 @@
 <div class="jumbotron">
     <div class="container">
         <h1>Welcome!</h1>
-        <p>Wanna book a room? Sign up!</p>
-        <p><a class="btn btn-success btn-lg" href="/registration" role="button">Sign up &raquo;</a></p>
+        <c:choose>
+            <c:when test="${sessionScope.login == null}">
+                <p>Wanna book a room? Log in or sign up!</p>
+                <a class="btn btn-success btn-lg" href="/registration" role="button">Sign up &raquo;</a>
+                <a class="btn btn-success btn-lg" href="/login" role="button">Log in &raquo;</a>
+            </c:when>
+            <c:otherwise>
+                <p>Reserve room just now!</p>
+                <a class="btn btn-success btn-lg" href="/order" role="button">Reserve room! &raquo;</a>
+                <form action="Logout">
+                    <button type="submit" class="btn btn-primary btn-lg">Logout</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
+
     </div>
 </div>
 </body>
