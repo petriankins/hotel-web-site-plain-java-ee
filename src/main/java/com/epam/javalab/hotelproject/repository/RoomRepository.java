@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomRepository implements RoomDAO{
+public class RoomRepository implements RoomDAO {
     DatabaseService databaseService = DatabaseServiceImpl.getInstance();
 
     @Override
@@ -18,7 +18,7 @@ public class RoomRepository implements RoomDAO{
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT FROM sql11188080.rooms ")) {
             while (resultSet.next()) {
-               // roomList.add(new Room(resultSet.getInt("number"), resultSet.getInt("beds"), resultSet.getInt("id_class")));
+                // roomList.add(new Room(resultSet.getInt("number"), resultSet.getInt("beds"), resultSet.getInt("id_class")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

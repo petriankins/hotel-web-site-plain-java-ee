@@ -20,7 +20,8 @@ public class UserRepository implements UserDAO {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.users");) {
             while (resultSet.next()) {
-                users.add(new User(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
+                users.add(new User(resultSet.getInt("id"), resultSet.getString("first_name"),
+                                   resultSet.getString("last_name"),
                                    resultSet.getString("password"), resultSet.getString("email")));
             }
         } catch (SQLException e) {
@@ -46,7 +47,8 @@ public class UserRepository implements UserDAO {
             preparedStatement.setString(1, login);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
-                User user = new User(resultSet.getInt("id"), resultSet.getString("first_name"), resultSet.getString("last_name"),
+                User user = new User(resultSet.getInt("id"), resultSet.getString("first_name"),
+                                     resultSet.getString("last_name"),
                                      resultSet.getString("email"), resultSet.getString("password"));
 
                 return user;
@@ -88,8 +90,8 @@ public class UserRepository implements UserDAO {
         if (Validator.validateUserBean(user)) {
             try (Connection connection = databaseService.takeConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(
-                    "UPDATE `sql11188080`.`users` SET `password`= ?, `first_name` = ?, `last_name` = ? WHERE `email` = ?")) {
-                preparedStatement.setString(1,user.getPassword());
+                         "UPDATE `sql11188080`.`users` SET `password`= ?, `first_name` = ?, `last_name` = ? WHERE `email` = ?")) {
+                preparedStatement.setString(1, user.getPassword());
                 preparedStatement.setString(2, user.getName());
                 preparedStatement.setString(3, user.getLastName());
                 preparedStatement.setString(4, user.getLogin());
@@ -106,8 +108,8 @@ public class UserRepository implements UserDAO {
         if (Validator.validateUserBean(user)) {
             try (Connection connection = databaseService.takeConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(
-                    "DELETE FROM `sql11188080`.`users` WHERE email = ?"
-            )) {
+                         "DELETE FROM `sql11188080`.`users` WHERE email = ?"
+                 )) {
                 preparedStatement.setString(1, user.getLogin());
                 return preparedStatement.executeUpdate() == 1 ? true : false;
             } catch (SQLException e) {

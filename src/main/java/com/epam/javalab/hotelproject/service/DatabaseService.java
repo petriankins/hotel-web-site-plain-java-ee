@@ -1,10 +1,10 @@
 package com.epam.javalab.hotelproject.service;
 
-
 import java.sql.Connection;
 
 /**
  * Provides API for taking, closing and disposing connection to DB
+ *
  * @author Maksim Starshinov, Sergei Petriankin
  * @version 1.0
  */
@@ -13,5 +13,5 @@ public interface DatabaseService {
 
     void closeConnection(Connection connection);
 
-    public void dispose();
+    void dispose();
 }

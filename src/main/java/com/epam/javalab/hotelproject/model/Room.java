@@ -2,9 +2,9 @@ package com.epam.javalab.hotelproject.model;
 
 
 public class Room {
-    private int id;
-    private int number;
-    private int beds;
+    private int       id;
+    private int       number;
+    private int       beds;
     private RoomClass roomClass;
     boolean isFree;
 

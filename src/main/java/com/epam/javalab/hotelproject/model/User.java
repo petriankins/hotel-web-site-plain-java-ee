@@ -1,7 +1,7 @@
 package com.epam.javalab.hotelproject.model;
 
 public class User {
-    private int id;
+    private int    id;
     private String name;
     private String login;
     private String password;
@@ -23,7 +23,7 @@ public class User {
     }
 
     public User() {
-        this("","","","");
+        this("", "", "", "");
     }
 
     public int getId() {

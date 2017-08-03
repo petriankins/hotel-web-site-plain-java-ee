@@ -6,9 +6,13 @@ import java.util.List;
 
 public interface RequestDAO {
     List<Request> findAll();
+
     Request findByNumber(int number);
+
     boolean insertRequest(Request request);
+
     boolean updateRequest(Request request);
+
     boolean deleteRequest(Request request);
 
 }
