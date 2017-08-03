@@ -23,7 +23,7 @@ public class Request {
     }
 
     public Request() {
-
+        this(0, 0, 0, 0, null, null, "");
     }
 
     public int getId() {

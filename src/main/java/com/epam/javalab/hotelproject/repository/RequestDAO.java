@@ -9,7 +9,6 @@ public interface RequestDAO {
     Request findByNumber(int number);
     boolean insertRequest(Request request);
     boolean updateRequest(Request request);
-
     boolean deleteRequest(Request request);
 
 }
