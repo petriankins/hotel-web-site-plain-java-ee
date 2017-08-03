@@ -35,11 +35,13 @@ public class LoginController extends HttpServlet {
         String message = null;
 
         if (userService.authorize(user)) {
-            req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
+            HttpSession session = req.getSession();
+            session.setAttribute("login", login);
+            resp.sendRedirect("/order");
         } else {
             message = "Password or login is wrong";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
+            resp.sendRedirect("/login");
         }
 
 
