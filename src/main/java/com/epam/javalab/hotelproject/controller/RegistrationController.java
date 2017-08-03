@@ -1,5 +1,8 @@
 package com.epam.javalab.hotelproject.controller;
 
+import com.epam.javalab.hotelproject.model.User;
+import com.epam.javalab.hotelproject.service.UserService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +15,9 @@ import java.io.IOException;
         urlPatterns = {"/registration"}
 )
 public class RegistrationController extends HttpServlet {
+
+    private UserService userService = new UserService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/jsp/registration.jsp").forward(req, resp);
@@ -19,16 +25,23 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/registration.jsp").forward(req, resp);
-
-        String userName = req.getParameter("userName");
-        String email = req.getParameter("email");
+        String firstName = req.getParameter("name");
+        String lastName = req.getParameter("lastName");
         String login = req.getParameter("login");
-        String pass = req.getParameter("password");
+        String password = req.getParameter("password");
 
-        System.out.println(userName);
-        System.out.println(email);
-        System.out.println(login);
-        System.out.println(pass);
+        User user = new User(firstName, lastName, login, password);
+        String message = null;
+        if (userService.registerUser(user)) {
+            userService.authorize(user);
+            message = "You have been successfully registered!";
+            req.setAttribute("message", message);
+            resp.sendRedirect("/order");
+
+        } else {
+            message = "Something has gone wrong! Try again.";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/jsp/registration.jsp").forward(req, resp);
+        }
     }
 }
