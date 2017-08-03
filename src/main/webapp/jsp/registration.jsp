@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: maxim
@@ -14,26 +15,32 @@
 </head>
 <body>
 <div class="container">
+    <c:if test="${not empty message}">
+        <div class="alert alert-danger">
+                ${message}
+        </div>
+    </c:if>
     <form style="width: 400px" action="/registration" method="post">
         <div class="form-group">
-            <label>Name:</label>
-            <input type="text" name="userName" class="form-control" placeholder="Name">
+            <label>First name:</label>
+            <input type="text" name="name" class="form-control" placeholder="First Name">
+        </div>
+        <div class="form-group">
+            <label>Last name:</label>
+            <input type="text" name="lastName" class="form-control" placeholder="Last Name">
         </div>
         <div class="form-group">
             <label>Email:</label>
-            <input type="email" name="email" class="form-control" placeholder="Email">
+            <input type="email" name="login" class="form-control" placeholder="Type your email">
         </div>
         <div class="form-group">
-            <label>Login</label>
-            <input type="text" name="login" class="form-control" placeholder="Login">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
+            <label>Password:</label>
             <input type="password" name="password" class="form-control" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary btn-md">Sign Up</button>
+        <button type="submit" class="btn btn-primary btn-md">Sign up</button>
+
+        <!--<p><a class="btn btn-primary btn-md" href="/" role="button">Sign up</a></p>-->
     </form>
 </div>
-
 </body>
 </html>
