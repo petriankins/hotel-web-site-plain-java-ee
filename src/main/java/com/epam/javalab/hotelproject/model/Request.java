@@ -12,6 +12,17 @@ public class Request {
     private Date dateTo;
     private String comments;
 
+    public Request(int id, int number, int userId, int beds, int classID, Date dateFrom, Date dateTo, String comments) {
+        this.id = id;
+        this.number = number;
+        this.userId = userId;
+        this.beds = beds;
+        this.classID = classID;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.comments = comments;
+    }
+
     public Request(int number, int userId, int beds, int classID, Date dateFrom, Date dateTo, String comments) {
         this.number = number;
         this.userId = userId;

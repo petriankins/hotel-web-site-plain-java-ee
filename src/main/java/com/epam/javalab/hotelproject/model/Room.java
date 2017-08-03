@@ -7,15 +7,13 @@ public class Room {
     private RoomClass roomClass;
     boolean isFree;
 
-    public Room(int id, int number, int beds, RoomClass roomClass) {
-        this.id = id;
+    public Room(int number, int beds, RoomClass roomClass) {
         this.number = number;
         this.beds = beds;
         this.roomClass = roomClass;
     }
 
-    public Room(int id, int number, int beds, RoomClass roomClass, boolean isFree) {
-        this.id = id;
+    public Room(int number, int beds, RoomClass roomClass, boolean isFree) {
         this.number = number;
         this.beds = beds;
         this.roomClass = roomClass;
