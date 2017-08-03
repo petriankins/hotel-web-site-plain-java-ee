@@ -10,6 +10,7 @@ import java.util.concurrent.Executor;
 
 /**
  * Provides Connection pool for work with database and API for it.
+ *
  * @author Maksim Starshinov, Sergei Petriankin
  * @version 1.0
  */
@@ -42,7 +43,8 @@ public class DatabaseServiceImpl implements DatabaseService {
             connectionQueue = new ArrayBlockingQueue<>(poolSize);
             givenAwayConnection = new ArrayBlockingQueue<>(poolSize);
             for (int i = 0; i < poolSize; i++) {
-                PooledConnection pooledConnection = new PooledConnection(DriverManager.getConnection(url, user, password));
+                PooledConnection pooledConnection = new PooledConnection(
+                        DriverManager.getConnection(url, user, password));
                 connectionQueue.add(pooledConnection);
             }
         } catch (SQLException e) {
@@ -54,6 +56,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     /**
      * Fabric method
+     *
      * @return singleton instance of DB Service
      */
     public static DatabaseServiceImpl getInstance() {
@@ -62,6 +65,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     /**
      * Util method that allows to commit whatever is in connections and clean the queue of them.
+     *
      * @param queue
      * @throws SQLException
      */
@@ -87,8 +91,14 @@ public class DatabaseServiceImpl implements DatabaseService {
         }
     }
 
+
+    public void dispose() {
+        clearConnectionQueue();
+    }
+
     /**
      * Gives connection and mark it as busy by passing from the list of available connections to the list of busy collections
+     *
      * @return connection
      */
 
@@ -158,6 +168,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 
         /**
          * Completely close the connection.
+         *
          * @throws SQLException
          */
         public void reallyClose() throws SQLException {
@@ -181,6 +192,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 
         /**
          * Mark connection as free by passing it from Busy connection to Free connections array.
+         *
          * @throws SQLException
          */
         @Override
@@ -255,12 +267,14 @@ public class DatabaseServiceImpl implements DatabaseService {
         }
 
         @Override
-        public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+        public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws
+                                                                                                           SQLException {
             return connection.prepareStatement(sql, resultSetType, resultSetConcurrency);
         }
 
         @Override
-        public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+        public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws
+                                                                                                      SQLException {
             return connection.prepareCall(sql, resultSetType, resultSetConcurrency);
         }
 
@@ -305,17 +319,24 @@ public class DatabaseServiceImpl implements DatabaseService {
         }
 
         @Override
-        public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws
+                                                                                                                SQLException {
             return connection.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
         }
 
         @Override
-        public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        public PreparedStatement prepareStatement(String sql,
+                                                  int resultSetType,
+                                                  int resultSetConcurrency,
+                                                  int resultSetHoldability) throws SQLException {
             return connection.prepareStatement(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
         }
 
         @Override
-        public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        public CallableStatement prepareCall(String sql,
+                                             int resultSetType,
+                                             int resultSetConcurrency,
+                                             int resultSetHoldability) throws SQLException {
             return connection.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
         }
 
