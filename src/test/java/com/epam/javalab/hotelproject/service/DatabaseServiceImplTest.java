@@ -1,6 +1,5 @@
 package com.epam.javalab.hotelproject.service;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -8,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DatabaseServiceImplTest {
-    DatabaseServiceImpl dataBaseServiceImpl = DatabaseServiceImpl.getInstance();
+    DatabaseService databaseService = DatabaseServiceImpl.getInstance();
 
     @Test
     public void test() throws Exception {
-        Connection connection = dataBaseServiceImpl.takeConnection();
+        Connection connection = databaseService.takeConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.test");
         while (resultSet.next()) {
@@ -20,7 +19,7 @@ public class DatabaseServiceImplTest {
         }
         resultSet.close();
         statement.close();
-        dataBaseServiceImpl.closeConnection(connection);
-        dataBaseServiceImpl.dispose();
+        databaseService.closeConnection(connection);
+        databaseService.dispose();
     }
 }

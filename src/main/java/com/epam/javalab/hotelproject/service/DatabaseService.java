@@ -13,4 +13,5 @@ public interface DatabaseService {
 
     void closeConnection(Connection connection);
 
+    public void dispose();
 }
