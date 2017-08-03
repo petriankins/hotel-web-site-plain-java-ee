@@ -1,5 +1,6 @@
 package com.epam.javalab.hotelproject.service;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.Connection;

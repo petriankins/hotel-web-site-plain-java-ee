@@ -15,7 +15,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
-@Ignore
 public class UserRepositoryTest {
     UserDAO userDAO = new UserRepository();
 

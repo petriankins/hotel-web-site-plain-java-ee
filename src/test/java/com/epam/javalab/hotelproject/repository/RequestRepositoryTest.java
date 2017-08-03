@@ -4,6 +4,7 @@ import com.epam.javalab.hotelproject.model.Request;
 import com.sun.org.apache.regexp.internal.RE;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Date;

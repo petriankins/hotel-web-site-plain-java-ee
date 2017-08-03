@@ -1,5 +1,6 @@
 package com.epam.javalab.hotelproject.service;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -16,6 +17,4 @@ public class SecurityServiceImplTest {
         password = "aoijgojasodmfaspn21jsj";
         assertThat(hashedPassword, not(securityServiceImpl.hash(password)));
     }
-
-
 }
