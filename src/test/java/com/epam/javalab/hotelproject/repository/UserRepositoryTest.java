@@ -49,7 +49,7 @@ public class UserRepositoryTest {
     @Test
     public void findAllUsers() throws Exception {
         List<User> users = userDAO.findAll();
-        assertThat(users.size(), is(1));
+        assertThat(users.size(), is(2));
     }
 
     @Test
