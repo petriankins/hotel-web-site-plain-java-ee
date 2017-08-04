@@ -34,7 +34,7 @@ public class Request {
     }
 
     public Request() {
-        this(0, 0, 0, 0, null, null, "");
+        this(0, 0, 0, 0, new Date(), new Date(), "");
     }
 
     public int getId() {

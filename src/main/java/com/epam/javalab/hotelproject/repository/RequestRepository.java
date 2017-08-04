@@ -45,8 +45,11 @@ public class RequestRepository implements RequestDAO {
             preparedStatement.setInt(1, number);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
-                return new Request(resultSet.getInt("id"), resultSet.getInt("number"), resultSet.getInt("id_user"),
-                                   resultSet.getInt("beds"), resultSet.getInt("id_class"),
+                return new Request(resultSet.getInt("id"),
+                                    resultSet.getInt("number"),
+                                    resultSet.getInt("id_user"),
+                                    resultSet.getInt("beds"),
+                                    resultSet.getInt("id_class"),
                                    new java.util.Date(resultSet.getDate("date_from").getTime()),
                                    new java.util.Date(resultSet.getDate("date_to").getTime()),
                                    resultSet.getString("comments"));
@@ -63,7 +66,7 @@ public class RequestRepository implements RequestDAO {
                 e.printStackTrace();
             }
         }
-        return null;
+        return emptyRequest();
     }
 
     @Override
