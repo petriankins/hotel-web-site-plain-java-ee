@@ -123,6 +123,17 @@ public class RoomRepository implements RoomDAO {
 
     @Override
     public boolean insertRoom(Room room) {
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "INSERT INTO sql11188080.rooms (id, number, beds, id_class) VALUES (?, ?, ?, ?) ")) {
+            preparedStatement.setInt(1, room.getId());
+            preparedStatement.setInt(2, room.getNumber());
+            preparedStatement.setInt(3, room.getBeds());
+            preparedStatement.setInt(4, room.getRoomClass());
+            return preparedStatement.executeUpdate() == 1 ? true : false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
