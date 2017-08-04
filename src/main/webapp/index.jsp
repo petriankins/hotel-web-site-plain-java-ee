@@ -37,7 +37,7 @@
     <div class="container">
         <h1>Welcome!</h1>
         <c:choose>
-            <c:when test="${sessionScope.login == null}">
+            <c:when test="${sessionScope.user == null}">
                 <p>Wanna book a room? Log in or sign up!</p>
                 <a class="btn btn-success btn-lg" href="/registration" role="button">Sign up &raquo;</a>
                 <a class="btn btn-success btn-lg" href="/login" role="button">Log in &raquo;</a>
