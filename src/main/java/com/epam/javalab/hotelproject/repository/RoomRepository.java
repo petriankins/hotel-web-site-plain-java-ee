@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RoomRepository implements RoomDAO {
     DatabaseService databaseService = DatabaseServiceImpl.getInstance();
-
+    private Room emptyRoom = new Room();
     @Override
     public List<Room> finAll() {
         List<Room> roomList = new ArrayList<>();
@@ -30,22 +30,17 @@ public class RoomRepository implements RoomDAO {
     }
 
     @Override
-    public Room findByNumber() {
+    public Room findByNumber(int number) {
+      return null;
+    }
+
+    @Override
+    public Room findByBeds(int beds) {
         return null;
     }
 
     @Override
-    public Room findByBeds() {
-        return null;
-    }
-
-    @Override
-    public Room findByClass() {
-        return null;
-    }
-
-    @Override
-    public Room findAvailable() {
+    public Room findByClass(int roomClass) {
         return null;
     }
 
