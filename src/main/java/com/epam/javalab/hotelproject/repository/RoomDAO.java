@@ -7,13 +7,11 @@ import java.util.List;
 public interface RoomDAO {
     List<Room> finAll();
 
-    Room findByNumber();
+    Room findByNumber(int number);
 
-    Room findByBeds();
+    Room findByBeds(int beds);
 
-    Room findByClass();
-
-    Room findAvailable();
+    Room findByClass(int roomClass);
 
     boolean insertRoom();
 

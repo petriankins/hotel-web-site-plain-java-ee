@@ -2,31 +2,21 @@ package com.epam.javalab.hotelproject.model;
 
 
 public class Room {
-    private int       id;
-    private int       number;
-    private int       beds;
-    private RoomClass roomClass;
+    private int id;
+    private int number;
+    private int beds;
+    private int roomClass;
     boolean isFree;
 
-    public Room(int number, int beds, RoomClass roomClass) {
+    public Room(int id, int number, int beds, int roomClass) {
+        this.id = id;
         this.number = number;
         this.beds = beds;
         this.roomClass = roomClass;
     }
 
-    public Room(int number, int beds, RoomClass roomClass, boolean isFree) {
-        this.number = number;
-        this.beds = beds;
-        this.roomClass = roomClass;
-        this.isFree = isFree;
-    }
-
-    public boolean isFree() {
-        return isFree;
-    }
-
-    public void setFree(boolean free) {
-        isFree = free;
+    public Room() {
+        this(0, 0, 0, 0);
     }
 
     public int getId() {
@@ -53,11 +43,11 @@ public class Room {
         this.beds = beds;
     }
 
-    public RoomClass getRoomClass() {
+    public int getRoomClass() {
         return roomClass;
     }
 
-    public void setRoomClass(RoomClass roomClass) {
+    public void setRoomClass(int roomClass) {
         this.roomClass = roomClass;
     }
 }
