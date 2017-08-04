@@ -155,6 +155,14 @@ public class RoomRepository implements RoomDAO {
 
     @Override
     public boolean deleteRoom(Room room) {
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "DELETE FROM sql11188080.rooms WHERE number = ?")) {
+            preparedStatement.setInt(1, room.getNumber());
+            return preparedStatement.executeLargeUpdate() == 1 ? true : false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }
