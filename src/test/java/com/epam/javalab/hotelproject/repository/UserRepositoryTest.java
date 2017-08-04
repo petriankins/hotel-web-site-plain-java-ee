@@ -13,6 +13,7 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.*;
 
 public class UserRepositoryTest {
@@ -35,12 +36,30 @@ public class UserRepositoryTest {
     }
 
     private boolean compareUsers(User user1, User user2) {
-        if (!user1.getLogin().equals(user2.getLogin())) return false;
-        if (!user1.getPassword().equals(user2.getPassword())) return false;
-        if (!user1.getName().equals(user2.getName())) return false;
-        if (!user1.getLastName().equals(user2.getLastName())) return false;
+        if (!user1.getLogin().equals(user2.getLogin())) {
+            printDifferences("Logins", user1.getLogin(), user2.getLogin());
+            return false;
+        }
+        if (!user1.getPassword().equals(user2.getPassword())) {
+            printDifferences("Passwords", user1.getPassword(), user2.getPassword());
+            return false;
+        }
+        if (!user1.getName().equals(user2.getName())) {
+            printDifferences("Names", user1.getName(), user2.getName());
+            return false;
+        }
+        if (!user1.getLastName().equals(user2.getLastName())) {
+            printDifferences("Last names", user1.getLastName(), user2.getLastName());
+            return false;
+        }
 
         return true;
+    }
+
+    private void printDifferences(String field, String expected, String actual) {
+        System.out.println(field + " does not match");
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual: " + actual);
     }
 
     @After
@@ -51,11 +70,13 @@ public class UserRepositoryTest {
     @Test
     public void findAll() throws Exception {
         List<User> allUsers = userDAO.findAll();
-        assertThat(allUsers.size(), is((users.size() + 1)));
+        int foundUsers = 0;
         for (User user : allUsers) {
-            assertThat(users.get(user.getLogin()), not(null));
-            assertThat(compareUsers(users.get(user.getLogin()), user), is(true));
+            assertThat(users.getOrDefault(user.getLogin(), user), notNullValue());
+            assertThat(compareUsers(users.getOrDefault(user.getLogin(), user), user), is(true));
+            if (users.get(user.getLogin()) != null) foundUsers++;
         }
+        assertThat(users.size(), is(foundUsers));
     }
 
     @Test
