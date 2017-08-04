@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface RequestService {
 
-
     List<Request> findByUser(User user);
 
     List<Request> findByNumber(int number);
