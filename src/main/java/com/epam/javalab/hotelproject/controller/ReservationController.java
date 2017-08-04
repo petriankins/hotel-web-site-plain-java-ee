@@ -11,14 +11,14 @@ import java.text.SimpleDateFormat;
 
 @WebServlet(
         name = "ReservationServlet",
-        urlPatterns = { "/order"}
+        urlPatterns = {"/order"}
 )
 public class ReservationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        if(session.getAttribute("user") != null){
+        if (session.getAttribute("user") != null) {
             req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
         } else {
 
@@ -36,12 +36,11 @@ public class ReservationController extends HttpServlet {
 
         String message = null;
 
-        if(beds == "" || stars == "" || checkIn == "" || checkOut == ""){
+        if (beds.equals("") || stars.equals("") || checkIn.equals("") || checkOut.equals("")) {
             message = "Fill all fields please";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
-        }
-        else {
+        } else {
             message = "Reservation have gone correct. Bill will be email to you";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
