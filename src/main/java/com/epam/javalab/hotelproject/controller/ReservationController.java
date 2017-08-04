@@ -26,14 +26,26 @@ public class ReservationController extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
-        int beds = Integer.parseInt(req.getParameter("beds"));
-        int stars = Integer.parseInt(req.getParameter("stars"));
+
+        String beds = req.getParameter("beds");
+        String stars = req.getParameter("stars");
         String checkIn = req.getParameter("checkIn");
         String checkOut = req.getParameter("checkOut");
 
+        String message = null;
+
+        if(beds == "" || stars == "" || checkIn == "" || checkOut == ""){
+            message = "Fill all fields please";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
+        }
+        else {
+            message = "Reservation have gone correct. Bill will be email to you";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
+            System.out.println(beds + stars + checkIn + checkOut);
+        }
     }
 }
