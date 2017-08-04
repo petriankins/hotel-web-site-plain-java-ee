@@ -69,11 +69,13 @@ public class UserRepositoryTest {
     @Test
     public void findAll() throws Exception {
         List<User> allUsers = userDAO.findAll();
-        assertThat(allUsers.size(), is((users.size() + 1)));
+        int foundUsers = 0;
         for (User user : allUsers) {
-            assertThat(users.get(user.getLogin()), not(null));
-            assertThat(compareUsers(users.get(user.getLogin()), user), is(true));
+            assertThat(users.getOrDefault(user.getLogin(), user), not(null));
+            assertThat(compareUsers(users.getOrDefault(user.getLogin(), user), user), is(true));
+            if (users.get(user.getLogin()) != null) foundUsers++;
         }
+        assertThat(users.size(), is(foundUsers));
     }
 
     @Test
