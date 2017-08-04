@@ -17,7 +17,7 @@ public class RequestRepository implements RequestDAO {
         List<Request> requests = new ArrayList<>();
         try (Connection connection = databaseService.takeConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.requests");) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.requests")) {
             while (resultSet.next()) {
                 requests.add(
                         new Request(resultSet.getInt("id"), resultSet.getInt("number"), resultSet.getInt("id_user"),
