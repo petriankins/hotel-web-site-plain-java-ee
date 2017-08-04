@@ -13,6 +13,7 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.*;
 
 public class UserRepositoryTest {
@@ -71,7 +72,7 @@ public class UserRepositoryTest {
         List<User> allUsers = userDAO.findAll();
         int foundUsers = 0;
         for (User user : allUsers) {
-            assertThat(users.getOrDefault(user.getLogin(), user), not(null));
+            assertThat(users.getOrDefault(user.getLogin(), user), notNullValue());
             assertThat(compareUsers(users.getOrDefault(user.getLogin(), user), user), is(true));
             if (users.get(user.getLogin()) != null) foundUsers++;
         }
