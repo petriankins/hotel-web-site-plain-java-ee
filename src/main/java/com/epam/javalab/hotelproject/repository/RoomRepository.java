@@ -139,6 +139,17 @@ public class RoomRepository implements RoomDAO {
 
     @Override
     public boolean updateRoom(Room room) {
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "UPDATE sql11188080.rooms SET (id = ?, beds = ?, id_class = ?) WHERE number = ?")) {
+            preparedStatement.setInt(1, room.getId());
+            preparedStatement.setInt(2, room.getBeds());
+            preparedStatement.setInt(3, room.getRoomClass());
+            preparedStatement.setInt(4, room.getNumber());
+            return preparedStatement.executeUpdate() == 1 ? true : false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
