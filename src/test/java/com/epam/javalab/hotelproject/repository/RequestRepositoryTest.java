@@ -137,6 +137,6 @@ public class RequestRepositoryTest {
         requestDAO.insertRequest(newRequest);
         assertThat(compareRequests(requestDAO.findByNumber(newRequest.getNumber()), newRequest), is(true));
         assertThat(requestDAO.deleteRequest(newRequest), is(true));
-        assertThat(compareRequests(requestDAO.findByNumber(newRequest.getNumber()), newRequest), is(new Request()));
+        assertThat(compareRequests(requestDAO.findByNumber(newRequest.getNumber()), new Request()), is(true));
     }
 }
