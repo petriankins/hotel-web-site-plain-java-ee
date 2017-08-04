@@ -45,14 +45,41 @@ public class RequestRepositoryTest {
     }
 
     private boolean compareRequests(Request request1, Request request2) {
-        if (!(request1.getNumber() != request2.getNumber())) return false;
-        if (!(request1.getBeds() != request2.getBeds())) return false;
-        if (!(request1.getClassID() != request2.getClassID())) return false;
-        if (!(request1.getDateFrom() != request2.getDateFrom())) return false;
-        if (!(request1.getDateTo() != request2.getDateTo())) return false;
-        if (!request1.getComments().equals(request2.getComments())) return false;
+        if (!(request1.getNumber() != request2.getNumber())) {
+            printDifferences("Number", Integer.valueOf(request1.getNumber()).toString(),
+                             Integer.valueOf(request2.getNumber()).toString());
+            return false;
+        }
+        if (!(request1.getBeds() != request2.getBeds())) {
+            printDifferences("Amount of beds", Integer.valueOf(request1.getBeds()).toString(),
+                             Integer.valueOf(request2.getBeds()).toString());
+            return false;
+        }
+        if (!(request1.getClassID() != request2.getClassID())) {
+            printDifferences("Class id", Integer.valueOf(request1.getClassID()).toString(),
+                             Integer.valueOf(request2.getClassID()).toString());
+            return false;
+        }
+        if (!(request1.getDateFrom() != request2.getDateFrom())) {
+            printDifferences("Date from", request1.getDateFrom().toString(), request2.getDateFrom().toString());
+            return false;
+        }
+        if (!(request1.getDateTo() != request2.getDateTo())) {
+            printDifferences("Date to", request1.getDateTo().toString(), request2.getDateTo().toString());
+            return false;
+        }
+        if (!request1.getComments().equals(request2.getComments())) {
+            printDifferences("Date from", request1.getComments(), request2.getComments());
+            return false;
+        }
 
         return true;
+    }
+
+    private void printDifferences(String field, String expected, String actual) {
+        System.out.println(field + " does not match");
+        System.out.println("Expected: " + expected);
+        System.out.println("Actual: " + actual);
     }
 
     @Test
