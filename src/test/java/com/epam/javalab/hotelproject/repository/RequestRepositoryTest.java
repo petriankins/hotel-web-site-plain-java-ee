@@ -14,6 +14,7 @@ import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
 
 public class RequestRepositoryTest {
@@ -87,7 +88,7 @@ public class RequestRepositoryTest {
         List<Request> allRequests = requestDAO.findAll();
         assertThat(allRequests.size(), is(requestsMap.size()));
         for (Request request : allRequests) {
-            assertThat(requestsMap.get(request.getNumber()), not(null));
+            assertThat(requestsMap.get(request.getNumber()), notNullValue());
             assertThat(compareRequests(requestsMap.get(request.getNumber()), request), is(true));
         }
     }
