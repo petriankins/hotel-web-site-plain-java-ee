@@ -21,8 +21,8 @@ public class UserRepository implements UserDAO {
              ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.users");) {
             while (resultSet.next()) {
                 users.add(new User(resultSet.getInt("id"), resultSet.getString("first_name"),
-                                   resultSet.getString("last_name"),
-                                   resultSet.getString("password"), resultSet.getString("email")));
+                                   resultSet.getString("email"),
+                                   resultSet.getString("password"), resultSet.getString("last_name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
