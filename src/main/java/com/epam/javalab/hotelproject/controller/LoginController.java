@@ -34,14 +34,14 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login");
-        String pass = req.getParameter("password");
-        User user = new User("", "", login, pass);
+        String login = req.getParameter("login").trim();
+        String pass = req.getParameter("password").trim();
+        User user = new User(login, pass);
         String message = null;
 
         if (userService.authorize(user)) {
             HttpSession session = req.getSession();
-            session.setAttribute("login", login);
+            session.setAttribute("user", user);
             resp.sendRedirect("/");
         } else {
             message = "Password or login is wrong";

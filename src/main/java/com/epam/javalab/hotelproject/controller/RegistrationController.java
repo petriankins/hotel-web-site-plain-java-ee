@@ -40,7 +40,7 @@ public class RegistrationController extends HttpServlet {
             req.setAttribute("message", message);
 
             HttpSession session = req.getSession();
-            session.setAttribute("login", login);
+            session.setAttribute("user", user);
 
             resp.sendRedirect("/order");
 

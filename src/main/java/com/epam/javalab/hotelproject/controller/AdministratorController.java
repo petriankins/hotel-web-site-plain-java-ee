@@ -23,7 +23,7 @@ public class AdministratorController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
-        if (session.getAttribute("login") != null) {
+        if (session.getAttribute("user") != null) {
             req.getRequestDispatcher("/jsp/administrator.jsp").forward(req, resp);
         } else {
             resp.sendRedirect("/login");
