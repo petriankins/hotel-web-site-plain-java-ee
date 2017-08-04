@@ -12,6 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * An HTTP servlet that is suitable for login processing. If the user's login and password
+ * are stored in data base he will be redirected to home page where they are able to book a room.
+ *
+ * @author Denis Iaichnikov, Andrey Kirshin
+ * @version 1.0
+ */
+
 @WebServlet(
         name = "UserServlet",
         urlPatterns = {"/login"}
@@ -22,7 +30,6 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
-
     }
 
     @Override
@@ -41,7 +48,5 @@ public class LoginController extends HttpServlet {
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
         }
-
-
     }
 }
