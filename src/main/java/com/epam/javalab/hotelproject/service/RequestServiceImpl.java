@@ -32,7 +32,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<Request> findByUser(User user) {
-        return req
+        return requestDAO.findByUser(user);
     }
 
     private boolean createRequest(Request request) {
