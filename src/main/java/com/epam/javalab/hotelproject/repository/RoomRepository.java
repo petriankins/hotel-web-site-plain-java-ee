@@ -16,9 +16,12 @@ public class RoomRepository implements RoomDAO {
         List<Room> roomList = new ArrayList<>();
         try (Connection connection = databaseService.takeConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT FROM sql11188080.rooms ")) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.rooms ")) {
             while (resultSet.next()) {
-                // roomList.add(new Room(resultSet.getInt("number"), resultSet.getInt("beds"), resultSet.getInt("id_class")));
+                 roomList.add(new Room(resultSet.getInt("id"),
+                                        resultSet.getInt("number"),
+                                        resultSet.getInt("beds"),
+                                        resultSet.getInt("id_class")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

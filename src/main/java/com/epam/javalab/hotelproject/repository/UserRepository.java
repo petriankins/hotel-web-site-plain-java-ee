@@ -20,9 +20,11 @@ public class UserRepository implements UserDAO {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.users");) {
             while (resultSet.next()) {
-                users.add(new User(resultSet.getInt("id"), resultSet.getString("first_name"),
-                                   resultSet.getString("email"),
-                                   resultSet.getString("password"), resultSet.getString("last_name")));
+                users.add(new User(resultSet.getInt("id"),
+                                    resultSet.getString("first_name"),
+                                    resultSet.getString("email"),
+                                    resultSet.getString("password"),
+                                    resultSet.getString("last_name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,9 +49,11 @@ public class UserRepository implements UserDAO {
             preparedStatement.setString(1, login);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
-                User user = new User(resultSet.getInt("id"), resultSet.getString("first_name"),
-                                     resultSet.getString("email"),
-                                     resultSet.getString("password"), resultSet.getString("last_name"));
+                User user = new User(resultSet.getInt("id"),
+                                    resultSet.getString("first_name"),
+                                    resultSet.getString("email"),
+                                    resultSet.getString("password"),
+                                    resultSet.getString("last_name"));
 
                 return user;
             }
