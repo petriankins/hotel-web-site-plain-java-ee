@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * An HTTP servlet that is suitable for login processing. If the user's login and password
+ * An HTTP servlet that is suitable for login processing. If user's login and password
  * are stored in data base he will be redirected to home page where they are able to book a room.
  *
  * @author Denis Iaichnikov, Andrey Kirshin
