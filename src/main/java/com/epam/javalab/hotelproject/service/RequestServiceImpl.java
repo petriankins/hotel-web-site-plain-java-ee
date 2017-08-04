@@ -32,7 +32,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<Request> findByUser(User user) {
-        return null;
+        return req
     }
 
     private boolean createRequest(Request request) {

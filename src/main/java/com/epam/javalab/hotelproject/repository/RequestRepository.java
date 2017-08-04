@@ -1,9 +1,12 @@
 package com.epam.javalab.hotelproject.repository;
 
 import com.epam.javalab.hotelproject.model.Request;
+import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
 import com.epam.javalab.hotelproject.utils.Validator;
+
+import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -21,15 +24,40 @@ public class RequestRepository implements RequestDAO {
             while (resultSet.next()) {
                 requests.add(
                         new Request(resultSet.getInt("id"), resultSet.getInt("number"), resultSet.getInt("id_user"),
-                                    resultSet.getInt("beds"), resultSet.getInt("id_class"),
-                                    resultSet.getDate("date_from"),
-                                    resultSet.getDate("date_to"), resultSet.getString("comments")));
+                                resultSet.getInt("beds"), resultSet.getInt("id_class"),
+                                resultSet.getDate("date_from"),
+                                resultSet.getDate("date_to"), resultSet.getString("comments")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
 
         }
 
+        return requests;
+    }
+
+    @Override
+    public List<Request> findByUser(User user) {
+        List<Request> requests = new ArrayList<>();
+        ResultSet resultSet = null;
+        if (validateUserBean(user)) {
+            try (Connection connection = databaseService.takeConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(
+                         "SELECT * FROM sql11188080.requests WHERE id_user = ?")) {
+                preparedStatement.setInt(1, user.getId());
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    requests.add(
+                            new Request(resultSet.getInt("id"), resultSet.getInt("number"), resultSet.getInt("id_user"),
+                                    resultSet.getInt("beds"), resultSet.getInt("id_class"),
+                                    resultSet.getDate("date_from"),
+                                    resultSet.getDate("date_to"), resultSet.getString("comments"))
+                    );
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return requests;
     }
 
@@ -46,13 +74,13 @@ public class RequestRepository implements RequestDAO {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
                 return new Request(resultSet.getInt("id"),
-                                    resultSet.getInt("number"),
-                                    resultSet.getInt("id_user"),
-                                    resultSet.getInt("beds"),
-                                    resultSet.getInt("id_class"),
-                                   new java.util.Date(resultSet.getDate("date_from").getTime()),
-                                   new java.util.Date(resultSet.getDate("date_to").getTime()),
-                                   resultSet.getString("comments"));
+                        resultSet.getInt("number"),
+                        resultSet.getInt("id_user"),
+                        resultSet.getInt("beds"),
+                        resultSet.getInt("id_class"),
+                        new java.util.Date(resultSet.getDate("date_from").getTime()),
+                        new java.util.Date(resultSet.getDate("date_to").getTime()),
+                        resultSet.getString("comments"));
             }
 
         } catch (SQLException e) {
