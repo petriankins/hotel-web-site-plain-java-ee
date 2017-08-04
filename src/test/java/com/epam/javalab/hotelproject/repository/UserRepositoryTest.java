@@ -27,7 +27,6 @@ public class UserRepositoryTest {
         addUserToMap(users, new User("Vasya", "Pupkin", "vasya@cool.ru", "MyPassword"));
         addUserToMap(users, new User("Nikitia", "Popkin", "nikitos@cool.ru", "nikitaKRUT"));
         addUserToMap(users, new User("Vika", "Ivanova", "nikavika@cool.ru", "VikaBarbie"));
-
         users.forEach((k, v) -> userDAO.insertUser(v));
     }
 
