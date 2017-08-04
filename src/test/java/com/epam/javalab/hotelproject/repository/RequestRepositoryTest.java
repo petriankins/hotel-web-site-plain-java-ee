@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -46,26 +47,26 @@ public class RequestRepositoryTest {
     }
 
     private boolean compareRequests(Request request1, Request request2) {
-        if (!(request1.getNumber() != request2.getNumber())) {
+        if ((request1.getNumber() != request2.getNumber())) {
             printDifferences("Number", Integer.valueOf(request1.getNumber()).toString(),
                              Integer.valueOf(request2.getNumber()).toString());
             return false;
         }
-        if (!(request1.getBeds() != request2.getBeds())) {
+        if ((request1.getBeds() != request2.getBeds())) {
             printDifferences("Amount of beds", Integer.valueOf(request1.getBeds()).toString(),
                              Integer.valueOf(request2.getBeds()).toString());
             return false;
         }
-        if (!(request1.getClassID() != request2.getClassID())) {
+        if ((request1.getClassID() != request2.getClassID())) {
             printDifferences("Class id", Integer.valueOf(request1.getClassID()).toString(),
                              Integer.valueOf(request2.getClassID()).toString());
             return false;
         }
-        if (!(request1.getDateFrom() != request2.getDateFrom())) {
+        if (!compareDates(request1.getDateFrom(), request2.getDateFrom())) {
             printDifferences("Date from", request1.getDateFrom().toString(), request2.getDateFrom().toString());
             return false;
         }
-        if (!(request1.getDateTo() != request2.getDateTo())) {
+        if (!compareDates(request1.getDateTo(), request2.getDateTo())) {
             printDifferences("Date to", request1.getDateTo().toString(), request2.getDateTo().toString());
             return false;
         }
@@ -81,6 +82,11 @@ public class RequestRepositoryTest {
         System.out.println(field + " does not match");
         System.out.println("Expected: " + expected);
         System.out.println("Actual: " + actual);
+    }
+
+    private boolean compareDates(Date date1, Date date2) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(date1).toString().equals(simpleDateFormat.format(date2).toString());
     }
 
     @Test
@@ -108,6 +114,7 @@ public class RequestRepositoryTest {
         Request storedRequest = requestDAO.findByNumber(newRequest.getNumber());
         assertThat(compareRequests(newRequest, storedRequest), is(true));
         assertThat(storedRequest.getId(), not(0));
+        requestDAO.deleteRequest(newRequest);
     }
 
     private Request makeFakeRequest() {
