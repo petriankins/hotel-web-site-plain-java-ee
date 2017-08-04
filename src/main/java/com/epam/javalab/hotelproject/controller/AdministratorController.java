@@ -20,7 +20,6 @@ public class AdministratorController extends HttpServlet {
         if(session.getAttribute("login") != null){
             req.getRequestDispatcher("/jsp/administrator.jsp").forward(req, resp);
         } else {
-
             resp.sendRedirect("/login");
         }
        // req.getRequestDispatcher("/jsp/administrator.jsp").forward(req, resp);

@@ -35,7 +35,5 @@ public class ReservationController extends HttpServlet {
         String checkIn = req.getParameter("checkIn");
         String checkOut = req.getParameter("checkOut");
 
-        System.out.println(beds + stars + checkIn + checkOut);
-
     }
 }
