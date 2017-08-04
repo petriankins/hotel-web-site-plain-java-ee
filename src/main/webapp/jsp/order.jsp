@@ -14,6 +14,7 @@
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
+<%--
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -37,7 +38,7 @@
             </form>
         </div><!--/.navbar-collapse -->
     </div>
-</nav>
+</nav>--%>
 <div class="container">
     <c:if test="${not empty message}">
         <div class="alert alert-success">
