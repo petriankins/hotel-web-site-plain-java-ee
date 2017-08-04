@@ -13,9 +13,9 @@ public interface RoomDAO {
 
     Room findByClass(int roomClass);
 
-    boolean insertRoom();
+    boolean insertRoom(Room room);
 
-    boolean updateRoom();
+    boolean updateRoom(Room room);
 
-    boolean deleteRoom();
+    boolean deleteRoom(Room room);
 }

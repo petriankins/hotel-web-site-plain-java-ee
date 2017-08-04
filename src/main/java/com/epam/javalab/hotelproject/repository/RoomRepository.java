@@ -122,18 +122,17 @@ public class RoomRepository implements RoomDAO {
     }
 
     @Override
-    public boolean insertRoom() {
-//        if (Validator.validateRoomBean())
+    public boolean insertRoom(Room room) {
         return false;
     }
 
     @Override
-    public boolean updateRoom() {
+    public boolean updateRoom(Room room) {
         return false;
     }
 
     @Override
-    public boolean deleteRoom() {
+    public boolean deleteRoom(Room room) {
         return false;
     }
 }

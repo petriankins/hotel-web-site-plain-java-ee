@@ -6,10 +6,15 @@ public class Room {
     private int number;
     private int beds;
     private int roomClass;
-    boolean isFree;
 
     public Room(int id, int number, int beds, int roomClass) {
         this.id = id;
+        this.number = number;
+        this.beds = beds;
+        this.roomClass = roomClass;
+    }
+
+    public Room(int number, int beds, int roomClass) {
         this.number = number;
         this.beds = beds;
         this.roomClass = roomClass;
