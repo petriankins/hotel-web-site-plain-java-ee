@@ -94,6 +94,7 @@ public class UserRepositoryTest {
         User storedUser = userDAO.findByLogin(newUser.getLogin());
         assertThat(compareUsers(newUser, storedUser), is(true));
         assertThat(storedUser.getId(), not(0));
+        userDAO.deleteUser(newUser);
     }
 
     private User makeTestUser() {
