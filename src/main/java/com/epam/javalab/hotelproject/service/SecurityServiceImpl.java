@@ -43,8 +43,24 @@ public class SecurityServiceImpl implements SecurityService {
         if (registeredUser.getLogin().isEmpty()) {
             return false;
         }
-        return hash(user.getPassword()).equals(registeredUser.getPassword());
 
+        return comparePasswords(hash(user.getPassword()), registeredUser.getPassword());
+    }
 
+    /**
+     * Compares to given password
+     *
+     * @param inputPassword password from user input on web page
+     * @param storedPassword password retrieved from database
+     * @return <code>true</code> if passwords match, otherwise returns <code>false</code>
+     */
+    private boolean comparePasswords(String inputPassword, String storedPassword) {
+        int i = 0;
+        byte[] inputPasswordBytes = inputPassword.getBytes();
+        for (byte b : storedPassword.getBytes()) {
+            if (b != inputPasswordBytes[i++]) return false;
+        }
+
+        return true;
     }
 }
