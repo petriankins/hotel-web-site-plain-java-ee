@@ -13,5 +13,4 @@ public interface RequestService {
     List<Request> findByUser(User user);
 
     Request findByNumber(int number);
-
 }

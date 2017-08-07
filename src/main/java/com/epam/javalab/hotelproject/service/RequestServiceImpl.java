@@ -9,9 +9,15 @@ import static com.epam.javalab.hotelproject.utils.Validator.validateRequestBean;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RequestServiceImpl implements RequestService {
     RequestDAO requestDAO = new RequestRepository();
+    private static volatile int requestNumber;
+
+    static {
+        requestNumber = generateRequestNumber();
+    }
 
     @Override
     public List<Request> findAll() {
@@ -23,6 +29,7 @@ public class RequestServiceImpl implements RequestService {
         if (!validateRequestBean(request)) {
             return false;
         }
+        request.setNumber(requestNumber);
         return createRequest(request);
     }
 
@@ -40,5 +47,16 @@ public class RequestServiceImpl implements RequestService {
 
         return requestDAO.insertRequest(request);
     }
+
+    private static int generateRequestNumber() {
+        AtomicInteger atomicInteger;
+        atomicInteger = new AtomicInteger(RequestRepository.returnMaxRequestNumber());
+        return incrementRequestNumber(atomicInteger);
+    }
+
+    private static int incrementRequestNumber(AtomicInteger number) {
+        return number.incrementAndGet();
+    }
+
 }
 
