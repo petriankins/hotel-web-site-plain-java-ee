@@ -15,7 +15,7 @@ public interface RoomDAO {
 
     Room findByClass(int roomClass);
 
-    List<Room> findFreeRooms(Request request);
+    List<Room> findAvailableRooms(Request request);
 
     boolean insertRoom(Room room);
 

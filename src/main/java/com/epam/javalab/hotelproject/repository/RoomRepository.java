@@ -169,7 +169,7 @@ public class RoomRepository implements RoomDAO {
     }
 
     @Override
-    public List<Room> findFreeRooms(Request request) {
+    public List<Room> findAvailableRooms(Request request) {
         ResultSet resultSet = null;
         List<Room> roomList = new ArrayList<>();
         try (Connection connection = databaseService.takeConnection();
