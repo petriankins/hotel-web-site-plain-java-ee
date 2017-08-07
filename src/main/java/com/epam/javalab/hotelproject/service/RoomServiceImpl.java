@@ -24,13 +24,13 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getFreeRooms(Request request) {
-        return roomDAO.findFreeRooms(request);
+    public List<Room> getAvailableRooms(Request request) {
+        return roomDAO.findAvailableRooms(request);
     }
 
     @Override
     public List<Room> findTheMostRelevant(Request request) {
-        List<Room> roomList = roomDAO.findFreeRooms(request);
+        List<Room> roomList = roomDAO.findAvailableRooms(request);
         Collections.sort(roomList, roomComparator);
         return roomList;
     }
@@ -39,10 +39,19 @@ public class RoomServiceImpl implements RoomService {
 class RoomComparator implements Comparator<Room> {
     @Override
     public int compare(Room o1, Room o2) {
-        int result = o1.getBeds() - o2.getBeds();
-        if (result == 0) {
-            return o1.getRoomClass() - o2.getRoomClass();
+        int result;
+        int bedsSubstraction = o1.getBeds() - o2.getBeds();
+        int roomClassSubstraction = o1.getRoomClass() - o2.getRoomClass();
+        if (bedsSubstraction == 0 && roomClassSubstraction == 0) {
+            return 0;
+        } else if (bedsSubstraction == 0 && roomClassSubstraction > 0) {
+            result = roomClassSubstraction;
+            return result;
+        } else if (bedsSubstraction > 0 && roomClassSubstraction == 0) {
+            result = bedsSubstraction;
+            return result;
         }
+        result = bedsSubstraction;
         return result;
     }
 }
