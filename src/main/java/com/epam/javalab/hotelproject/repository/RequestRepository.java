@@ -11,6 +11,7 @@ import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RequestRepository implements RequestDAO {
     DatabaseService databaseService = DatabaseServiceImpl.getInstance();
@@ -162,12 +163,14 @@ public class RequestRepository implements RequestDAO {
 
     @Override
     public int returnNextRequestId(Request request) {
+        AtomicInteger atomicInteger;
         ResultSet resultSet = null;
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(number) FROM sql11188080.requests ")) {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
-                return resultSet.getInt("number") + 1;
+                atomicInteger = new AtomicInteger(resultSet.getInt("number"));
+                return atomicInteger.incrementAndGet();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -180,6 +183,7 @@ public class RequestRepository implements RequestDAO {
                 e.printStackTrace();
             }
         }
-        return 1;
+        atomicInteger = new AtomicInteger(1);
+        return atomicInteger.get();
     }
 }
