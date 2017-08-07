@@ -41,7 +41,8 @@
                         <td>${request.dateTo}</td>
                         <td>${request.comments}</td>
                         <%--<td><button type="submit" class="btn btn-primary  btn-md">Appoint room</button></td>--%>
-                        <td><a href="/appointRoom?requestId=${request.id}">Appoint room</a></td>
+                        <%--<td><a href="/appointRoom?requestId=${request.id}">Appoint room</a></td>--%>
+                        <td><a href="/appointRoom?requestNumber=${request.number}">Appoint room</a></td>
                     </form>
 
                 </tr>
