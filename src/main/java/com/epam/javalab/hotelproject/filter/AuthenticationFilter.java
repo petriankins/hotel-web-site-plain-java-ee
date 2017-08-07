@@ -1,5 +1,7 @@
 package com.epam.javalab.hotelproject.filter;
 
+import com.epam.javalab.hotelproject.model.User;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,7 @@ public class AuthenticationFilter implements Filter {
 
         String requestURI = request.getRequestURI();
         System.out.println("URI : " + requestURI);
+        session.setAttribute("user", new User(1,"Test User","test","test","test last name"));
         if (requestURI.equals("/") || requestURI.equals("/registration") || requestURI.equals("/login") ||
             requestURI.contains("/css") || requestURI.contains("/js") || requestURI.contains("/fonts") || requestURI.contains("/locale")) {
             System.out.println("Chaining first");
