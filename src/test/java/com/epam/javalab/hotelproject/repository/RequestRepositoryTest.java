@@ -139,4 +139,11 @@ public class RequestRepositoryTest {
         assertThat(requestDAO.deleteRequest(newRequest), is(true));
         assertThat(compareRequests(requestDAO.findByNumber(newRequest.getNumber()), new Request()), is(true));
     }
+
+    @Test
+    public void returnNextRequestId() throws Exception {
+        Thread thread1 = new Thread();
+        Thread thread2 = new Thread();
+
+    }
 }
