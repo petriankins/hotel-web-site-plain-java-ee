@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RequestRepository implements RequestDAO {
-    DatabaseService databaseService = DatabaseServiceImpl.getInstance();
+    private static DatabaseService databaseService = DatabaseServiceImpl.getInstance();
 
     @Override
     public List<Request> findAll() {
@@ -161,16 +161,13 @@ public class RequestRepository implements RequestDAO {
         return new Request();
     }
 
-    @Override
-    public int returnNextRequestId() {
-        AtomicInteger atomicInteger;
+    public static int returnMaxRequestNumber() {
         ResultSet resultSet = null;
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(number) FROM sql11188080.requests ")) {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
-                atomicInteger = new AtomicInteger(resultSet.getInt("number"));
-                return atomicInteger.incrementAndGet();
+                return resultSet.getInt("MAX(number)");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -183,7 +180,6 @@ public class RequestRepository implements RequestDAO {
                 e.printStackTrace();
             }
         }
-        atomicInteger = new AtomicInteger(1);
-        return atomicInteger.get();
+        return 0;
     }
 }
