@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -46,6 +47,12 @@ public class AdministratorController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        Enumeration<String> en = req.getParameterNames();
+
+        while (en.hasMoreElements()){
+            System.out.println(en.nextElement());
+        }
+        resp.sendRedirect("/appointRoom");
+
     }
 }
