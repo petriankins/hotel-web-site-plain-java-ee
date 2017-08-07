@@ -183,6 +183,7 @@ public class RequestRepository implements RequestDAO {
                 e.printStackTrace();
             }
         }
-        return 1;
+        atomicInteger = new AtomicInteger(1);
+        return atomicInteger.get();
     }
 }
