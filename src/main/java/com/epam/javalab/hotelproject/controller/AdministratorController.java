@@ -26,15 +26,16 @@ import java.util.List;
 )
 public class AdministratorController extends HttpServlet {
     private RequestService requestService = new RequestServiceImpl();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
 
         if (session.getAttribute("user") != null) {
-            //List<Request> allRequests = requestService.findAll();
-            List<Request> allRequests = new ArrayList<>();
-            allRequests.add(new Request());
+            List<Request> allRequests;
+            allRequests = requestService.findAll();
+
             System.out.println(allRequests);
             req.setAttribute("allRequests", allRequests);
             req.getRequestDispatcher("/jsp/administrator.jsp").forward(req, resp);
