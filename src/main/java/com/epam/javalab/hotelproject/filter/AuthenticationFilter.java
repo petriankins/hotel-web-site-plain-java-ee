@@ -24,7 +24,7 @@ public class AuthenticationFilter implements Filter {
         String requestURI = request.getRequestURI();
         System.out.println("URI : " + requestURI);
         if (requestURI.equals("/") || requestURI.equals("/registration") || requestURI.equals("/login") ||
-            requestURI.contains("/css") || requestURI.contains("/js") || requestURI.contains("/fonts")) {
+            requestURI.contains("/css") || requestURI.contains("/js") || requestURI.contains("/fonts") || requestURI.contains("/locale")) {
             System.out.println("Chaining first");
             filterChain.doFilter(servletRequest, servletResponse);
         } else if (session.getAttribute("user") == null) {
