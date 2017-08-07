@@ -4,6 +4,8 @@ import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.RequestService;
 import com.epam.javalab.hotelproject.service.RequestServiceImpl;
+import com.epam.javalab.hotelproject.service.UserService;
+import com.epam.javalab.hotelproject.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +42,7 @@ public class ReservationController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
+        System.out.println("User id: " + user.getId());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         int beds = 0;
         int stars = 0;

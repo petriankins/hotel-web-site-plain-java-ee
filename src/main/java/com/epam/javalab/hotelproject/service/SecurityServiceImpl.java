@@ -44,13 +44,20 @@ public class SecurityServiceImpl implements SecurityService {
             return false;
         }
 
-        return comparePasswords(hash(user.getPassword()), registeredUser.getPassword());
+        if (comparePasswords(hash(user.getPassword()), registeredUser.getPassword())) {
+            user.setId(registeredUser.getId());
+            user.setName(registeredUser.getName());
+            user.setLastName(registeredUser.getLastName());
+
+            return true;
+        }
+        return false;
     }
 
     /**
      * Compares to given password
      *
-     * @param inputPassword password from user input on web page
+     * @param inputPassword  password from user input on web page
      * @param storedPassword password retrieved from database
      * @return <code>true</code> if passwords match, otherwise returns <code>false</code>
      */
