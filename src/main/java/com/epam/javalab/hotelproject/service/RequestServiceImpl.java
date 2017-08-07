@@ -39,10 +39,5 @@ public class RequestServiceImpl implements RequestService {
     private boolean createRequest(Request request) {
         return requestDAO.insertRequest(request);
     }
-
-    @Override
-    public int returnNextRequestId() {
-        return 0;
-    }
 }
 
