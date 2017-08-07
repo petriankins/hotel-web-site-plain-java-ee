@@ -7,6 +7,7 @@ import com.epam.javalab.hotelproject.utils.Validator;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class RoomRepository implements RoomDAO {
@@ -141,11 +142,10 @@ public class RoomRepository implements RoomDAO {
     public boolean updateRoom(Room room) {
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "UPDATE sql11188080.rooms SET (id = ?, beds = ?, id_class = ?) WHERE number = ?")) {
-            preparedStatement.setInt(1, room.getId());
-            preparedStatement.setInt(2, room.getBeds());
-            preparedStatement.setInt(3, room.getRoomClass());
-            preparedStatement.setInt(4, room.getNumber());
+                     "UPDATE `sql11188080`.`rooms` SET  `beds` = ?, `id_class` = ? WHERE number = ?")) {
+            preparedStatement.setInt(1, room.getBeds());
+            preparedStatement.setInt(2, room.getRoomClass());
+            preparedStatement.setInt(3, room.getNumber());
             return preparedStatement.executeUpdate() == 1 ? true : false;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -159,7 +159,7 @@ public class RoomRepository implements RoomDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "DELETE FROM sql11188080.rooms WHERE number = ?")) {
             preparedStatement.setInt(1, room.getNumber());
-            return preparedStatement.executeLargeUpdate() == 1 ? true : false;
+            return preparedStatement.executeUpdate() == 1 ? true : false;
         } catch (SQLException e) {
             e.printStackTrace();
         }
