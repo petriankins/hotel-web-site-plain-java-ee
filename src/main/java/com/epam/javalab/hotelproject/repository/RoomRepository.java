@@ -1,5 +1,6 @@
 package com.epam.javalab.hotelproject.repository;
 
+import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
@@ -8,6 +9,7 @@ import com.epam.javalab.hotelproject.utils.Validator;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class RoomRepository implements RoomDAO {
@@ -15,7 +17,7 @@ public class RoomRepository implements RoomDAO {
     private Room emptyRoom = new Room();
 
     @Override
-    public List<Room> finAll() {
+    public List<Room> findAll() {
         List<Room> roomList = new ArrayList<>();
         try (Connection connection = databaseService.takeConnection();
              Statement statement = connection.createStatement();
@@ -164,6 +166,34 @@ public class RoomRepository implements RoomDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<Room> findFreeRooms(Request request) {
+        ResultSet resultSet = null;
+        ArrayList<Room> roomList = new ArrayList<>();
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT * FROM sql11188080.roomstatus WHERE date_to < ?")) {
+            preparedStatement.setDate(1, new java.sql.Date((request.getDateTo().getTime())));
+            preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                roomList.add(new Room(resultSet.getInt("number"),
+                        resultSet.getInt("beds"),
+                        resultSet.getInt("id_class")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null || !resultSet.isClosed()) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return roomList;
     }
 }
 

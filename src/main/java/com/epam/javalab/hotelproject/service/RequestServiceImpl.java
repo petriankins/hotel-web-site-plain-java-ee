@@ -7,6 +7,7 @@ import com.epam.javalab.hotelproject.repository.RequestRepository;
 
 import static com.epam.javalab.hotelproject.utils.Validator.validateRequestBean;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -34,6 +35,11 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    public boolean deleteRequest(Request request) {
+        return requestDAO.deleteRequest(request);
+    }
+
+    @Override
     public Request findByNumber(int number) {
         return requestDAO.findByNumber(number);
     }
@@ -57,6 +63,5 @@ public class RequestServiceImpl implements RequestService {
     private static int incrementRequestNumber(AtomicInteger number) {
         return number.incrementAndGet();
     }
-
 }
 
