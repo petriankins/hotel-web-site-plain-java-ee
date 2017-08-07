@@ -16,6 +16,48 @@
 </head>
 <body>
 Appoint!
-<c:out value="${id}"/>
+<div class="container">
+
+    <h1>Order</h1>
+    <table class="table table-striped">
+        <th>
+            <tr>
+                <td>#</td>
+                <td>Beds</td>
+                <td>Stars</td>
+                <td>Check-in date</td>
+                <td>Check-out date</td>
+                <td>Comment</td>
+            </tr>
+        <th>
+            <tr>
+                <td>${request.number}</td>
+                <td>${request.beds}</td>
+                <td>${request.classID}</td>
+                <td>${request.dateFrom}</td>
+                <td>${request.dateTo}</td>
+                <td>${request.comments}</td>
+            </tr>
+        </th>
+    </table>
+    <h1>Available rooms</h1>
+
+    <form style="width:200px" action="/appointRoom" method="post">
+        <table class="table table-striped">
+            <c:forEach var="room" items="${availableRooms}">
+                <tr>
+                    <td>${room.number}</td>
+                    <td>${room.beds}</td>
+                    <td>${room.roomClass}</td>
+
+                    <td><input type="radio" name="choose"/></td>
+
+                </tr>
+            </c:forEach>
+        </table>
+       <button type="submit" class="btn btn-primary btn-md">Bill</button>
+   </form>
+
+</div>
 </body>
 </html>
