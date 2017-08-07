@@ -3,6 +3,7 @@ package com.epam.javalab.hotelproject.repository;
 import com.epam.javalab.hotelproject.model.Room;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
+import com.epam.javalab.hotelproject.utils.Validator;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -56,32 +57,112 @@ public class RoomRepository implements RoomDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return emptyRoom;
         }
+        return emptyRoom;
     }
 
     @Override
     public Room findByBeds(int beds) {
-        return null;
+        if (beds == 0) {
+            return emptyRoom;
+        }
+        ResultSet resultSet = null;
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM sql11188080.rooms WHERE beds = ?")) {
+            preparedStatement.setInt(1, beds);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new Room(resultSet.getInt("id"),
+                        resultSet.getInt("number"),
+                        resultSet.getInt("beds"),
+                        resultSet.getInt("id_class"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null && !resultSet.isClosed()) {
+
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return emptyRoom;
     }
 
     @Override
     public Room findByClass(int roomClass) {
-        return null;
+        if (roomClass == 0) {
+            return emptyRoom;
+        }
+        ResultSet resultSet = null;
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM sql11188080.rooms WHERE id_class = ?")) {
+            preparedStatement.setInt(1, roomClass);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new Room(resultSet.getInt("id"),
+                        resultSet.getInt("number"),
+                        resultSet.getInt("beds"),
+                        resultSet.getInt("id_class"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null && !resultSet.isClosed()) {
+
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return emptyRoom;
     }
 
     @Override
-    public boolean insertRoom() {
+    public boolean insertRoom(Room room) {
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "INSERT INTO sql11188080.rooms (id, number, beds, id_class) VALUES (?, ?, ?, ?) ")) {
+            preparedStatement.setInt(1, room.getId());
+            preparedStatement.setInt(2, room.getNumber());
+            preparedStatement.setInt(3, room.getBeds());
+            preparedStatement.setInt(4, room.getRoomClass());
+            return preparedStatement.executeUpdate() == 1 ? true : false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
-    public boolean updateRoom() {
+    public boolean updateRoom(Room room) {
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "UPDATE sql11188080.rooms SET (id = ?, beds = ?, id_class = ?) WHERE number = ?")) {
+            preparedStatement.setInt(1, room.getId());
+            preparedStatement.setInt(2, room.getBeds());
+            preparedStatement.setInt(3, room.getRoomClass());
+            preparedStatement.setInt(4, room.getNumber());
+            return preparedStatement.executeUpdate() == 1 ? true : false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
-    public boolean deleteRoom() {
+    public boolean deleteRoom(Room room) {
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "DELETE FROM sql11188080.rooms WHERE number = ?")) {
+            preparedStatement.setInt(1, room.getNumber());
+            return preparedStatement.executeLargeUpdate() == 1 ? true : false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }

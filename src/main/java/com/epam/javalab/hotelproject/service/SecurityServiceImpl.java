@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 /**
- * Provides API fo hashing password and suthorization
+ * Provides API fo hashing password and authorization
  *
  * @author Maksim Starshinov, Sergei Petriankin
  * @version 1.0
