@@ -12,7 +12,7 @@ public interface RequestDAO {
 
     List<Request> findByUser(User user);
 
-    int returnNextRequestId(Request request);
+    int returnNextRequestId();
 
     boolean insertRequest(Request request);
 

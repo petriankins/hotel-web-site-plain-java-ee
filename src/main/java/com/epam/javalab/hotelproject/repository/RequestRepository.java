@@ -162,7 +162,7 @@ public class RequestRepository implements RequestDAO {
     }
 
     @Override
-    public int returnNextRequestId(Request request) {
+    public int returnNextRequestId() {
         AtomicInteger atomicInteger;
         ResultSet resultSet = null;
         try (Connection connection = databaseService.takeConnection();
@@ -179,7 +179,7 @@ public class RequestRepository implements RequestDAO {
                 if (resultSet != null || !resultSet.isClosed()) {
                     resultSet.close();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | NullPointerException e) {
                 e.printStackTrace();
             }
         }
