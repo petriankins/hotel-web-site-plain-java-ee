@@ -182,6 +182,8 @@ public class RoomRepository implements RoomDAO {
                         resultSet.getInt("number"),
                         resultSet.getInt("beds"),
                         resultSet.getInt("id_class")));
+            } else {
+                roomList = findAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
