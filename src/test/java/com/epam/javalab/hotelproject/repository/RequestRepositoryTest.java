@@ -8,10 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -32,6 +29,9 @@ public class RequestRepositoryTest {
                                                  new Date(System.currentTimeMillis()),
                                                  "Must have at lead 10 windows!"));
         addRequestToMap(requestsMap, new Request(1, 753, 2, 1, new Date(System.currentTimeMillis()),
+                                                 new Date(System.currentTimeMillis()),
+                                                 "i want huge minibar"));
+        addRequestToMap(requestsMap, new Request(99, 753, 2, 1, new Date(System.currentTimeMillis()),
                                                  new Date(System.currentTimeMillis()),
                                                  "i want huge minibar"));
 
@@ -142,23 +142,8 @@ public class RequestRepositoryTest {
     }
 
     @Test
-    public void returnNextRequestId() throws Exception {
-        final CountDownLatch latch = new CountDownLatch(1);
-        for (int i=0; i<50; ++i) {
-            Runnable runner = new Runnable() {
-                public void run() {
-                    try {
-                        latch.await();
-                        requestDAO.returnNextRequestId()
-                    } catch (InterruptedException ie) { }
-                }
-            }
-            new Thread(runner, "TestThread"+i).start();
-        }
-        // all threads are waiting on the latch.
-        latch.countDown(); // release the latch
-        // all threads are now running concurrently.
-
-
+    public void returnMaxRequestNumber() throws Exception {
+        SortedMap<Integer, Request> sortedMap = new TreeMap<>(requestsMap);
+        assertThat(RequestRepository.returnMaxRequestNumber(), is(sortedMap.lastKey()));
     }
 }
