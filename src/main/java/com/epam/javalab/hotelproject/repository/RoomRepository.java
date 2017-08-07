@@ -176,7 +176,7 @@ public class RoomRepository implements RoomDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "SELECT * FROM sql11188080.roomstatus WHERE date_to < ?")) {
             preparedStatement.setDate(1, new java.sql.Date((request.getDateTo().getTime())));
-            preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 roomList.add(new Room(resultSet.getInt("id"),
                         resultSet.getInt("number"),
