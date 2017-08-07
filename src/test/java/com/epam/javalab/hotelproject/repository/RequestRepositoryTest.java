@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -142,8 +143,22 @@ public class RequestRepositoryTest {
 
     @Test
     public void returnNextRequestId() throws Exception {
-        Thread thread1 = new Thread();
-        Thread thread2 = new Thread();
+        final CountDownLatch latch = new CountDownLatch(1);
+        for (int i=0; i<50; ++i) {
+            Runnable runner = new Runnable() {
+                public void run() {
+                    try {
+                        latch.await();
+                        requestDAO.returnNextRequestId()
+                    } catch (InterruptedException ie) { }
+                }
+            }
+            new Thread(runner, "TestThread"+i).start();
+        }
+        // all threads are waiting on the latch.
+        latch.countDown(); // release the latch
+        // all threads are now running concurrently.
+
 
     }
 }
