@@ -23,10 +23,10 @@ import java.util.Random;
         name = "ReservationServlet",
         urlPatterns = {"/order"}
 )
-public class ReservationController extends HttpServlet {
+public class OrderController extends HttpServlet {
     RequestService requestService = new RequestServiceImpl();
 
-    @Override
+    /*@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
 
@@ -36,7 +36,7 @@ public class ReservationController extends HttpServlet {
 
             resp.sendRedirect("/login");
         }
-    }
+    }*/
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,7 +61,7 @@ public class ReservationController extends HttpServlet {
             e.printStackTrace();
         }
 
-        Request request = new Request((new Random().nextInt()), user.getId(), beds, stars, dateFrom, dateTo, "");
+        Request request = new Request(user.getId(), beds, stars, dateFrom, dateTo, "");
 
         String message = null;
 
