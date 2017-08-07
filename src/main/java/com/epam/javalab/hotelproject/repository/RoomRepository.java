@@ -7,9 +7,11 @@ import com.epam.javalab.hotelproject.utils.Validator;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class RoomRepository implements RoomDAO {
+    private static final RoomComparator roomComparator = new RoomComparator();
     DatabaseService databaseService = DatabaseServiceImpl.getInstance();
     private Room emptyRoom = new Room();
 
@@ -123,7 +125,7 @@ public class RoomRepository implements RoomDAO {
 
     @Override
     public Room findTHeMostRelevant() {
-        return null;
+
     }
 
     @Override
@@ -172,3 +174,13 @@ public class RoomRepository implements RoomDAO {
     }
 }
 
+class RoomComparator implements Comparator<Room> {
+    @Override
+    public int compare(Room o1, Room o2) {
+        int result = o1.getBeds() - o2.getBeds();
+        if (result == 0) {
+            return o1.getRoomClass() - o2.getRoomClass();
+        }
+        return result;
+    }
+}
