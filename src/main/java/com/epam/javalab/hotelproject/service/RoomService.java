@@ -10,7 +10,7 @@ public interface RoomService {
 
     Room findByNumber(int number);
 
-    List<Room> getFreeRooms(Request request);
+    List<Room> getAvailableRooms(Request request);
 
     List<Room> findTheMostRelevant(Request request);
 }

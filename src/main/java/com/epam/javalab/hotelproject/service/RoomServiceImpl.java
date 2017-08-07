@@ -24,7 +24,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getFreeRooms(Request request) {
+    public List<Room> getAvailableRooms(Request request) {
         return roomDAO.findAvailableRooms(request);
     }
 
