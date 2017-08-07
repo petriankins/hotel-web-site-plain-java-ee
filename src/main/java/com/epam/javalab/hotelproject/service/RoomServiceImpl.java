@@ -16,7 +16,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room findByNumber(int number) {
-        return roomDAO.findByNumber();
+        return roomDAO.findByNumber(number);
     }
 
     @Override
