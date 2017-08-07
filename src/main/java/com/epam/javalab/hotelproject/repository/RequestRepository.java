@@ -159,4 +159,27 @@ public class RequestRepository implements RequestDAO {
     private Request emptyRequest() {
         return new Request();
     }
+
+    @Override
+    public int returnNextRequestId(Request request) {
+        ResultSet resultSet = null;
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(number) FROM sql11188080.requests ")) {
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.first()) {
+                return resultSet.getInt("number") + 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null || !resultSet.isClosed()) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 1;
+    }
 }

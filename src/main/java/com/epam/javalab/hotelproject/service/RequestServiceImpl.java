@@ -7,6 +7,7 @@ import com.epam.javalab.hotelproject.repository.RequestRepository;
 
 import static com.epam.javalab.hotelproject.utils.Validator.validateRequestBean;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class RequestServiceImpl implements RequestService {
@@ -19,10 +20,10 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public boolean saveRequest(Request request) {
-       if (!validateRequestBean(request)) {
-           return false;
-       }
-        return true;
+        if (!validateRequestBean(request)) {
+            return false;
+        }
+        return createRequest(request);
     }
 
     @Override
@@ -39,3 +40,4 @@ public class RequestServiceImpl implements RequestService {
         return requestDAO.insertRequest(request);
     }
 }
+

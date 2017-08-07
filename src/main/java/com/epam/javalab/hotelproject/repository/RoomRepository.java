@@ -82,8 +82,8 @@ public class RoomRepository implements RoomDAO {
             e.printStackTrace();
         } finally {
             try {
-                if (resultSet != null && !resultSet.isClosed()) {
-
+                if (resultSet != null || !resultSet.isClosed()) {
+                    resultSet.close();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -112,8 +112,8 @@ public class RoomRepository implements RoomDAO {
             e.printStackTrace();
         } finally {
             try {
-                if (resultSet != null && !resultSet.isClosed()) {
-
+                if (resultSet != null || !resultSet.isClosed()) {
+                    resultSet.close();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
