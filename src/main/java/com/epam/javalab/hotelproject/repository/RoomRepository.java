@@ -171,14 +171,15 @@ public class RoomRepository implements RoomDAO {
     @Override
     public List<Room> findFreeRooms(Request request) {
         ResultSet resultSet = null;
-        ArrayList<Room> roomList = new ArrayList<>();
+        List<Room> roomList = new ArrayList<>();
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "SELECT * FROM sql11188080.roomstatus WHERE date_to < ?")) {
             preparedStatement.setDate(1, new java.sql.Date((request.getDateTo().getTime())));
             preparedStatement.executeQuery();
             if (resultSet.next()) {
-                roomList.add(new Room(resultSet.getInt("number"),
+                roomList.add(new Room(resultSet.getInt("id"),
+                        resultSet.getInt("number"),
                         resultSet.getInt("beds"),
                         resultSet.getInt("id_class")));
             }
