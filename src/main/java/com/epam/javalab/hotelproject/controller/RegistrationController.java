@@ -35,7 +35,7 @@ public class RegistrationController extends HttpServlet {
         User user = new User(firstName, lastName, login, password);
         String message = null;
         if (userService.registerUser(user)) {
-            userService.authorize(user);
+            userService.authenticate(user);
             message = "You have been successfully registered!";
             req.setAttribute("message", message);
 

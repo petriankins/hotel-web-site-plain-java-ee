@@ -5,5 +5,5 @@ import com.epam.javalab.hotelproject.model.User;
 public interface SecurityService {
     String hash(String password);
 
-    boolean authorize(User user);
+    boolean authenticate(User user);
 }

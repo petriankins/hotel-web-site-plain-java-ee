@@ -38,7 +38,7 @@ public class SecurityServiceImpl implements SecurityService {
      * @param user
      * @return <code>true</code> if such user is is already registered
      */
-    public boolean authorize(User user) {
+    public boolean authenticate(User user) {
         User registeredUser = userDAO.findByLogin(user.getLogin());
         if (registeredUser.getLogin().isEmpty()) {
             return false;

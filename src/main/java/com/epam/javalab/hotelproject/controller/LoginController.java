@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
         User user = new User(login, pass);
         String message = null;
 
-        if (userService.authorize(user)) {
+        if (userService.authenticate(user)) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
             resp.sendRedirect("/");

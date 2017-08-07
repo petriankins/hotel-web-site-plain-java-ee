@@ -39,12 +39,12 @@ public class UserServiceImpl implements UserService {
      * @param user bean from user input
      * @return <code>true</code> if authorization was successful, otherwise, if login and password didn't match <code>false</code>
      */
-    public boolean authorize(User user) {
+    public boolean authenticate(User user) {
         if (!validateUserBean(user)) {
             return false;
         }
 
-        return securityService.authorize(user);
+        return securityService.authenticate(user);
     }
 
     private boolean saveUser(User user) {
