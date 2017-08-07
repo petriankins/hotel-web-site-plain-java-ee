@@ -14,11 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class RequestServiceImpl implements RequestService {
     RequestDAO requestDAO = new RequestRepository();
-    private static volatile int requestNumber;
-
-    static {
-        requestNumber = generateRequestNumber();
-    }
 
     @Override
     public List<Request> findAll() {
@@ -27,10 +22,10 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public boolean saveRequest(Request request) {
+        request.setNumber(generateRequestNumber());
         if (!validateRequestBean(request)) {
             return false;
         }
-        request.setNumber(requestNumber);
         return createRequest(request);
     }
 

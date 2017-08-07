@@ -17,5 +17,7 @@ public class RequestServiceImplTest {
         Request secondRequest = new Request(753, 2, 2, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), "");
         assertThat(requestService.saveRequest(secondRequest), is(true));
         assertThat(secondRequest.getNumber() - firstRequest.getNumber(), is(1));
+        requestService.deleteRequest(firstRequest);
+        requestService.deleteRequest(secondRequest);
     }
 }
