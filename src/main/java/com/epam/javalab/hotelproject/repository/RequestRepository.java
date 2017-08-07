@@ -11,9 +11,10 @@ import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RequestRepository implements RequestDAO {
-    DatabaseService databaseService = DatabaseServiceImpl.getInstance();
+    private static DatabaseService databaseService = DatabaseServiceImpl.getInstance();
 
     @Override
     public List<Request> findAll() {
@@ -158,5 +159,27 @@ public class RequestRepository implements RequestDAO {
 
     private Request emptyRequest() {
         return new Request();
+    }
+
+    public static int returnMaxRequestNumber() {
+        ResultSet resultSet = null;
+        try (Connection connection = databaseService.takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(number) FROM sql11188080.requests ")) {
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.first()) {
+                return resultSet.getInt("MAX(number)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null || !resultSet.isClosed()) {
+                    resultSet.close();
+                }
+            } catch (SQLException | NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
     }
 }

@@ -61,7 +61,7 @@ public class UserRepository implements UserDAO {
             e.printStackTrace();
         } finally {
             try {
-                if (resultSet != null && !resultSet.isClosed()) {
+                if (resultSet != null || !resultSet.isClosed()) {
                     resultSet.close();
                 }
             } catch (SQLException e) {
@@ -104,6 +104,7 @@ public class UserRepository implements UserDAO {
                 e.printStackTrace();
             }
         }
+
         return false;
     }
 

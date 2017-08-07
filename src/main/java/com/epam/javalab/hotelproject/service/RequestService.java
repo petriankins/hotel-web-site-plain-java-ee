@@ -14,5 +14,5 @@ public interface RequestService {
 
     Request findByNumber(int number);
 
-    int returnNextRequestId();
+    boolean deleteRequest(Request request);
 }

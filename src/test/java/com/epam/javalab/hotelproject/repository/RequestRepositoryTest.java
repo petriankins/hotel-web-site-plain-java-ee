@@ -8,10 +8,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.CountDownLatch;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -31,6 +29,9 @@ public class RequestRepositoryTest {
                                                  new Date(System.currentTimeMillis()),
                                                  "Must have at lead 10 windows!"));
         addRequestToMap(requestsMap, new Request(1, 753, 2, 1, new Date(System.currentTimeMillis()),
+                                                 new Date(System.currentTimeMillis()),
+                                                 "i want huge minibar"));
+        addRequestToMap(requestsMap, new Request(99, 753, 2, 1, new Date(System.currentTimeMillis()),
                                                  new Date(System.currentTimeMillis()),
                                                  "i want huge minibar"));
 
@@ -138,5 +139,11 @@ public class RequestRepositoryTest {
         assertThat(compareRequests(requestDAO.findByNumber(newRequest.getNumber()), newRequest), is(true));
         assertThat(requestDAO.deleteRequest(newRequest), is(true));
         assertThat(compareRequests(requestDAO.findByNumber(newRequest.getNumber()), new Request()), is(true));
+    }
+
+    @Test
+    public void returnMaxRequestNumber() throws Exception {
+        SortedMap<Integer, Request> sortedMap = new TreeMap<>(requestsMap);
+        assertThat(RequestRepository.returnMaxRequestNumber(), is(sortedMap.lastKey()));
     }
 }
