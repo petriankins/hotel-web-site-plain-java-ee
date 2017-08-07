@@ -12,6 +12,6 @@ public interface RoomService {
 
     List<Room> getFreeRooms(Request request);
 
-    List<Room> findTheMostRelevant();
+    List<Room> findTheMostRelevant(Request request);
 }
 

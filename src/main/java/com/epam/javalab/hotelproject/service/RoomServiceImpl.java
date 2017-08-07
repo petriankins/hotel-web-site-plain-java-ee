@@ -20,7 +20,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room findByNumber(int number) {
-        return roomDAO.findByNumber();
+        return roomDAO.findByNumber(number);
     }
 
     @Override
@@ -29,8 +29,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> findTheMostRelevant() {
-        List<Room> roomList = roomDAO.findAll();
+    public List<Room> findTheMostRelevant(Request request) {
+        List<Room> roomList = roomDAO.findFreeRooms(request);
         Collections.sort(roomList, roomComparator);
         return roomList;
     }
