@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.PrimitiveIterator;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -61,7 +60,7 @@ public class RoomRepositoryTest {
 
     @Test
     public void findAll() throws Exception {
-        List<Room> allRooms = roomDAO.finAll();
+        List<Room> allRooms = roomDAO.findAll();
         assertThat(allRooms.size(), is(roomMap.size()));
         for (Room room : allRooms) {
             assertThat(roomMap.get(room.getNumber()), notNullValue());
