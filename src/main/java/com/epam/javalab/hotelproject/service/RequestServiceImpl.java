@@ -35,6 +35,11 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    public boolean deleteRequest(Request request) {
+        return requestDAO.deleteRequest(request);
+    }
+
+    @Override
     public Request findByNumber(int number) {
         return requestDAO.findByNumber(number);
     }
