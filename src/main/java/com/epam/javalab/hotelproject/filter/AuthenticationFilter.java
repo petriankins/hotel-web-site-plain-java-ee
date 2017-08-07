@@ -16,16 +16,22 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
+        System.out.println("Auth filter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
-        if (request.getRequestURI().equals("/") || request.getRequestURI().equals("/registration") ||
-            request.getRequestURI().equals("/login")) {
+        String requestURI = request.getRequestURI();
+        System.out.println("URI : " + requestURI);
+        if (requestURI.equals("/") || requestURI.equals("/registration") || requestURI.equals("/login") ||
+            requestURI.contains("/css") || requestURI.contains("/js") || requestURI.contains("/fonts")) {
+            System.out.println("Chaining first");
             filterChain.doFilter(servletRequest, servletResponse);
         } else if (session.getAttribute("user") == null) {
+            System.out.println("Redirect");
             response.sendRedirect("/login");
         } else {
+            System.out.println("Chaining second");
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }
