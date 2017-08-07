@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>AdministratorPage</title>
@@ -15,20 +17,35 @@
 <body>
 
 <div class="container">
-    <h1>Order list</h1>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <td>#</td>
-            <td>Customer name</td>
-            <td>Email</td>
-            <td>Beds</td>
-            <td>Stars</td>
-            <td>Check-in date</td>
-            <td>Check-out date</td>
-        </tr>
-        </thead>
-    </table>
+
+        <h1>Order list</h1>
+        <table class="table table-striped">
+            <th>
+                <tr>
+                    <td>#</td>
+                    <td>User ID</td>
+                    <td>Beds</td>
+                    <td>Stars</td>
+                    <td>Check-in date</td>
+                    <td>Check-out date</td>
+                    <td>Comment</td>
+                    <td>Complete!</td>
+                </tr>
+            </th>
+            <c:forEach var="request" items="${allRequests}">
+                <tr>
+                    <td>${request.number}</td>
+                    <td>${request.number}</td>
+                    <td>${request.beds}</td>
+                    <td>${request.classID}</td>
+                    <td>${request.dateFrom}</td>
+                    <td>${request.dateTo}</td>
+                    <td>${request.comments}</td>
+                    <td><button type="submit" class="btn btn-primary  btn-md">Complete!</button></td>
+                </tr>
+            </c:forEach>
+        </table>
+
 </div>
 
 <div class="container">
