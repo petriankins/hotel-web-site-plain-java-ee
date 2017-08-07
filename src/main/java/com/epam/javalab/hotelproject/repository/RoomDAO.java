@@ -13,6 +13,8 @@ public interface RoomDAO {
 
     Room findByClass(int roomClass);
 
+    Room findTHeMostRelevant();
+
     boolean insertRoom(Room room);
 
     boolean updateRoom(Room room);

@@ -122,6 +122,11 @@ public class RoomRepository implements RoomDAO {
     }
 
     @Override
+    public Room findTHeMostRelevant() {
+        return null;
+    }
+
+    @Override
     public boolean insertRoom(Room room) {
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
