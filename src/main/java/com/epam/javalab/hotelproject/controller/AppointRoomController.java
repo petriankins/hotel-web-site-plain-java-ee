@@ -30,14 +30,14 @@ public class AppointRoomController extends HttpServlet {
         Request request = requestService.findByNumber(Integer.parseInt(number));
         req.setAttribute("request", request);
 
-//        List<Room> availableRooms = roomService.getAvailableRooms(request);
-//        System.out.println(availableRooms);
+        List<Room> availableRooms = roomService.getAvailableRooms(request);
+        System.out.println(availableRooms);
 
-        List<Room> availableRooms = new ArrayList<>();
-        availableRooms.add(new Room(1, 1, 1, 1));
-        availableRooms.add(new Room(2, 2, 2, 2));
-        availableRooms.add(new Room(3, 3, 3, 3));
-        availableRooms.add(new Room());
+//        List<Room> availableRooms = new ArrayList<>();
+//        availableRooms.add(new Room(1, 1, 1, 1));
+//        availableRooms.add(new Room(2, 2, 2, 2));
+//        availableRooms.add(new Room(3, 3, 3, 3));
+//        availableRooms.add(new Room());
 
         req.setAttribute("availableRooms", availableRooms);
         req.getRequestDispatcher("/jsp/appointRoom.jsp").forward(req, resp);
