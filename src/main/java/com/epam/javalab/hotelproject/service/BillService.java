@@ -7,6 +7,7 @@ import java.util.List;
 public interface BillService {
     List<Bill> findAll();
     Bill findByNumber();
+    Bill createBill();
     boolean saveBill();
     boolean deleteBill();
 }

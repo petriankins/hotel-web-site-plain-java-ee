@@ -16,6 +16,12 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public Bill createBill() {
+        
+        return null;
+    }
+
+    @Override
     public boolean saveBill() {
         return false;
     }
@@ -24,6 +30,4 @@ public class BillServiceImpl implements BillService {
     public boolean deleteBill() {
         return false;
     }
-
-
 }
