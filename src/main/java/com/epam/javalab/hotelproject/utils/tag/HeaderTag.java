@@ -72,7 +72,10 @@ public class HeaderTag extends TagSupport {
         JspWriter out = pageContext.getOut();
         out.write("<div class=\"navbar-right navbar-info-container\">");
         out.write("<table><tr><td class=\"navbar-info-container-item\">");
-        out.write("<button class=\"btn btn-danger\" type=\"button\">" +
+        /*out.write("<button class=\"btn btn-danger\" type=\"button\">" +
+                  resourceBundle.getString("statusbar.request.text") + " <span class=\"badge\">" +
+                  requestService.findAll().size() + "</span></button>");*/
+        out.write("<a href=\"/administrator\" class=\"btn btn-danger btn-md\">" +
                   resourceBundle.getString("statusbar.request.text") + " <span class=\"badge\">" +
                   requestService.findAll().size() + "</span></button>");
         out.write("<td class=\"navbar-info-container-item\">");
