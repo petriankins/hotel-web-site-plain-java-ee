@@ -35,11 +35,13 @@ public class AdministratorController extends HttpServlet {
 
         if (session.getAttribute("user") != null) {
             List<Request> allRequests;
-            allRequests = requestService.findAll();
+            allRequests = requestService.findAllUnhandledRequests();
 
             System.out.println(allRequests);
             req.setAttribute("allRequests", allRequests);
             req.getRequestDispatcher("/jsp/administrator.jsp").forward(req, resp);
+
+
         } else {
             resp.sendRedirect("/login");
         }
