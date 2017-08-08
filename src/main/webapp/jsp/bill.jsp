@@ -6,11 +6,23 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Bill Page</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-    Bill
+<div class="container">
+    <h1>Bill</h1>
+    <table class="table table-striped">
+        <tr><td>Beds</td><td>Beds</td></tr>
+
+    </table>
+
+</div>
+
+
 </body>
 </html>

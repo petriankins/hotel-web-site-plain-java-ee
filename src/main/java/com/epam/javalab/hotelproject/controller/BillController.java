@@ -1,5 +1,9 @@
 package com.epam.javalab.hotelproject.controller;
 
+import com.epam.javalab.hotelproject.model.Room;
+import com.epam.javalab.hotelproject.service.RoomService;
+import com.epam.javalab.hotelproject.service.RoomServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +16,13 @@ import java.io.IOException;
         urlPatterns = {"/bill"}
 )
 public class BillController extends HttpServlet {
+    RoomService roomService = new RoomServiceImpl();
+
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String roomId = req.getParameter("roomId");
-        System.out.println(roomId);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String roomNumber = req.getParameter("roomNumber");
+        System.out.println(roomNumber);
         req.getRequestDispatcher("/jsp/bill.jsp");
     }
 }
