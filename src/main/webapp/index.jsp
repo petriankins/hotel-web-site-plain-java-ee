@@ -51,24 +51,6 @@
         </div>
     </c:if>
 </div>
-<select onchange="switchLang(this)" id="test">
-    <c:choose>
-        <c:when test="${sessionScope.lang == 'en'}">
-            <option value="en" selected="selected">EN</option>
-        </c:when>
-        <c:otherwise>
-            <option value="en">EN</option>
-        </c:otherwise>
-    </c:choose>
-    <c:choose>
-        <c:when test="${sessionScope.lang == 'ru'}">
-            <option value="ru" selected="selected">RU</option>
-        </c:when>
-        <c:otherwise>
-            <option value="ru">RU</option>
-        </c:otherwise>
-    </c:choose>
-</select>
 <script src="http://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">

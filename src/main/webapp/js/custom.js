@@ -1,3 +1,3 @@
-function switchLang(select) {
-    window.location.href="/locale?lang=" + select.value;
+function switchLang(node) {
+    window.location.href="/locale?lang=" + node.value;
 }

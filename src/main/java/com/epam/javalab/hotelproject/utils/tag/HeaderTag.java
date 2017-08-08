@@ -72,8 +72,23 @@ public class HeaderTag extends TagSupport {
         pageContext.getOut().write("<span class=\"icon-bar\"></span>");
         pageContext.getOut().write("<span class=\"icon-bar\"></span>");
         pageContext.getOut().write("</button>");
+        pageContext.getOut().write("<table><tr><td><ul>");
+        pageContext.getOut().write("<select onchange=\"switchLang(this)\">");
+        if (session.getAttribute("lang").equals("en")) {
+            /*pageContext.getOut().write("<li onClick=\"switchLang(this)\" class=\"navbar-lang active-lang\"><span>EN</span></li>");
+            pageContext.getOut().write("<li onClick=\"switchLang(this)\" class=\"navbar-lang\"><span>RU</span></li>");*/
+            pageContext.getOut().write("<option value=\"en\" selected=\"selected\">EN</option>");
+            pageContext.getOut().write("<option value=\"ru\">RU</option>");
+        } else {
+            /*pageContext.getOut().write("<li class=\"navbar-lang\"><span>EN</span></li>");
+            pageContext.getOut().write("<li class=\"navbar-lang active-lang\"><span>RU</span></li>");*/
+            pageContext.getOut().write("<option value=\"en\">EN</option>");
+            pageContext.getOut().write("<option value=\"ru\" selected=\"selected\">RU</option>");
+        }
+        pageContext.getOut().write("</ul></td><td>");
         pageContext.getOut()
                 .write("<a class=\"navbar-brand\" href=\"/\">" + resourceBundle.getString("project.name") + "</a>");
+        pageContext.getOut().write("</td></tr></table>");
         pageContext.getOut().write("</div>");
     }
 
