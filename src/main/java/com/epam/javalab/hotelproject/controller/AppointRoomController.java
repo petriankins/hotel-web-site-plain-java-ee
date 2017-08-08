@@ -6,12 +6,14 @@ import com.epam.javalab.hotelproject.service.RequestService;
 import com.epam.javalab.hotelproject.service.RequestServiceImpl;
 import com.epam.javalab.hotelproject.service.RoomService;
 import com.epam.javalab.hotelproject.service.RoomServiceImpl;
+import org.apache.catalina.Session;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,9 @@ public class AppointRoomController extends HttpServlet {
         System.out.println(number);
         Request request = requestService.findByNumber(Integer.parseInt(number));
         req.setAttribute("request", request);
+
+        HttpSession session = req.getSession();
+        session.setAttribute("request", request);
 
         List<Room> availableRooms = roomService.getAvailableRooms(request);
         System.out.println(availableRooms);
