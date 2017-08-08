@@ -44,6 +44,14 @@ Appoint!
 
     <form style="width:200px" action="/bill" method="post">
         <table class="table table-striped">
+            <tr>
+                <td>Number</td>
+                <td>Beds</td>
+                <td>Stars</td>
+
+                <td>Choose</td>
+
+            </tr>
             <c:forEach var="room" items="${availableRooms}">
                 <tr>
                     <td>${room.number}</td>

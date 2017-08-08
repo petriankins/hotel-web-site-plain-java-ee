@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +76,7 @@ public class RoomRepositoryTest {
             assertThat(compareRooms(v, room), is(true));
         });
     }
+
 
     @Test
     public void findByBeds() throws Exception {
