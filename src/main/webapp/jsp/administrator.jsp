@@ -64,7 +64,7 @@
                 <td>Complete!</td>
             </tr>
         </th>
-        <c:forEach var="request" items="${unHendls}">
+        <c:forEach var="request" items="${unhandledRequests}">
             <tr>
                 <form action="/administrator" method="post">
                     <td>${request.number}</td>

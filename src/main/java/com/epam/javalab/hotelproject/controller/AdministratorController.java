@@ -38,8 +38,8 @@ public class AdministratorController extends HttpServlet {
             allRequests = requestService.findAll();
             req.setAttribute("allRequests", allRequests);
 
-            List<Request> unHendls = requestService.findAllUnhandledRequests();
-            req.setAttribute("unHendls", unHendls);
+            List<Request> unhandledRequests = requestService.findAllUnhandledRequests();
+            req.setAttribute("unhandledRequests", unhandledRequests);
 
             req.getRequestDispatcher("/jsp/administrator.jsp").forward(req, resp);
 
