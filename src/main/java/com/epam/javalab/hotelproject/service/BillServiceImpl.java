@@ -25,7 +25,7 @@ public class BillServiceImpl implements BillService {
         int classRatio = request.getClassID();
         int totalSum = ((daysRatio * 10) + bedsRatio) * classRatio;
         return new Bill(1, totalSum, 0, request.getId(), new Date(System.currentTimeMillis()), 1);
-            }
+    }
 
     @Override
     public boolean saveBill() {

@@ -15,4 +15,6 @@ public interface RequestService {
     Request findByNumber(int number);
 
     boolean deleteRequest(Request request);
+
+    List<Request> findAllUnhandledRequests();
 }
