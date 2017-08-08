@@ -1,17 +1,13 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: maxim
-  Date: 31.07.2017
-  Time: 18:08
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="localization.locale" var="loc"/>
     <title>Registration Page</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/custom.css">
 </head>
 <body>
 <div class="container">
@@ -37,10 +33,14 @@
             <label>Password:</label>
             <input type="password" name="password" class="form-control" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary btn-md">Sign up</button>
-
-        <!--<p><a class="btn btn-primary btn-md" href="/" role="button">Sign up</a></p>-->
+        <button type="submit" class="btn btn-success btn-md">Sign up</button>
+        <a class="btn btn-primary btn-md" href="/" role="button">Back</a>
     </form>
 </div>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+</script>
+<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>
