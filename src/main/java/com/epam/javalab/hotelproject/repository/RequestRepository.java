@@ -66,9 +66,8 @@ public class RequestRepository implements RequestDAO {
         List<Request> handledRequests = new ArrayList<>();
         try (Connection connection = databaseService.takeConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT requests.number, requests.id_user, requests.beds, requests.id_class," +
-                     "requests.id_class, requests.date_from, requests.date_to, bills.number," +
-                     " FROM sql11188080.requests INNER JOIN sql11188080.bills ON requests.id = bill.id_request;")) {
+             ResultSet resultSet = statement.executeQuery("SELECT request.*, bills.number," +
+                     " FROM sql11188080.requests LEFT JOIN sql11188080.bills ON requests.id = bill.id_request WHERE bills.id_request IS null;")) {
             while (resultSet.next()) {
                 handledRequests.add(new Request(resultSet.getInt("number"), resultSet.getInt("id_user"),
                         resultSet.getInt("beds"),
