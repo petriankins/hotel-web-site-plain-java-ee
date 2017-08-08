@@ -1,10 +1,13 @@
 package com.epam.javalab.hotelproject.utils.tag;
 
 import com.epam.javalab.hotelproject.model.User;
+import com.epam.javalab.hotelproject.service.RequestService;
+import com.epam.javalab.hotelproject.service.RequestServiceImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.Locale;
@@ -14,18 +17,20 @@ public class HeaderTag extends TagSupport {
     private static final Logger LOGGER = Logger.getLogger(HeaderTag.class);
     private ResourceBundle resourceBundle;
     private HttpSession    session;
+    private User           user;
+    private RequestService requestService = new RequestServiceImpl();
 
     @Override
     public int doStartTag() throws JspException {
         initialize();
-        User user;
         try {
             printHeaderTop();
-            if (session.getAttribute("user") != null) {
-                user = (User) session.getAttribute("user");
-                pageContext.getOut().write("<span>" + user.getName() + "</span>");
-            } else {
+            if (user == null) {
                 printLoginForm();
+            } else if (user.getLogin().equals("info@hotel.project")) {
+                printAdminStatusBar();
+            } else {
+                printUserStatusBar();
             }
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
@@ -36,13 +41,8 @@ public class HeaderTag extends TagSupport {
     }
 
     @Override
-    public int doAfterBody() throws JspException {
-
-        return SKIP_BODY;
-    }
-
-    @Override
     public int doEndTag() throws JspException {
+        LOGGER.info("Doing end tag");
         try {
             pageContext.getOut().write("</div>");
             pageContext.getOut().write("</nav>");
@@ -52,8 +52,41 @@ public class HeaderTag extends TagSupport {
         return SKIP_BODY;
     }
 
+    private void printUserStatusBar() throws IOException {
+        LOGGER.info("Current user is not admin, printing user status bar!");
+
+        JspWriter out = pageContext.getOut();
+        out.write("<div class=\"navbar-right navbar-info-container\">");
+        out.write("<table><tr><td class=\"navbar-info-container-item\">");
+        out.write("<span class=\"navbar-info-container-item-text\">" + user.getName() + "</span></td>");
+        out.write("<td class=\"navbar-info-container-item\">");
+        out.write("<a href=\"/logout\" class=\"btn btn-primary btn-md\">" + resourceBundle.getString("button.logout") +
+                  "</a>");
+        out.write("</td></tr></table></div>");
+    }
+    //TODO findAll to findNewRequests!
+
+    private void printAdminStatusBar() throws IOException {
+        LOGGER.info("Current user is admin, printing admin status bar!");
+
+        JspWriter out = pageContext.getOut();
+        out.write("<div class=\"navbar-right navbar-info-container\">");
+        out.write("<table><tr><td class=\"navbar-info-container-item\">");
+        /*out.write("<button class=\"btn btn-danger\" type=\"button\">" +
+                  resourceBundle.getString("statusbar.request.text") + " <span class=\"badge\">" +
+                  requestService.findAll().size() + "</span></button>");*/
+        out.write("<a href=\"/administrator\" class=\"btn btn-danger btn-md\">" +
+                  resourceBundle.getString("statusbar.request.text") + " <span class=\"badge\">" +
+                  requestService.findAll().size() + "</span></button>");
+        out.write("<td class=\"navbar-info-container-item\">");
+        out.write("<a href=\"/logout\" class=\"btn btn-danger btn-md\">" + resourceBundle.getString("button.logout") +
+                  "</a>");
+        out.write("</td></tr></table></div>");
+    }
+
     private void initialize() {
         session = pageContext.getSession();
+        user = (User) session.getAttribute("user");
         Locale locale = new Locale(session.getAttribute("lang").toString());
 
         LOGGER.info("Got locale from session: " + locale.getLanguage());
@@ -96,13 +129,19 @@ public class HeaderTag extends TagSupport {
         pageContext.getOut().write("<div id=\"navbar\" class=\"navbar-collapse collapse\">");
         pageContext.getOut().write("<form class=\"navbar-form navbar-right\" action=\"/login\" method=\"post\">");
         pageContext.getOut().write("<div class=\"form-group\">");
-        pageContext.getOut().write("<input type=\"email\" name=\"login\" placeholder=\"Email\" class=\"form-control\">");
+        pageContext.getOut()
+                .write("<input type=\"email\" name=\"login\" placeholder=\"Email\" class=\"form-control\">");
         pageContext.getOut().write("</div>");
         pageContext.getOut().write("<div class=\"form-group\">");
-        pageContext.getOut().write("<input type=\"password\" name=\"password\" placeholder=\"Password\" class=\"form-control\">");
+        pageContext.getOut()
+                .write("<input type=\"password\" name=\"password\" placeholder=\"Password\" class=\"form-control\">");
         pageContext.getOut().write("</div>");
-        pageContext.getOut().write("<button type=\"submit\" class=\"btn btn-success\">" + resourceBundle.getString("button.sign_in") + "</button>");
-        pageContext.getOut().write("<a class=\"btn btn-success btn-md\" href=\"/registration\" role=\"button\">" + resourceBundle.getString("button.sign_up") + "</a>");
+        pageContext.getOut()
+                .write("<button type=\"submit\" class=\"btn btn-success\">" +
+                       resourceBundle.getString("button.sign_in") + "</button>");
+        pageContext.getOut()
+                .write("<a class=\"btn btn-success btn-md\" href=\"/registration\" role=\"button\">" +
+                       resourceBundle.getString("button.sign_up") + "</a>");
         pageContext.getOut().write("</form>");
         pageContext.getOut().write("</div>");
     }

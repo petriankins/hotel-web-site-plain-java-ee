@@ -29,3 +29,19 @@ active-lang {
     margin: auto;
     padding-right: 10px;
 }
+
+.navbar-info-container {
+    margin-top:8px;
+}
+.navbar-info-container-item {
+    padding-right: 5px;
+}
+.navbar-info-container-item-text {
+    color: white;
+    font-size: 20px;
+}
+div.info-alert {
+    position: absolute;
+    z-index: 9999999;
+    right: 0;
+}

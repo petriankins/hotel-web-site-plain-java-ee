@@ -42,7 +42,7 @@ public class RegistrationController extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
 
-            resp.sendRedirect("/order");
+            resp.sendRedirect("/");
 
         } else {
             message = "Something has gone wrong! Try again.";

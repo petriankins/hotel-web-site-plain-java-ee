@@ -3,6 +3,8 @@ package com.epam.javalab.hotelproject.controller;
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.UserService;
 import com.epam.javalab.hotelproject.service.UserServiceImpl;
+import org.apache.log4j.Logger;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,11 +27,12 @@ import java.io.IOException;
         urlPatterns = {"/login"}
 )
 public class LoginController extends HttpServlet {
-    private final UserService userService = new UserServiceImpl();
+    private static final Logger      LOGGER      = Logger.getLogger(LoginController.class);
+    private final        UserService userService = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
+        resp.sendRedirect("/");
     }
 
     @Override
@@ -37,16 +40,20 @@ public class LoginController extends HttpServlet {
         String login = req.getParameter("login").trim();
         String pass = req.getParameter("password").trim();
         User user = new User(login, pass);
-        String message = null;
 
         if (userService.authenticate(user)) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            resp.sendRedirect("/");
+
+            LOGGER.info("Successful authentication for user " + user.getLogin());
+
         } else {
-            message = "Password or login is wrong";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/login.jsp").forward(req, resp);
+            LOGGER.info("Error in login or password. Login: " + user.getLogin() + ";Password: " + user.getPassword());
+
+            req.setAttribute("message", "1");
+            req.getRequestDispatcher("/").forward(req, resp);
         }
+
+        resp.sendRedirect("/");
     }
 }

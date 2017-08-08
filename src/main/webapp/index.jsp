@@ -4,17 +4,20 @@
 <%@ taglib prefix="ht" uri="/WEB-INF/headerTag.tld" %>
 <html>
 <head>
-    <title>Home Page</title>
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
+    <fmt:message bundle="${loc}" key="page_title.index" var="pageTitle"/>
+    <title>${pageTitle}</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/custom.css">
 </head>
 <body>
-<ht:HeaderTag />
+<ht:HeaderTag/>
 <c:if test="${not empty message}">
-    <div class="alert alert-success">
-            ${message}
+    <div class="alert alert-danger alert-dismissible info-alert" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <fmt:message bundle="${loc}" key="message.login.error" var="loginErrorMessage"/>
+            ${loginErrorMessage}
     </div>
 </c:if>
 <div class="jumbotron">
