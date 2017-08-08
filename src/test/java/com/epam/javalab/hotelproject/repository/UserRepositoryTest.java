@@ -73,7 +73,7 @@ public class UserRepositoryTest {
             assertThat(compareUsers(users.getOrDefault(user.getLogin(), user), user), is(true));
             if (users.get(user.getLogin()) != null) foundUsers++;
         }
-        assertThat(users.size(), is(foundUsers));
+        assertThat(foundUsers, is(users.size()));
     }
 
     @Test

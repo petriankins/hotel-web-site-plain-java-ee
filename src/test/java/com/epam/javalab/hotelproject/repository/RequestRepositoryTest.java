@@ -90,11 +90,13 @@ public class RequestRepositoryTest {
     @Test
     public void findAll() throws Exception {
         List<Request> allRequests = requestDAO.findAll();
-        assertThat(allRequests.size(), is(requestsMap.size()));
+        int foundRequests = 0;
         for (Request request : allRequests) {
             assertThat(requestsMap.get(request.getNumber()), notNullValue());
             assertThat(compareRequests(requestsMap.get(request.getNumber()), request), is(true));
+            if (requestsMap.get(request.getNumber()) != null) foundRequests++;
         }
+        assertThat(foundRequests, is(requestsMap.size()));
     }
 
     @Test
