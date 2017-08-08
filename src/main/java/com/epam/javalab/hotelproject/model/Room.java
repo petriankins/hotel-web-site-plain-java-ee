@@ -5,18 +5,17 @@ import java.util.Date;
 
 public class Room {
     private int id;
-    private int id_roomstatus;
-    private int id_user;
+    private int id_class;
     private int number;
     private int beds;
     private int roomClass;
     private Date dateFrom;
     private Date dateTo;
 
-    public Room(int id_roomstatus, int id_user, int id, Date dateFrom, Date dateTo) {
-        this.id = id;
-        this.id_roomstatus = id_roomstatus;
-        this.id_user = id_user;
+    public Room(int number, int beds, int roomClass, Date dateFrom, Date dateTo) {
+        this.number = number;
+        this.beds = beds;
+        this.roomClass = roomClass;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
     }
@@ -34,21 +33,12 @@ public class Room {
         this.roomClass = roomClass;
     }
 
-
-    public int getId_roomstatus() {
-        return id_roomstatus;
+    public int getId_class() {
+        return id_class;
     }
 
-    public void setId_roomstatus(int id_roomstatus) {
-        this.id_roomstatus = id_roomstatus;
-    }
-
-    public int getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public void setId_class(int id_class) {
+        this.id_class = id_class;
     }
 
     public Date getDateFrom() {
