@@ -9,3 +9,6 @@ target/
 
 #TomcatEE build
 tomcat.8080/
+
+# log4j output file
+log.out
