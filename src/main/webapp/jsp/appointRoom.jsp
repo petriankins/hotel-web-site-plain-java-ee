@@ -42,15 +42,23 @@ Appoint!
     </table>
     <h1>Available rooms</h1>
 
-    <form style="width:200px" action="/appointRoom" method="post">
+    <form style="width:200px" action="/bill" method="post">
         <table class="table table-striped">
+            <tr>
+                <td>Number</td>
+                <td>Beds</td>
+                <td>Stars</td>
+
+                <td>Choose</td>
+
+            </tr>
             <c:forEach var="room" items="${availableRooms}">
                 <tr>
                     <td>${room.number}</td>
                     <td>${room.beds}</td>
                     <td>${room.roomClass}</td>
 
-                    <td><input type="radio" name="choose"/></td>
+                    <td><input type="radio" name="roomNumber" value="${room.number}"/></td>
 
                 </tr>
             </c:forEach>
