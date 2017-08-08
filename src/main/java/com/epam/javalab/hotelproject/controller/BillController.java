@@ -23,6 +23,6 @@ public class BillController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String roomNumber = req.getParameter("roomNumber");
         System.out.println(roomNumber);
-        req.getRequestDispatcher("/jsp/bill.jsp");
+        req.getRequestDispatcher("/jsp/bill.jsp").forward(req, resp);
     }
 }
