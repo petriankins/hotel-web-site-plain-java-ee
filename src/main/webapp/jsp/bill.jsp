@@ -17,11 +17,10 @@
 <div class="container">
     <h1>Bill</h1>
     <table class="table table-striped">
-        <tr><td>Bill's #:</td><td>...</td></tr>
-        <tr><td>Room's #:</td><td>...</td></tr>
-        <tr><td>Total Price:</td><td>...</td></tr>
-
-
+        <tr><td>Request's #:</td><td>${request.number}</td></tr>
+        <tr><td>Bill's #:</td><td>${bill.number}</td></tr>
+        <tr><td>Room's #:</td><td>${room.number}</td></tr>
+        <tr><td>Total Price:</td><td>${bill.sum}</td></tr>
     </table>
 
 </div>
