@@ -69,7 +69,7 @@ public class RequestRepositoryTest {
             return false;
         }
         if (!request1.getComments().equals(request2.getComments())) {
-            printDifferences("Date from", request1.getComments(), request2.getComments());
+            printDifferences("Comments", request1.getComments(), request2.getComments());
             return false;
         }
 
@@ -92,8 +92,8 @@ public class RequestRepositoryTest {
         List<Request> allRequests = requestDAO.findAll();
         int foundRequests = 0;
         for (Request request : allRequests) {
-            assertThat(requestsMap.get(request.getNumber()), notNullValue());
-            assertThat(compareRequests(requestsMap.get(request.getNumber()), request), is(true));
+            assertThat(requestsMap.getOrDefault(request.getNumber(), request), notNullValue());
+            assertThat(compareRequests(requestsMap.getOrDefault(request.getNumber(), request), request), is(true));
             if (requestsMap.get(request.getNumber()) != null) foundRequests++;
         }
         assertThat(foundRequests, is(requestsMap.size()));
