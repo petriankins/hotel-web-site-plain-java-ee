@@ -17,7 +17,10 @@
 <div class="container">
     <h1>Bill</h1>
     <table class="table table-striped">
-        <tr><td>Beds</td><td>Beds</td></tr>
+        <tr><td>Bill's #:</td><td>...</td></tr>
+        <tr><td>Room's #:</td><td>...</td></tr>
+        <tr><td>Total Price:</td><td>...</td></tr>
+
 
     </table>
 
