@@ -50,7 +50,7 @@ Appoint!
                     <td>${room.beds}</td>
                     <td>${room.roomClass}</td>
 
-                    <td><input type="radio" name="choose"/></td>
+                    <td><input type="radio" name="choose" value="${room.id}"/></td>
 
                 </tr>
             </c:forEach>
