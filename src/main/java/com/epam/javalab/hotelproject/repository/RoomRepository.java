@@ -170,33 +170,33 @@ public class RoomRepository implements RoomDAO {
 
     @Override
     public List<Room> findAvailableRooms(Request request) {
-        ResultSet resultSet = null;
-        List<Room> roomList = new ArrayList<>();
-        try (Connection connection = databaseService.takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT * FROM sql11188080.roomstatus WHERE date_to < ?")) {
-            preparedStatement.setDate(1, new java.sql.Date((request.getDateTo().getTime())));
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                roomList.add(new Room(resultSet.getInt("id"),
-                        resultSet.getInt("number"),
-                        resultSet.getInt("beds"),
-                        resultSet.getInt("id_class")));
-            } else {
-                roomList = findAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (resultSet != null || !resultSet.isClosed()) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return roomList;
+//        ResultSet resultSet = null;
+//        List<Room> roomList = new ArrayList<>();
+//        try (Connection connection = databaseService.takeConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(
+//                     "SELECT * FROM sql11188080.roomstatus WHERE date_to < ?")) {
+//            preparedStatement.setDate(1, new java.sql.Date((request.getDateTo().getTime())));
+//            resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                roomList.add(new Room(resultSet.getInt("id"),
+//                        resultSet.getInt("number"),
+//                        resultSet.getInt("beds"),
+//                        resultSet.getInt("id_class")));
+//            } else {
+//                roomList = findAll();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (resultSet != null || !resultSet.isClosed()) {
+//                    resultSet.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        return findAll();
     }
 }
 
