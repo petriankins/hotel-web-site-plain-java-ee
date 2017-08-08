@@ -33,12 +33,6 @@ public class BillRepository implements BillDAO {
     }
 
     @Override
-    public Bill findByNumber(int number) {
-
-        return null;
-    }
-
-    @Override
     public boolean insertBill(Bill bill) {
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
