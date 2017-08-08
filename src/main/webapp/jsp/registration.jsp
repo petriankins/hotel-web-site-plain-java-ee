@@ -5,7 +5,8 @@
 <head>
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
-    <title>Registration Page</title>
+    <fmt:message bundle="${loc}" key="page_title.registration" var="pageTitle"/>
+    <title>${pageTitle}</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/custom.css">
 </head>
@@ -16,7 +17,7 @@
                 ${message}
         </div>
     </c:if>
-    <form style="width: 400px" action="/registration" method="post">
+    <form action="/registration" method="post">
         <div class="form-group">
             <label>First name:</label>
             <input type="text" name="name" class="form-control" placeholder="First Name">
@@ -32,6 +33,10 @@
         <div class="form-group">
             <label>Password:</label>
             <input type="password" name="password" class="form-control" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label>Password confirm:</label>
+            <input type="password" name="passwordConfirm" class="form-control" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-success btn-md">Sign up</button>
         <a class="btn btn-primary btn-md" href="/" role="button">Back</a>

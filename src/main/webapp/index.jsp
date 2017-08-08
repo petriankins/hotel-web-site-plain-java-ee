@@ -4,9 +4,10 @@
 <%@ taglib prefix="ht" uri="/WEB-INF/headerTag.tld" %>
 <html>
 <head>
-    <title>Home Page</title>
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
+    <fmt:message bundle="${loc}" key="page_title.index" var="pageTitle"/>
+    <title>${pageTitle}</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/custom.css">
 </head>
