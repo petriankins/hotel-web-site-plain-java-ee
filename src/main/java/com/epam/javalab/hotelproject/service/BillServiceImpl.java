@@ -3,36 +3,36 @@ package com.epam.javalab.hotelproject.service;
 import com.epam.javalab.hotelproject.model.Bill;
 import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
+import com.epam.javalab.hotelproject.repository.BillDAO;
+import com.epam.javalab.hotelproject.repository.BillRepository;
 import com.epam.javalab.hotelproject.utils.DateHelper;
 
 import java.util.Date;
 import java.util.List;
 
 public class BillServiceImpl implements BillService {
-    @Override
-    public List<Bill> findAll() {
-        return null;
-    }
+    BillDAO billDAO = new BillRepository();
 
     @Override
-    public Bill findByNumber() {
-        return null;
+    public List<Bill> findAll() {
+        return billDAO.findAll();
     }
 
     @Override
     public Bill createBill(Request request, Room room) {
-
-        return new Bill(request.getNumber(), calculatePrice(request), 0, request.getId(), new Date(System.currentTimeMillis()), room.getId());
+        Bill createdBill = new Bill(request.getNumber(), calculatePrice(request), 0, request.getId(), new Date(System.currentTimeMillis()), room.getId());
+        saveBill(createdBill);
+        return createdBill;
     }
 
     @Override
-    public boolean saveBill() {
-        return false;
+    public boolean saveBill(Bill bill) {
+        return billDAO.insertBill(bill);
     }
 
     @Override
-    public boolean deleteBill() {
-        return false;
+    public boolean deleteBill(Bill bill) {
+        return billDAO.deleteBill(bill);
     }
 
     private int calculatePrice(Request request) {

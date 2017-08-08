@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface BillService {
     List<Bill> findAll();
-    Bill findByNumber();
     Bill createBill(Request request, Room room);
-    boolean saveBill();
-    boolean deleteBill();
+    boolean saveBill(Bill bill);
+    boolean deleteBill(Bill bill);
 }

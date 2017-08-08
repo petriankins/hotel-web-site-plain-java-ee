@@ -42,7 +42,7 @@ public class BillRepository implements BillDAO {
             preparedStatement.setInt(2, bill.getSum());
             preparedStatement.setInt(3, bill.getPaid());
             preparedStatement.setInt(4, bill.getIdRequest());
-            preparedStatement.setDate(5, new java.sql.Date((bill.getCreated().getTime())));
+            preparedStatement.setDate(5, new java.sql.Date((bill.getDateOfCreation().getTime())));
             preparedStatement.setInt(6, bill.getIdRoom());
             return preparedStatement.executeUpdate() == 1 ? true : false;
         } catch (SQLException e) {
@@ -60,7 +60,7 @@ public class BillRepository implements BillDAO {
             preparedStatement.setInt(1, bill.getSum());
             preparedStatement.setInt(2, bill.getPaid());
             preparedStatement.setInt(3, bill.getIdRequest());
-            preparedStatement.setDate(4, new java.sql.Date((bill.getCreated().getTime())));
+            preparedStatement.setDate(4, new java.sql.Date((bill.getDateOfCreation().getTime())));
             preparedStatement.setInt(5, bill.getIdRoom());
             preparedStatement.setInt(6, bill.getNumber());
             return preparedStatement.executeUpdate() == 1 ? true : false;
