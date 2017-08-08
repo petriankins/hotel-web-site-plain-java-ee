@@ -4,8 +4,6 @@ import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.RequestService;
 import com.epam.javalab.hotelproject.service.RequestServiceImpl;
-import com.epam.javalab.hotelproject.service.UserService;
-import com.epam.javalab.hotelproject.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,14 +15,13 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
 @WebServlet(
         name = "ReservationServlet",
         urlPatterns = {"/order"}
 )
 public class OrderController extends HttpServlet {
-    RequestService requestService = new RequestServiceImpl();
+    private final RequestService requestService = new RequestServiceImpl();
 
     /*@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

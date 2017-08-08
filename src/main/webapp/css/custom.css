@@ -1,9 +1,31 @@
+div.jumbotron {
+    margin-top: 50px;
+}
 .navbar-item {
-    padding-top: 10px;
-    padding-bottom: 10px;
     line-height: 20px;
     position: relative;
     display: block;
     padding: 10px 15px;
     color: #9d9d9d;
+}
+
+.navbar-lang {
+    padding: 5px 5px;
+    height: 25px;
+}
+
+.navbar-lang:hover {
+    cursor: pointer;
+}
+
+.navbar-lang > span {
+    color: white;
+}
+
+active-lang {
+    background-color: #28a4c9;
+}
+.navbar-lang-switcher {
+    margin: auto;
+    padding-right: 10px;
 }

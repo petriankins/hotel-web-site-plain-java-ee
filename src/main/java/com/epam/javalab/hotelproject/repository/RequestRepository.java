@@ -11,10 +11,9 @@ import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class RequestRepository implements RequestDAO {
-    private static DatabaseService databaseService = DatabaseServiceImpl.getInstance();
+    private static final DatabaseService databaseService = DatabaseServiceImpl.getInstance();
 
     @Override
     public List<Request> findAll() {
@@ -111,7 +110,7 @@ public class RequestRepository implements RequestDAO {
                 preparedStatement.setDate(5, new java.sql.Date(request.getDateFrom().getTime()));
                 preparedStatement.setDate(6, new java.sql.Date((request.getDateTo().getTime())));
                 preparedStatement.setString(7, request.getComments());
-                return preparedStatement.executeUpdate() == 1 ? true : false;
+                return preparedStatement.executeUpdate() == 1;
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -133,7 +132,7 @@ public class RequestRepository implements RequestDAO {
                 preparedStatement.setDate(5, new java.sql.Date((request.getDateTo().getTime())));
                 preparedStatement.setString(6, request.getComments());
                 preparedStatement.setInt(7, request.getNumber());
-                return preparedStatement.executeUpdate() == 1 ? true : false;
+                return preparedStatement.executeUpdate() == 1;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -148,7 +147,7 @@ public class RequestRepository implements RequestDAO {
                  PreparedStatement preparedStatement = connection.prepareStatement(
                          "DELETE FROM sql11188080.requests WHERE number = ?")) {
                 preparedStatement.setInt(1, request.getNumber());
-                return preparedStatement.executeUpdate() == 1 ? true : false;
+                return preparedStatement.executeUpdate() == 1;
             } catch (SQLException e) {
                 e.printStackTrace();
             }

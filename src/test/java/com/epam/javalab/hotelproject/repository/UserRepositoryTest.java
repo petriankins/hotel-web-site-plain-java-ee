@@ -3,10 +3,8 @@ package com.epam.javalab.hotelproject.repository;
 import com.epam.javalab.hotelproject.model.User;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +15,9 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.*;
 
 public class UserRepositoryTest {
-    UserDAO userDAO = new UserRepository();
+    private final UserDAO userDAO = new UserRepository();
 
-    Map<String, User> users;
+    private Map<String, User> users;
 
     @Before
     public void setUp() throws Exception {

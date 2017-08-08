@@ -3,7 +3,6 @@ package com.epam.javalab.hotelproject.repository;
 import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
 
-import java.util.Date;
 import java.util.List;
 
 public interface RoomDAO {

@@ -3,8 +3,11 @@ package com.epam.javalab.hotelproject.utils;
 import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
 import com.epam.javalab.hotelproject.model.User;
+import org.apache.log4j.Logger;
 
 public class Validator {
+    private static final Logger LOGGER = Logger.getLogger(Validator.class);
+
     /**
      * Checks if the user has login and password fields completed.
      *
@@ -12,11 +15,25 @@ public class Validator {
      * @return <code>true</code> if user has login and password fields
      */
     public static boolean validateUserBean(User user) {
-        if (user.getLogin() == null || user.getPassword() == null) {
+        if (user.getLogin() == null) {
+            LOGGER.error("Couldn't validate user bean! Login is null!");
+
+            return false;
+        }
+        if (user.getPassword() == null) {
+            LOGGER.error("Couldn't validate user bean! Password is null!");
+
             return false;
         }
 
-        if (user.getLogin().isEmpty() || user.getPassword().isEmpty()) {
+        if (user.getLogin().isEmpty()) {
+            LOGGER.error("Couldn't validate user bean! Login is empty!");
+
+            return false;
+        }
+        if (user.getPassword().isEmpty()) {
+            LOGGER.error("Couldn't validate user bean! Password is empty!");
+
             return false;
         }
 
@@ -31,6 +48,9 @@ public class Validator {
      */
     public static boolean validateRequestBean(Request request) {
         if (request.getNumber() == 0) {
+            LOGGER.error("Couldn't validate request bean. Request for user with id[" + request.getUserId() +
+                         "] didn't have a number!");
+
             return false;
         }
         return true;
@@ -38,13 +58,29 @@ public class Validator {
 
     /**
      * Checks if the room class, room number and amount of beds is specified
+     *
      * @param room
      * @return <code>true</code> if room has all the necessary parameters
      */
     public static boolean validateRoomBean(Room room) {
-        if (room.getNumber() == 0 || room.getBeds() == 0 || room.getRoomClass() == 0) {
+        if (room.getNumber() == 0) {
+            LOGGER.error("Couldn't validate room bean! Room number is not specified!");
+
             return false;
         }
+
+        if (room.getBeds() == 0) {
+            LOGGER.error("Couldn't validate room bean! Amount of beds is not specified!");
+
+            return false;
+        }
+
+        if (room.getRoomClass() == 0) {
+            LOGGER.error("Couldn't validate room bean! Room class is not specified!");
+
+            return false;
+        }
+
         return true;
     }
 }

@@ -21,7 +21,7 @@ import java.util.List;
         urlPatterns = {"/appointRoom"}
 )
 public class AppointRoomController extends HttpServlet {
-    RequestService requestService = new RequestServiceImpl();
+    private final RequestService requestService = new RequestServiceImpl();
     RoomService roomService = new RoomServiceImpl();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

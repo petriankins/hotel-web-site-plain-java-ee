@@ -4,17 +4,14 @@ import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
-import com.epam.javalab.hotelproject.utils.Validator;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 public class RoomRepository implements RoomDAO {
-    DatabaseService databaseService = DatabaseServiceImpl.getInstance();
-    private Room emptyRoom = new Room();
+    private final DatabaseService databaseService = DatabaseServiceImpl.getInstance();
+    private final Room            emptyRoom       = new Room();
 
     @Override
     public List<Room> findAll() {
@@ -55,7 +52,7 @@ public class RoomRepository implements RoomDAO {
         } finally {
             try {
                 if (resultSet != null && !resultSet.isClosed()) {
-
+                    resultSet.close();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -133,7 +130,7 @@ public class RoomRepository implements RoomDAO {
             preparedStatement.setInt(2, room.getNumber());
             preparedStatement.setInt(3, room.getBeds());
             preparedStatement.setInt(4, room.getRoomClass());
-            return preparedStatement.executeUpdate() == 1 ? true : false;
+            return preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -148,7 +145,7 @@ public class RoomRepository implements RoomDAO {
             preparedStatement.setInt(1, room.getBeds());
             preparedStatement.setInt(2, room.getRoomClass());
             preparedStatement.setInt(3, room.getNumber());
-            return preparedStatement.executeUpdate() == 1 ? true : false;
+            return preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -161,7 +158,7 @@ public class RoomRepository implements RoomDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "DELETE FROM sql11188080.rooms WHERE number = ?")) {
             preparedStatement.setInt(1, room.getNumber());
-            return preparedStatement.executeUpdate() == 1 ? true : false;
+            return preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }

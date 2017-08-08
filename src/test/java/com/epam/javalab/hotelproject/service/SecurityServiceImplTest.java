@@ -1,6 +1,5 @@
 package com.epam.javalab.hotelproject.service;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -8,7 +7,7 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 public class SecurityServiceImplTest {
-    SecurityServiceImpl securityServiceImpl = new SecurityServiceImpl();
+    private final SecurityServiceImpl securityServiceImpl = new SecurityServiceImpl();
     @Test
     public void hash() throws Exception {
         String password = "asdfdhsdhsdfmgasmdglamsodmalsdmlakf33";

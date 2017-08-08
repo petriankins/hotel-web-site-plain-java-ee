@@ -5,13 +5,12 @@ import com.epam.javalab.hotelproject.model.Room;
 import com.epam.javalab.hotelproject.repository.RoomDAO;
 import com.epam.javalab.hotelproject.repository.RoomRepository;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class RoomServiceImpl implements RoomService {
     private static final RoomComparator roomComparator = new RoomComparator();
-    RoomDAO roomDAO = new RoomRepository();
+    private final        RoomDAO        roomDAO        = new RoomRepository();
 
     @Override
     public List<Room> findAll() {
@@ -31,7 +30,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<Room> findTheMostRelevant(Request request) {
         List<Room> roomList = roomDAO.findAvailableRooms(request);
-        Collections.sort(roomList, roomComparator);
+        roomList.sort(roomComparator);
         return roomList;
     }
 }

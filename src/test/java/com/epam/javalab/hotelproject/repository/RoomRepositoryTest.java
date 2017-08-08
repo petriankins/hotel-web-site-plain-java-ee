@@ -16,8 +16,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
 
 public class RoomRepositoryTest {
-    RoomDAO roomDAO = new RoomRepository();
-    Map<Integer, Room> roomMap;
+    private final RoomDAO roomDAO = new RoomRepository();
+    private Map<Integer, Room> roomMap;
 
     private void addRoomsToMap(Map<Integer, Room> roomMap, Room room) {
         roomMap.put(room.getNumber(), room);
