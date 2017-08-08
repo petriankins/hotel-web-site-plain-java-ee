@@ -12,6 +12,8 @@ public interface RequestDAO {
 
     List<Request> findByUser(User user);
 
+    List<Request> findAllHandledRequests();
+
     boolean insertRequest(Request request);
 
     boolean updateRequest(Request request);

@@ -7,9 +7,7 @@ import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class CalculateDaysAmountTest {
+public class DateHelperTest {
     @Test
     public void calculateDaysBetweenDates() throws Exception {
         DatabaseService databaseService = DatabaseServiceImpl.getInstance();
@@ -18,7 +16,7 @@ public class CalculateDaysAmountTest {
         Request request = requestDAO.findByNumber(2);
         System.out.println("Date from:" + request.getDateFrom());
         System.out.println("Date to: " + request.getDateTo());
-        System.out.println("Days between them " + CalculateDaysAmount.calculateDaysBetweenDates(request.getDateFrom(), request.getDateTo()));
+        System.out.println("Days between them " + DateHelper.calculateDaysBetweenDates(request.getDateFrom(), request.getDateTo()));
     }
 
 }
