@@ -48,6 +48,7 @@ public class RequestServiceImpl implements RequestService {
     public List<Request> findAllUnhandledRequests() {
         List<Request> handledRequests = requestDAO.findAllHandledRequests();
         List<Request> allRequests = requestDAO.findAll();
+        allRequests.removeAll(handledRequests);
         return allRequests;
     }
 
