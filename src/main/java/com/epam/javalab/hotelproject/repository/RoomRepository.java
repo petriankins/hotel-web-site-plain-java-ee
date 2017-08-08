@@ -179,9 +179,10 @@ public class RoomRepository implements RoomDAO {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 roomList.add(new Room(resultSet.getInt("id"),
-                        resultSet.getInt("number"),
-                        resultSet.getInt("beds"),
-                        resultSet.getInt("id_class")));
+                        resultSet.getInt("id_user"),
+                        resultSet.getInt("id_room"),
+                        resultSet.getDate("date_from"),
+                        resultSet.getDate("date_to")));
             } else {
                 roomList = findAll();
             }
