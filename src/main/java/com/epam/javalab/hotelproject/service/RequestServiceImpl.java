@@ -44,6 +44,12 @@ public class RequestServiceImpl implements RequestService {
         return requestDAO.insertRequest(request);
     }
 
+    @Override
+    public List<Request> findAllUnhandledRequests() {
+
+        return null;
+    }
+
     private static int generateRequestNumber() {
         AtomicInteger atomicInteger;
         atomicInteger = new AtomicInteger(RequestRepository.returnMaxRequestNumber());

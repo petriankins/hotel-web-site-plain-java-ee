@@ -8,25 +8,25 @@ public class Bill {
     private int sum;
     private int paid;
     private int idRequest;
-    private Date created;
+    private Date dateOfCreation;
     private int idRoom;
 
-    public Bill(int id, int number, int sum, int paid, int idRequest, Date created, int idRoom) {
+    public Bill(int id, int number, int sum, int paid, int idRequest, Date dateOfCreation, int idRoom) {
         this.id = id;
         this.number = number;
         this.sum = sum;
         this.paid = paid;
         this.idRequest = idRequest;
-        this.created = created;
+        this.dateOfCreation = dateOfCreation;
         this.idRoom = idRoom;
     }
 
-    public Bill(int number, int sum, int paid, int idRequest, Date created, int idRoom) {
+    public Bill(int number, int sum, int paid, int idRequest, Date dateOfCreation, int idRoom) {
         this.number = number;
         this.sum = sum;
         this.paid = paid;
         this.idRequest = idRequest;
-        this.created = created;
+        this.dateOfCreation = dateOfCreation;
         this.idRoom = idRoom;
     }
 
@@ -70,12 +70,12 @@ public class Bill {
         this.idRequest = idRequest;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getDateOfCreation() {
+        return dateOfCreation;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 
     public int getIdRoom() {

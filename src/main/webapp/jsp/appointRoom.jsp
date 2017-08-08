@@ -48,7 +48,6 @@ Appoint!
                 <td>Number</td>
                 <td>Beds</td>
                 <td>Stars</td>
-
                 <td>Choose</td>
 
             </tr>
@@ -57,9 +56,7 @@ Appoint!
                     <td>${room.number}</td>
                     <td>${room.beds}</td>
                     <td>${room.roomClass}</td>
-
                     <td><input type="radio" name="roomNumber" value="${room.number}"/></td>
-
                 </tr>
             </c:forEach>
         </table>

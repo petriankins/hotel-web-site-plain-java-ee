@@ -7,11 +7,11 @@ import java.util.List;
 public interface BillDAO {
     List<Bill> findAll();
 
-    Bill findByNumber(int number);
-
     boolean insertBill(Bill bill);
 
     boolean updateBill(Bill bill);
 
     boolean deleteBill(Bill bill);
+
+
 }

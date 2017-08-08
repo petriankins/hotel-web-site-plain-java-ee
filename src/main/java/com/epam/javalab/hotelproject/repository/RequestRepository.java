@@ -62,6 +62,20 @@ public class RequestRepository implements RequestDAO {
     }
 
     @Override
+    public List<Request> findAllHandledRequests() {
+        List<Request> handledRequests = new ArrayList<>();
+        try (Connection connection = databaseService.takeConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT requests.number, requests.id_user, bills.number, bills.sum," +
+                     " bills.paid, bills.created FROM sql11188080.requests INNER JOIN sql11188080.bills ON requests.id = bill.id_request;")) {
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public Request findByNumber(int number) {
         if (number == 0) {
             return emptyRequest();
