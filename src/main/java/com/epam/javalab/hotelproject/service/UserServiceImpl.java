@@ -52,6 +52,11 @@ public class UserServiceImpl implements UserService {
         return userDAO.insertUser(user);
     }
 
+    @Override
+    public User findByLogin(User user) {
+        return userDAO.findByLogin(user.getLogin());
+    }
+
     private boolean loginIsAvailable(String login) {
         return userDAO.findByLogin(login).getLogin().isEmpty();
     }
