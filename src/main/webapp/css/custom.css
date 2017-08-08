@@ -1,0 +1,9 @@
+.navbar-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    color: #9d9d9d;
+}
