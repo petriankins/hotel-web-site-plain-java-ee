@@ -12,7 +12,7 @@ public interface RequestDAO {
 
     List<Request> findByUser(User user);
 
-    List<Request> findAllHandledRequests();
+    List<Request> findAllUnhandledRequests();
 
     boolean insertRequest(Request request);
 
