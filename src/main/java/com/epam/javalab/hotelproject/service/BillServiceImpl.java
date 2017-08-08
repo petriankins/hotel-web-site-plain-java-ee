@@ -3,7 +3,9 @@ package com.epam.javalab.hotelproject.service;
 import com.epam.javalab.hotelproject.model.Bill;
 import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
+import com.epam.javalab.hotelproject.utils.CalculateDaysAmount;
 
+import java.util.Date;
 import java.util.List;
 
 public class BillServiceImpl implements BillService {
@@ -19,8 +21,12 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Bill createBill(Request request) {
-        return null;
-    }
+        int daysRatio = CalculateDaysAmount.calculateDaysBetweenDates(request.getDateFrom(), request.getDateTo());
+        int bedsRatio = request.getBeds();
+        int classRatio = request.getClassID();
+        int totalSum = ((daysRatio * 10) + bedsRatio) * classRatio;
+        return new Bill(1, totalSum, 0, request.getId(), new Date(System.currentTimeMillis()), 1);
+            }
 
     @Override
     public boolean saveBill() {
