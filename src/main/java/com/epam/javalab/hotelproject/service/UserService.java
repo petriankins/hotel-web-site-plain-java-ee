@@ -6,4 +6,6 @@ public interface UserService {
     boolean registerUser(User user);
 
     boolean authenticate(User user);
+
+    User findByLogin(User user);
 }
