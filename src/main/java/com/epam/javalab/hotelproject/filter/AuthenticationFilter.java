@@ -20,7 +20,6 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("Auth filter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
@@ -33,8 +32,6 @@ public class AuthenticationFilter implements Filter {
 
             filterChain.doFilter(servletRequest, servletResponse);
         } else if (session.getAttribute("user") == null) {
-            System.out.println("Redirect");
-
             LOGGER.info("Unauthorized access attempt to uri \"" + request.getRequestURI() + "\"");
 
             response.sendRedirect("/login");
