@@ -72,7 +72,7 @@ public class HeaderTag extends TagSupport {
         pageContext.getOut().write("<span class=\"icon-bar\"></span>");
         pageContext.getOut().write("<span class=\"icon-bar\"></span>");
         pageContext.getOut().write("</button>");
-        pageContext.getOut().write("<table><tr><td><ul>");
+        pageContext.getOut().write("<table><tr><td><ul class=\"navbar-lang-switcher\">");
         pageContext.getOut().write("<select onchange=\"switchLang(this)\">");
         if (session.getAttribute("lang").equals("en")) {
             /*pageContext.getOut().write("<li onClick=\"switchLang(this)\" class=\"navbar-lang active-lang\"><span>EN</span></li>");

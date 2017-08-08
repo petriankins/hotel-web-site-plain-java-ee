@@ -1,3 +1,6 @@
+div.jumbotron {
+    margin-top: 50px;
+}
 .navbar-item {
     line-height: 20px;
     position: relative;
@@ -21,4 +24,8 @@
 
 active-lang {
     background-color: #28a4c9;
+}
+.navbar-lang-switcher {
+    margin: auto;
+    padding-right: 10px;
 }
