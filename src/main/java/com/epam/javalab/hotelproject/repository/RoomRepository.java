@@ -175,7 +175,7 @@ public class RoomRepository implements RoomDAO {
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "SELECT rooms.number, rooms.beds, rooms.id_class" +
-                             "FROM rooms LEFT JOIN roomstatus ON rooms.id = roomstatus.id_room WHERE date_to < ?")) {
+                             "FROM sql11188080.rooms LEFT JOIN sql11188080.roomstatus ON rooms.id = roomstatus.id_room WHERE date_to < ?")) {
             preparedStatement.setDate(1, new java.sql.Date((request.getDateFrom().getTime())));
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
