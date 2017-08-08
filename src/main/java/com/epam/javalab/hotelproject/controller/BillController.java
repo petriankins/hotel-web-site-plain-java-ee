@@ -3,6 +3,7 @@ package com.epam.javalab.hotelproject.controller;
 import com.epam.javalab.hotelproject.model.Bill;
 import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
+import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.*;
 
 import javax.servlet.ServletException;
@@ -32,10 +33,6 @@ public class BillController extends HttpServlet {
 
         HttpSession session = req.getSession();
         Request request = (Request) session.getAttribute("request");
-
-        // TODO find user by ID
-
-
 
         System.out.println("request # " + request.getNumber());
         System.out.println(roomNumber);
