@@ -40,3 +40,8 @@ active-lang {
     color: white;
     font-size: 20px;
 }
+div.info-alert {
+    position: absolute;
+    z-index: 9999999;
+    right: 0;
+}
