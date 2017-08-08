@@ -41,7 +41,7 @@ public class BillController extends HttpServlet {
         System.out.println("request # " + request.getNumber());
         System.out.println(roomNumber);
 
-        Bill bill = billService.createBill(request);
+        Bill bill = billService.createBill(request, room);
         System.out.println("Total sum " + bill.getSum());
         req.setAttribute("bill", bill);
         req.getRequestDispatcher("/jsp/bill.jsp").forward(req, resp);
