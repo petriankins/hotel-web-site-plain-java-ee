@@ -25,8 +25,7 @@ public class BillServiceImpl implements BillService {
         return createdBill;
     }
 
-    @Override
-    public boolean saveBill(Bill bill) {
+    private boolean saveBill(Bill bill) {
         return billDAO.insertBill(bill);
     }
 
