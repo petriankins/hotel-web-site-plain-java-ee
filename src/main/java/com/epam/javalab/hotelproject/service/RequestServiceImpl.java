@@ -51,8 +51,9 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<Request> findAllUnhandledRequests() {
-
-        return null;
+        List<Request> handledRequests = requestDAO.findAllHandledRequests();
+        List<Request> allRequests = requestDAO.findAll();
+        return allRequests;
     }
 
     private static int generateRequestNumber() {
