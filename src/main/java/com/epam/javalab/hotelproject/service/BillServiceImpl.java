@@ -1,6 +1,8 @@
 package com.epam.javalab.hotelproject.service;
 
 import com.epam.javalab.hotelproject.model.Bill;
+import com.epam.javalab.hotelproject.model.Request;
+import com.epam.javalab.hotelproject.model.Room;
 
 import java.util.List;
 
@@ -16,8 +18,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public Bill createBill() {
-        
+    public Bill createBill(Request request) {
         return null;
     }
 
