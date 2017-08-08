@@ -18,10 +18,13 @@
     <h1>Bill</h1>
     <table class="table table-striped">
         <tr><td>Request's #:</td><td>${request.number}</td></tr>
+        <tr><td>Date from:</td><td>${request.dateFrom}</td></tr>
+        <tr><td>Date to:</td><td>${request.dateTo}</td></tr>
         <tr><td>Bill's #:</td><td>${bill.number}</td></tr>
         <tr><td>Room's #:</td><td>${room.number}</td></tr>
         <tr><td>Total Price:</td><td>${bill.sum}</td></tr>
     </table>
+    <p><a class="btn btn-primary btn-md" href="/administrator" role="button">Back to Order List</a></p>
 
 </div>
 
