@@ -40,7 +40,7 @@
                         <td>${request.dateFrom}</td>
                         <td>${request.dateTo}</td>
                         <td>${request.comments}</td>
-                        <td><a href="/appointRoom?requestNumber=${request.number}">Appoint room</a></td>
+                        <%--<td><a href="/appointRoom?requestNumber=${request.number}">Appoint room</a></td>--%>
                     </form>
 
                 </tr>
@@ -51,7 +51,7 @@
 
 <div class="container">
 
-    <h1>Order list</h1>
+    <h1>Unhandled Requests</h1>
     <table class="table table-striped">
         <th>
             <tr>
@@ -73,7 +73,7 @@
                     <td>${request.dateFrom}</td>
                     <td>${request.dateTo}</td>
                     <td>${request.comments}</td>
-                    <%--<td><a href="/appointRoom?requestNumber=${request.number}">Appoint room</a></td>--%>
+                    <td><a href="/appointRoom?requestNumber=${request.number}">Appoint room</a></td>
                 </form>
 
             </tr>
