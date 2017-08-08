@@ -33,6 +33,12 @@ public class AppointRoomController extends HttpServlet {
         List<Room> availableRooms = roomService.getAvailableRooms(request);
         System.out.println(availableRooms);
 
+//        List<Room> availableRooms = new ArrayList<>();
+//        availableRooms.add(new Room(1, 1, 1, 1));
+//        availableRooms.add(new Room(2, 2, 2, 2));
+//        availableRooms.add(new Room());
+//        availableRooms.add(new Room());
+
         req.setAttribute("availableRooms", availableRooms);
         req.getRequestDispatcher("/jsp/appointRoom.jsp").forward(req, resp);
 
@@ -40,7 +46,7 @@ public class AppointRoomController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("/");
+        resp.sendRedirect("/bill");
 
     }
 }
