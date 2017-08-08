@@ -1,15 +1,12 @@
 package com.epam.javalab.hotelproject.repository;
 
 import com.epam.javalab.hotelproject.model.Request;
-import com.sun.org.apache.regexp.internal.RE;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -17,9 +14,9 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
 
 public class RequestRepositoryTest {
-    RequestDAO requestDAO = new RequestRepository();
+    private final RequestDAO requestDAO = new RequestRepository();
 
-    Map<Integer, Request> requestsMap;
+    private Map<Integer, Request> requestsMap;
 
     @Before
     public void setUp() throws Exception {
@@ -63,11 +60,11 @@ public class RequestRepositoryTest {
                              Integer.valueOf(request2.getClassID()).toString());
             return false;
         }
-        if (!compareDates(request1.getDateFrom(), request2.getDateFrom())) {
+        if (compareDates(request1.getDateFrom(), request2.getDateFrom())) {
             printDifferences("Date from", request1.getDateFrom().toString(), request2.getDateFrom().toString());
             return false;
         }
-        if (!compareDates(request1.getDateTo(), request2.getDateTo())) {
+        if (compareDates(request1.getDateTo(), request2.getDateTo())) {
             printDifferences("Date to", request1.getDateTo().toString(), request2.getDateTo().toString());
             return false;
         }
@@ -87,7 +84,7 @@ public class RequestRepositoryTest {
 
     private boolean compareDates(Date date1, Date date2) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return simpleDateFormat.format(date1).toString().equals(simpleDateFormat.format(date2).toString());
+        return !simpleDateFormat.format(date1).equals(simpleDateFormat.format(date2));
     }
 
     @Test

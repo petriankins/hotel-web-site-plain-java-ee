@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class RequestServiceImplTest {
-    RequestService requestService = new RequestServiceImpl();
+    private final RequestService requestService = new RequestServiceImpl();
 
     @Test
     public void saveRequest() throws Exception {

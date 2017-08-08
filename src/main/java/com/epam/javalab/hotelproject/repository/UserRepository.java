@@ -11,20 +11,20 @@ import java.util.List;
 
 // TODO
 public class UserRepository implements UserDAO {
-    DatabaseService databaseService = DatabaseServiceImpl.getInstance();
+    private final DatabaseService databaseService = DatabaseServiceImpl.getInstance();
 
     @Override
     public List<User> findAll() {
-        List users = new ArrayList();
+        List<User> users = new ArrayList<>();
         try (Connection connection = databaseService.takeConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.users");) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.users")) {
             while (resultSet.next()) {
                 users.add(new User(resultSet.getInt("id"),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password"),
-                        resultSet.getString("last_name")));
+                                   resultSet.getString("first_name"),
+                                   resultSet.getString("email"),
+                                   resultSet.getString("password"),
+                                   resultSet.getString("last_name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,18 +44,16 @@ public class UserRepository implements UserDAO {
         ResultSet resultSet = null;
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT * FROM sql11188080.users WHERE email = ?");
+                     "SELECT * FROM sql11188080.users WHERE email = ?")
         ) {
             preparedStatement.setString(1, login);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
-                User user = new User(resultSet.getInt("id"),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password"),
-                        resultSet.getString("last_name"));
-
-                return user;
+                return new User(resultSet.getInt("id"),
+                                resultSet.getString("first_name"),
+                                resultSet.getString("email"),
+                                resultSet.getString("password"),
+                                resultSet.getString("last_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,7 +79,7 @@ public class UserRepository implements UserDAO {
                 preparedStatement.setString(2, user.getPassword());
                 preparedStatement.setString(3, user.getName());
                 preparedStatement.setString(4, user.getLastName());
-                return preparedStatement.executeUpdate() == 1 ? true : false;
+                return preparedStatement.executeUpdate() == 1;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -99,7 +97,7 @@ public class UserRepository implements UserDAO {
                 preparedStatement.setString(2, user.getName());
                 preparedStatement.setString(3, user.getLastName());
                 preparedStatement.setString(4, user.getLogin());
-                return preparedStatement.executeUpdate() == 1 ? true : false;
+                return preparedStatement.executeUpdate() == 1;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -116,7 +114,7 @@ public class UserRepository implements UserDAO {
                          "DELETE FROM `sql11188080`.`users` WHERE email = ?"
                  )) {
                 preparedStatement.setString(1, user.getLogin());
-                return preparedStatement.executeUpdate() == 1 ? true : false;
+                return preparedStatement.executeUpdate() == 1;
             } catch (SQLException e) {
                 e.printStackTrace();
             }

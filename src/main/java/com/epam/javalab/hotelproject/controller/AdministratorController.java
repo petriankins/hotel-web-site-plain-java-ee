@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -26,7 +25,7 @@ import java.util.List;
         urlPatterns = {"/administrator"}
 )
 public class AdministratorController extends HttpServlet {
-    private RequestService requestService = new RequestServiceImpl();
+    private final RequestService requestService = new RequestServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

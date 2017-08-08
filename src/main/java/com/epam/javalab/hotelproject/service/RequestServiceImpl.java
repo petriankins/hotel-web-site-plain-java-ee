@@ -7,13 +7,11 @@ import com.epam.javalab.hotelproject.repository.RequestRepository;
 
 import static com.epam.javalab.hotelproject.utils.Validator.validateRequestBean;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RequestServiceImpl implements RequestService {
-    RequestDAO requestDAO = new RequestRepository();
+    private final RequestDAO requestDAO = new RequestRepository();
 
     @Override
     public List<Request> findAll() {
@@ -23,10 +21,7 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public boolean saveRequest(Request request) {
         request.setNumber(generateRequestNumber());
-        if (!validateRequestBean(request)) {
-            return false;
-        }
-        return createRequest(request);
+        return validateRequestBean(request) && createRequest(request);
     }
 
     @Override

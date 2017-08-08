@@ -1,6 +1,5 @@
 package com.epam.javalab.hotelproject.filter;
 
-import com.epam.javalab.hotelproject.model.User;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;

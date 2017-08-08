@@ -3,6 +3,7 @@ package com.epam.javalab.hotelproject.service;
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.repository.UserDAO;
 import com.epam.javalab.hotelproject.repository.UserRepository;
+import org.apache.log4j.Logger;
 
 import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
 
@@ -14,8 +15,9 @@ import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
  * @since 1.0
  */
 public class UserServiceImpl implements UserService {
-    private SecurityService securityService = new SecurityServiceImpl();
-    private UserDAO         userDAO         = new UserRepository();
+    private static final Logger          LOGGER          = Logger.getLogger(UserServiceImpl.class);
+    private final        SecurityService securityService = new SecurityServiceImpl();
+    private final        UserDAO         userDAO         = new UserRepository();
 
     /**
      * @param user bean from user input
@@ -27,6 +29,8 @@ public class UserServiceImpl implements UserService {
         }
 
         if (!loginIsAvailable(user.getLogin())) {
+            LOGGER.info("User with email \"" + user.getLogin() + "\" already registered!");
+
             return false;
         }
 
@@ -40,11 +44,8 @@ public class UserServiceImpl implements UserService {
      * @return <code>true</code> if authorization was successful, otherwise, if login and password didn't match <code>false</code>
      */
     public boolean authenticate(User user) {
-        if (!validateUserBean(user)) {
-            return false;
-        }
+        return validateUserBean(user) && securityService.authenticate(user);
 
-        return securityService.authenticate(user);
     }
 
     private boolean saveUser(User user) {
@@ -54,7 +55,5 @@ public class UserServiceImpl implements UserService {
     private boolean loginIsAvailable(String login) {
         return userDAO.findByLogin(login).getLogin().isEmpty();
     }
-
-    // TODO what about email?
 
 }

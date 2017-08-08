@@ -15,7 +15,7 @@ import java.security.MessageDigest;
  */
 
 public class SecurityServiceImpl implements SecurityService {
-    private UserDAO userDAO = new UserRepository();
+    private final UserDAO userDAO = new UserRepository();
 
     /**
      * @param password

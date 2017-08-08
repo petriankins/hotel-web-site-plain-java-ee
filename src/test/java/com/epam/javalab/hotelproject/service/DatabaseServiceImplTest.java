@@ -1,6 +1,5 @@
 package com.epam.javalab.hotelproject.service;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -8,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DatabaseServiceImplTest {
-    DatabaseService databaseService = DatabaseServiceImpl.getInstance();
+    private final DatabaseService databaseService = DatabaseServiceImpl.getInstance();
 
     @Test
     public void test() throws Exception {

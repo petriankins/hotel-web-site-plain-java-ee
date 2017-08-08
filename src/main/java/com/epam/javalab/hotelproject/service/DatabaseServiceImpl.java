@@ -26,11 +26,11 @@ public class DatabaseServiceImpl implements DatabaseService {
     /**
      * JDBC driver for MySQL
      */
-    private              String              driverName = "com.mysql.jdbc.Driver";
-    private              String              url        = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11188080";
-    private              String              user       = "sql11188080";
-    private              String              password   = "WFJLwRnBBE";
-    private              int                 poolSize   = 5;
+    private final        String              driverName = "com.mysql.jdbc.Driver";
+    private final        String              url        = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11188080";
+    private final        String              user       = "sql11188080";
+    private final        String              password   = "WFJLwRnBBE";
+    private final        int                 poolSize   = 5;
     /**
      * Singleton instance of Connection pool
      */
@@ -159,7 +159,7 @@ public class DatabaseServiceImpl implements DatabaseService {
      */
 
     private class PooledConnection implements Connection {
-        private Connection connection;
+        private final Connection connection;
 
         public PooledConnection(Connection connection) throws SQLException {
             this.connection = connection;
