@@ -62,7 +62,7 @@ public class RequestRepository implements RequestDAO {
     }
 
     @Override
-    public List<Request> findAllHandledRequests() {
+    public List<Request> findAllUnhandledRequests() {
         List<Request> handledRequests = new ArrayList<>();
         try (Connection connection = databaseService.takeConnection();
              Statement statement = connection.createStatement();

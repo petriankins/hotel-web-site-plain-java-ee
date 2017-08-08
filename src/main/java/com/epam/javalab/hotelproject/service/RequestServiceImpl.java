@@ -7,8 +7,6 @@ import com.epam.javalab.hotelproject.repository.RequestRepository;
 
 import static com.epam.javalab.hotelproject.utils.Validator.validateRequestBean;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -51,7 +49,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<Request> findAllUnhandledRequests() {
-        return requestDAO.findAllHandledRequests();
+        return requestDAO.findAllUnhandledRequests();
     }
 
     private static int generateRequestNumber() {
