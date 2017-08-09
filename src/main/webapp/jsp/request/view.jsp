@@ -6,6 +6,7 @@
 <head>
     <fmt:setLocale value="${sessionScope.lang}"/>
     <fmt:setBundle basename="localization.locale" var="loc"/>
+    <fmt:message bundle="${loc}" key="date_pattern" var="datePattern"/>
     <fmt:message bundle="${loc}" key="page_title.request.view" var="pageTitle"/>
     <title>${pageTitle}</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
@@ -37,10 +38,10 @@
             <div class="row">
                 <fmt:message bundle="${loc}" key="request.view.tablix.date_from" var="requestCheckIn"/>
                 <div class="col-lg-3">${requestCheckIn}:</div>
-                <div class="col-lg-3">${request.dateFrom}</div>
+                <div class="col-lg-3"><fmt:formatDate pattern="${datePattern}" value="${request.dateFrom}"/></div>
                 <fmt:message bundle="${loc}" key="request.view.tablix.date_to" var="requestCheckOut"/>
                 <div class="col-lg-3">${requestCheckOut}:</div>
-                <div class="col-lg-3">${request.dateTo}</div>
+                <div class="col-lg-3"><fmt:formatDate pattern="${datePattern}" value="${request.dateTo}"/></div>
             </div>
             <div class="row">
                 <fmt:message bundle="${loc}" key="request.view.tablix.comments" var="requestComments"/>
