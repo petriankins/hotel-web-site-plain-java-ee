@@ -14,7 +14,7 @@
 <body>
 <ht:HeaderTag/>
 <div class="container container-main">
-    <form action="/request" method="post">
+    <form action="/request?num=${request.number}" method="post">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">

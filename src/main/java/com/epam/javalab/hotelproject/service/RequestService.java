@@ -16,5 +16,7 @@ public interface RequestService {
 
     boolean deleteRequest(Request request);
 
+    boolean updateRequest(Request request);
+
     List<Request> findAllUnhandledRequests();
 }

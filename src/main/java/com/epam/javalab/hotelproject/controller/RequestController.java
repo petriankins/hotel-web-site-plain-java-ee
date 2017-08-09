@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 //TODO what if there is no request with such number?
 //TODO need method for request status. is there a bill for it or no
@@ -47,6 +50,27 @@ public class RequestController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LOGGER.info("Trying to update request!");
+        Request userRequest = extractUserRequestFromHttpRequest(req);
+        LOGGER.info("Request number: " + userRequest.getNumber());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        int beds = 0;
+        int stars = 0;
+        Date defaultDate = new Date();
+        Date dateFrom = defaultDate;
+        Date dateTo = defaultDate;
+
+        try {
+            userRequest.setBeds(Integer.parseInt(getRequestParameter(req, "beds")));
+            userRequest.setClassID(Integer.parseInt(getRequestParameter(req, "stars")));
+            userRequest.setDateFrom(dateFormat.parse(getRequestParameter(req, "checkIn")));
+            userRequest.setDateTo(dateFormat.parse(getRequestParameter(req, "checkOut")));
+            userRequest.setComments(getRequestParameter(req, "comments"));
+            requestService.updateRequest(userRequest);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         resp.sendRedirect("/");
     }
 

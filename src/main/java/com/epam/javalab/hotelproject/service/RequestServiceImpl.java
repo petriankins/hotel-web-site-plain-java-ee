@@ -55,6 +55,11 @@ public class RequestServiceImpl implements RequestService {
         return incrementRequestNumber(atomicInteger);
     }
 
+    @Override
+    public boolean updateRequest(Request request) {
+        return requestDAO.updateRequest(request);
+    }
+
     private static int incrementRequestNumber(AtomicInteger number) {
         return number.incrementAndGet();
     }
