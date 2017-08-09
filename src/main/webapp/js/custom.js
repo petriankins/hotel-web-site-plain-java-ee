@@ -10,17 +10,12 @@ function checkForm(form) {
             form.password.focus();
             return false;
         }
-        if (form.password.value == form.login.value) {
-            alert("Error: Password must be different from Username!");
-            form.password.focus();
-            return false;
-        }
     } else {
         alert("Error: Please check that you've entered and confirmed your password!");
-        form.pwd1.focus();
+        form.password.focus();
         return false;
     }
 
     alert("You entered a valid password: " + form.password.value);
-    return true;
+    document.getElementById('submitBtn').click();
 }
