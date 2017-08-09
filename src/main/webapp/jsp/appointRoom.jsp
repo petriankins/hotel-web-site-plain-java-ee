@@ -16,7 +16,7 @@
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-Appoint!
+
 <div class="container">
 
     <h1>Order</h1>
