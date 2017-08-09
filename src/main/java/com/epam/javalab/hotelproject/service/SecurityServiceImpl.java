@@ -1,5 +1,6 @@
 package com.epam.javalab.hotelproject.service;
 
+import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.repository.UserDAO;
 import com.epam.javalab.hotelproject.repository.UserRepository;
@@ -38,6 +39,7 @@ public class SecurityServiceImpl implements SecurityService {
      * @param user
      * @return <code>true</code> if such user is is already registered
      */
+    @Override
     public boolean authenticate(User user) {
         User registeredUser = userDAO.findByLogin(user.getLogin());
         if (registeredUser.getLogin().isEmpty()) {
@@ -52,6 +54,18 @@ public class SecurityServiceImpl implements SecurityService {
             return true;
         }
         return false;
+    }
+
+    /**
+     *
+     * @param user <code>user</code> bean for authorize check
+     * @param request <code>request</code> bean for authorize check
+     * @return <code>true</code> if user can access provided request, otherwise will return <code>false</code>
+     */
+    @Override
+    public boolean authorize(User user, Request request) {
+        if (user.getLogin().equals("info@hotel.project")) return true;
+        return user.getId() == request.getUserId();
     }
 
     /**
