@@ -35,7 +35,7 @@ public class AppointRoomController extends HttpServlet {
         HttpSession session = req.getSession();
         session.setAttribute("request", request);
 
-        List<Room> availableRooms = roomService.getAvailableRooms(request);
+        List<Room> availableRooms = roomService.findTheMostRelevant(request);
         System.out.println(availableRooms);
 
 //        List<Room> availableRooms = new ArrayList<>();
