@@ -22,6 +22,7 @@
                     <fmt:message bundle="${loc}" key="request.view.tablix.title" var="tablixTitle"/>
                     <div class="col-lg-6">${tablixTitle} №${request.number}</div>
                     <fmt:message bundle="${loc}" key="request.view.tablix.status" var="requestStatus"/>
+                    <%--TODO take actual status based on database info!--%>
                     <div class="col-lg-6 text-right">${requestStatus}: новый</div>
                 </div>
             </h3>
@@ -52,9 +53,11 @@
             </div>
         </div>
         <div class="panel-footer text-right">
-            <%--<a href="#" class="btn btn-primary btn-md">View Bill</a>--%>
-            <fmt:message bundle="${loc}" key="button.edit" var="btnSave"/>
-            <a href="/request?num=${request.number}&action=edit" class="btn btn-primary btn-md">${btnSave}</a>
+            <fmt:message bundle="${loc}" key="button.edit" var="btnEdit"/>
+            <a href="/request?num=${request.number}&action=edit" class="btn btn-primary btn-md">${btnEdit}</a>
+            <fmt:message bundle="${loc}" key="button.delete" var="btnDelete"/>
+            <%--TODO hide delete button if status is not "new"--%>
+            <a href="/request?num=${request.number}&action=delete" class="btn btn-danger btn-md">${btnDelete}</a>
             <fmt:message bundle="${loc}" key="button.back" var="btnBack"/>
             <a href="/" class="btn btn-primary btn-md">${btnBack}</a>
         </div>

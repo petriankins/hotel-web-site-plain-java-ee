@@ -34,12 +34,16 @@ public class RequestController extends HttpServlet {
         String action = req.getParameter("action").trim();
 
         switch (action) {
+            case "view": {
+                viewRequest(req, resp);
+                break;
+            }
             case "edit": {
                 editRequest(req, resp);
                 break;
             }
-            case "view": {
-                viewRequest(req, resp);
+            case "delete": {
+                deleteRequest(req, resp);
                 break;
             }
             default:
@@ -94,6 +98,17 @@ public class RequestController extends HttpServlet {
             req.setAttribute("request", userRequest);
             req.getRequestDispatcher("/jsp/request/edit.jsp").forward(req, resp);
         }
+    }
+
+    private void deleteRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Request userRequest;
+
+        if ((userRequest = extractUserRequestFromHttpRequest(req)).getId() != 0) {
+            requestService.deleteRequest(userRequest);
+        }
+
+        //TODO add message
+        resp.sendRedirect("/");
     }
 
     private Request extractUserRequestFromHttpRequest(HttpServletRequest req) {
