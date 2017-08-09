@@ -34,10 +34,9 @@ public class BillServiceImpl implements BillService {
         return billDAO.deleteBill(bill);
     }
 
-    // TODO Andrei
     @Override
     public int getBillId(Request request) {
-        return 0;
+        return billDAO.getBillId(request);
     }
 
     private int calculatePrice(Request request) {
