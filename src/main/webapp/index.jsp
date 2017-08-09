@@ -14,11 +14,12 @@
 <body>
 <ht:HeaderTag/>
 <c:if test="${not empty message}">
-<div class="alert alert-danger alert-dismissible info-alert" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <fmt:message bundle="${loc}" key="message.login.error" var="loginErrorMessage"/>
-        ${loginErrorMessage}
-</div>
+    <div class="alert alert-danger alert-dismissible info-alert" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <fmt:message bundle="${loc}" key="message.login.error" var="loginErrorMessage"/>
+            ${loginErrorMessage}
+    </div>
 </c:if>
 <div class="jumbotron">
     <div class="container">
@@ -63,7 +64,6 @@
         crossorigin="anonymous">
 </script>
 <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/custom.js"></script>
-    </
-    body >
-    < / html >
+<script src="../js/custom.js"></script>
+</body>
+</html>

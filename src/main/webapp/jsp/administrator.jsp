@@ -22,7 +22,6 @@
     <fmt:message bundle="${loc}" key="unhandledRequests.table" var="unhandledReqTable"/>
     <h1>${unhandledReqTable}</h1>
     <table class="table table-striped">
-        <th>
             <tr>
                 <td>#</td>
                 <fmt:message bundle="${loc}" key="beds" var="beds"/>
@@ -37,7 +36,6 @@
                 <td>${comment}</td>
                 <td></td>
             </tr>
-        </th>
         <c:forEach var="request" items="${unhandledRequests}">
             <tr>
                 <form action="/administrator" method="post">
@@ -60,7 +58,6 @@
     <fmt:message bundle="${loc}" key="allRequests.table" var="allRequestsTable"/>
         <h1>${allRequestsTable}</h1>
         <table class="table table-striped">
-            <th>
                 <tr>
                     <td>#</td>
                     <fmt:message bundle="${loc}" key="beds" var="beds"/>
@@ -75,7 +72,6 @@
                     <td>${comment}</td>
                     <td></td>
                 </tr>
-            </th>
             <c:forEach var="request" items="${allRequests}">
                 <tr>
                     <form action="/administrator" method="post">
