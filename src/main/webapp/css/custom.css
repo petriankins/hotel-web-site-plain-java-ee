@@ -45,3 +45,6 @@ div.info-alert {
     z-index: 9999999;
     right: 0;
 }
+div.container-main {
+    margin-top: 60px;
+}
