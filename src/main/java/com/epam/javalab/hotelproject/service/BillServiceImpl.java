@@ -34,6 +34,12 @@ public class BillServiceImpl implements BillService {
         return billDAO.deleteBill(bill);
     }
 
+    // TODO Andrei
+    @Override
+    public int getBillId(Request request) {
+        return 0;
+    }
+
     private int calculatePrice(Request request) {
         int daysRatio = DateHelper.calculateDaysBetweenDates(request.getDateFrom(), request.getDateTo());
         int bedsRatio = request.getBeds();

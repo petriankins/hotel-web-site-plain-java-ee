@@ -10,4 +10,6 @@ public interface BillService {
     List<Bill> findAll();
     Bill createBill(Request request, Room room);
     boolean deleteBill(Bill bill);
+
+    int getBillId(Request request);
 }
