@@ -4,14 +4,17 @@ import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RoomRepository implements RoomDAO {
     private final DatabaseService databaseService = DatabaseServiceImpl.getInstance();
-    private final Room            emptyRoom       = new Room();
+    private final Room emptyRoom = new Room();
+    private static final Logger LOGGER = Logger.getLogger(RoomRepository.class);
 
     @Override
     public List<Room> findAll() {
@@ -171,17 +174,18 @@ public class RoomRepository implements RoomDAO {
         List<Room> roomList = new ArrayList<>();
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT rooms.number, rooms.beds, rooms.id_class FROM sql11188080.roomstatus" +
-                             " INNER JOIN sql11188080.rooms ON roomstatus.id_room = rooms.id WHERE date_to < ?")) {
+                     "SELECT rooms.* FROM sql11188080.rooms" +
+                             " LEFT JOIN sql11188080.roomstatus ON rooms.id = roomstatus.id_room WHERE roomstatus.date_to < ?" +
+                             " OR roomstatus.date_from IS null OR roomstatus.date_to IS null")) {
             preparedStatement.setDate(1, new java.sql.Date((request.getDateFrom().getTime())));
             resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                roomList.add(new Room(resultSet.getInt("number"),
+            while (resultSet.next()) {
+                roomList.add(new Room(resultSet.getInt("id"),
+                        resultSet.getInt("number"),
                         resultSet.getInt("beds"),
                         resultSet.getInt("id_class")));
-            } else {
-                roomList = findAll();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -192,6 +196,9 @@ public class RoomRepository implements RoomDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+        for (Room room : roomList) {
+            LOGGER.info(room.getNumber());
         }
         return roomList;
     }
