@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 //TODO what if there is no request with such number?
+//TODO need method for request status. is there a bill for it or no
 @WebServlet(
         name = "RequestController",
         urlPatterns = "/request"
@@ -50,21 +51,37 @@ public class RequestController extends HttpServlet {
     }
 
     private void viewRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Request userRequest;
+
+        if ((userRequest = extractUserRequestFromHttpRequest(req)).getId() == 0) {
+            resp.sendRedirect("/");
+        } else {
+            req.setAttribute("request", userRequest);
+            req.getRequestDispatcher("/jsp/request/view.jsp").forward(req, resp);
+        }
+    }
+
+    private void editRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Request userRequest;
+
+        if ((userRequest = extractUserRequestFromHttpRequest(req)).getId() == 0) {
+            resp.sendRedirect("/");
+        } else {
+            req.setAttribute("request", userRequest);
+            req.getRequestDispatcher("/jsp/request/edit.jsp").forward(req, resp);
+        }
+    }
+
+    private Request extractUserRequestFromHttpRequest(HttpServletRequest req) {
         String requestNumber = getRequestParameter(req, "num");
         Request userRequest = requestService.findByNumber(Integer.parseInt(requestNumber));
         User user = (User) req.getSession().getAttribute("user");
 
-        if (securityService.authorize(user, userRequest)) {
-            req.setAttribute("request", userRequest);
-
-            req.getRequestDispatcher("/jsp/request/view.jsp").forward(req, resp);
+        if (!securityService.authorize(user, userRequest)) {
+            userRequest = new Request();
         }
 
-        resp.sendRedirect("/");
-    }
-
-    private void editRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/jsp/request/edit.jsp").forward(req, resp);
+        return userRequest;
     }
 
     private String getRequestParameter(HttpServletRequest req, String parameterName) {
