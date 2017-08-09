@@ -145,4 +145,9 @@ public class RequestRepositoryTest {
         SortedMap<Integer, Request> sortedMap = new TreeMap<>(requestsMap);
         assertThat(RequestRepository.returnMaxRequestNumber(), is(sortedMap.lastKey()));
     }
+
+    @Test
+    public void findUnhandledRequests() throws Exception {
+
+    }
 }
