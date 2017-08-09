@@ -16,6 +16,6 @@ function checkForm(form) {
         return false;
     }
 
-    alert("You entered a valid password: " + form.password.value);
+    alert("You entered a valid password!");
     document.getElementById('submitBtn').click();
 }
