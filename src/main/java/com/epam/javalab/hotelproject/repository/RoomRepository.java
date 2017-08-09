@@ -4,6 +4,7 @@ import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
+import com.epam.javalab.hotelproject.utils.DateHelper;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -177,7 +178,7 @@ public class RoomRepository implements RoomDAO {
                      "SELECT rooms.* FROM sql11188080.rooms" +
                              " LEFT JOIN sql11188080.roomstatus ON rooms.id = roomstatus.id_room WHERE roomstatus.date_to < ?" +
                              " OR roomstatus.date_from IS null OR roomstatus.date_to IS null")) {
-            preparedStatement.setDate(1, new java.sql.Date((request.getDateFrom().getTime())));
+            preparedStatement.setDate(1, DateHelper.javaToSQLDdate(request.getDateFrom()));
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 roomList.add(new Room(resultSet.getInt("id"),
