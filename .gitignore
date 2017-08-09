@@ -12,3 +12,6 @@ tomcat.8080/
 
 # log4j output file
 log.out
+
+#Page for tests
+test.html
