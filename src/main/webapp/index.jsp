@@ -49,7 +49,9 @@
 
                 <br/>
                 <fmt:message bundle="${loc}" key="button.order_page" var="btn_orderPage"/>
-                <button type="submit" class="btn btn-success">${btn_orderPage}</button>
+
+                <button type="button" class="btn btn-success" onclick="checkDates(this.parentNode)">${btn_orderPage}</button>
+                <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">${btn_orderPage}</button>
             </form>
         </div>
     </c:if>
