@@ -42,14 +42,14 @@
                 <fmt:message bundle="${loc}" key="request.view.tablix.date_from" var="requestCheckIn"/>
                 <div class="col-lg-3">${requestCheckIn}:</div>
                 <div class="col-lg-3">
-                    <%--TODO date to input--%>
-                    <input type="date" name="checkIn" class="form-control" value="${request.dateFrom}">
+                    <fmt:formatDate pattern="yyyy-MM-dd" value="${request.dateFrom}" var="dateFrom"/>
+                    <input type="date" name="checkIn" class="form-control" value="${dateFrom}">
                 </div>
                 <fmt:message bundle="${loc}" key="request.view.tablix.date_to" var="requestCheckOut"/>
                 <div class="col-lg-3">${requestCheckOut}:</div>
                 <div class="col-lg-3">
-                    <%--TODO date to input--%>
-                    <input type="date" name="checkOut" class="form-control" value="${request.dateTo}">
+                    <fmt:formatDate pattern="yyyy-MM-dd" value="${request.dateTo}" var="dateTo"/>
+                    <input type="date" name="checkOut" class="form-control" value="${dateTo}">
                 </div>
             </div>
             <div class="row">
