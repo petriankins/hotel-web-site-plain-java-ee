@@ -38,7 +38,8 @@
             <label>Password confirm:</label>
             <input type="password" name="passwordConfirm" class="form-control" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-success btn-md">Sign up</button>
+        <button type="button" class="btn btn-success btn-md" onclick="checkForm(this.parentNode);" >Sign up</button>
+        <button type="submit" class="btn btn-success btn-md" id="submitBtn" style="display: none;">Sign up</button>
         <a class="btn btn-primary btn-md" href="/" role="button">Back</a>
     </form>
 </div>
@@ -47,5 +48,6 @@
         crossorigin="anonymous">
 </script>
 <script src="../js/bootstrap.min.js"></script>
+<script src="../js/custom.js"></script>
 </body>
 </html>
