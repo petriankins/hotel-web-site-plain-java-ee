@@ -12,5 +12,8 @@ public class DateHelper {
         long diff = dateTo.getTime() - dateFrom.getTime();
         return (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
+    public static java.sql.Date javaToSQLDdate(Date javaDate) {
+        return new java.sql.Date(javaDate.getTime());
+    }
 
 }
