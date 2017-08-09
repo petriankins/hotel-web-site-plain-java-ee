@@ -50,10 +50,12 @@
                 <div class="col-lg-12">${request.comments}</div>
             </div>
         </div>
-        <div class="panel-footer">
-            <a href="/request?num=${request.number}&action=edit" class="btn btn-primary btn-md">View Bill</a>
-            <a href="/logout" class="btn btn-primary btn-md">Edit</a>
-            <a href="/logout" class="btn btn-primary btn-md">Back</a>
+        <div class="panel-footer text-right">
+            <%--<a href="#" class="btn btn-primary btn-md">View Bill</a>--%>
+            <fmt:message bundle="${loc}" key="button.edit" var="btnEdit"/>
+            <a href="/request?num=${request.number}&action=edit" class="btn btn-primary btn-md">${btnEdit}</a>
+            <fmt:message bundle="${loc}" key="button.back" var="btnBack"/>
+            <a href="/" class="btn btn-primary btn-md">${btnBack}</a>
         </div>
     </div>
 </div>
