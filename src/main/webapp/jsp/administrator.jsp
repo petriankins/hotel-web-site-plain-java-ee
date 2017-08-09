@@ -40,7 +40,7 @@
                         <td>${request.dateFrom}</td>
                         <td>${request.dateTo}</td>
                         <td>${request.comments}</td>
-                        <%--<td><a href="/appointRoom?requestNumber=${request.number}">Appoint room</a></td>--%>
+                        <td><a href="/appointRoom?requestNumber=${request.number}">Appoint room</a></td>
                     </form>
 
                 </tr>
