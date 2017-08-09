@@ -66,7 +66,7 @@ public class OrderController extends HttpServlet {
             request.getDateTo().equals(defaultDate)) {
             message = "Fill all fields please";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         } else {
             if (requestService.saveRequest(request)) {
                 message = "Reservation have gone correct. Bill will be email to you";
@@ -74,7 +74,7 @@ public class OrderController extends HttpServlet {
                 message = "Something went wrong : (";
             }
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
 
         }
     }

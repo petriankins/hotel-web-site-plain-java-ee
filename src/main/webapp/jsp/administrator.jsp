@@ -59,8 +59,6 @@
                     <td>Stars</td>
                     <td>Check-in date</td>
                     <td>Check-out date</td>
-                    <td>Comment</td>
-                    <td>Complete!</td>
                 </tr>
             </th>
             <c:forEach var="request" items="${allRequests}">
@@ -71,7 +69,6 @@
                         <td>${request.classID}</td>
                         <td>${request.dateFrom}</td>
                         <td>${request.dateTo}</td>
-                        <td>${request.comments}</td>
                         <%--<td><a href="/appointRoom?requestNumber=${request.number}">Appoint room</a></td>--%>
                     </form>
 
