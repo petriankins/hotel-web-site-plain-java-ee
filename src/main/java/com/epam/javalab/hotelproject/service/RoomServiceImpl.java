@@ -29,7 +29,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<Room> findTheMostRelevant(Request request) {
-        List<Room> roomList = roomDAO.findAvailableRooms(request);
+        List<Room> roomList = getAvailableRooms(request);
         roomList.sort(roomComparator);
         return roomList;
     }
