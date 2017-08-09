@@ -10,22 +10,33 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Bill Page</title>
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="localization.locale" var="loc"/>
+    <fmt:message bundle="${loc}" key="billPage.title" var="billPageTitle"/>
+    <title>${billPageTitle}</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
-    <h1>Bill</h1>
+    <fmt:message bundle="${loc}" key="billPage.title" var="billPageTitle"/>
+    <h1>${billPageTitle}</h1>
     <table class="table table-striped">
-        <tr><td>Request's #:</td><td>${request.number}</td></tr>
-        <tr><td>Date from:</td><td><fmt:formatDate value="${request.dateFrom}" pattern="yyyy-MM-dd" /></td></tr>
-        <tr><td>Date to:</td><td><fmt:formatDate value="${request.dateTo}" pattern="yyyy-MM-dd" /></td></tr>
-        <tr><td>Bill's #:</td><td>${bill.number}</td></tr>
-        <tr><td>Room's #:</td><td>${room.number}</td></tr>
-        <tr><td>Total Price:</td><td>${bill.sum}</td></tr>
+        <fmt:message bundle="${loc}" key="reqestsNumber" var="reqestsNumber"/>
+        <tr><td>${reqestsNumber}</td><td>${request.number}</td></tr>
+        <fmt:message bundle="${loc}" key="checkInDate" var="checkInDate"/>
+        <tr><td>${checkInDate}</td><td><fmt:formatDate value="${request.dateFrom}" pattern="yyyy-MM-dd" /></td></tr>
+        <fmt:message bundle="${loc}" key="checkOutDate" var="checkOutDate"/>
+        <tr><td>${checkOutDate}</td><td><fmt:formatDate value="${request.dateTo}" pattern="yyyy-MM-dd" /></td></tr>
+        <fmt:message bundle="${loc}" key="billsNumber" var="billsNumber"/>
+        <tr><td>${billsNumber}</td><td>${bill.number}</td></tr>
+        <fmt:message bundle="${loc}" key="roomsNumber" var="roomsNumber"/>
+        <tr><td>${roomsNumber}</td><td>${room.number}</td></tr>
+        <fmt:message bundle="${loc}" key="totalPrice" var="totalPrice"/>
+        <tr><td>${totalPrice}</td><td>${bill.sum}</td></tr>
     </table>
-    <p><a class="btn btn-primary btn-md" href="/administrator" role="button">Back to Order List</a></p>
+    <fmt:message bundle="${loc}" key="bakToOrderListBtn" var="bakToOrderListBtn"/>
+    <p><a class="btn btn-primary btn-md" href="/administrator" role="button">${bakToOrderListBtn}</a></p>
 
 </div>
 
