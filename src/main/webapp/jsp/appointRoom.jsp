@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -16,7 +15,6 @@
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container">
 
     <h1>Order</h1>
@@ -35,8 +33,8 @@
                 <td>${request.number}</td>
                 <td>${request.beds}</td>
                 <td>${request.classID}</td>
-                <td><fmt:formatDate value="${request.dateFrom}" pattern="yyyy-MM-dd" /></td>
-                <td><fmt:formatDate value="${request.dateTo}" pattern="yyyy-MM-dd" /></td>
+                <td>${request.dateFrom}</td>
+                <td>${request.dateTo}</td>
                 <td>${request.comments}</td>
             </tr>
         </th>
