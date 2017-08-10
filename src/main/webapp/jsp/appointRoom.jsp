@@ -43,8 +43,8 @@
                 <td>${request.number}</td>
                 <td>${request.beds}</td>
                 <td>${request.classID}</td>
-                <td>${request.dateFrom}</td>
-                <td>${request.dateTo}</td>
+                <td><fmt:formatDate value="${request.dateFrom}" pattern="dd-MM-yyyy" /></td>
+                <td><fmt:formatDate value="${request.dateTo}" pattern="dd-MM-yyyy" /></td>
                 <td>${request.comments}</td>
             </tr>
     </table>
