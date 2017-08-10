@@ -15,7 +15,8 @@
 <ht:HeaderTag/>
 <c:if test="${not empty message}">
     <div class="alert alert-danger alert-dismissible info-alert" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
         <fmt:message bundle="${loc}" key="message.login.error" var="loginErrorMessage"/>
             ${loginErrorMessage}
     </div>
@@ -50,8 +51,10 @@
                 <br/>
                 <fmt:message bundle="${loc}" key="button.order_page" var="btn_orderPage"/>
 
-                <button type="button" class="btn btn-success" onclick="checkDates(this.parentNode)">${btn_orderPage}</button>
-                <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">${btn_orderPage}</button>
+                <button type="button" class="btn btn-success"
+                        onclick="checkDates(this.parentNode)">${btn_orderPage}</button>
+                <button type="submit" class="btn btn-success" id="submitBtn"
+                        style="display: none;">${btn_orderPage}</button>
             </form>
         </div>
     </c:if>

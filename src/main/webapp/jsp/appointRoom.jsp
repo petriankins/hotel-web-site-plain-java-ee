@@ -11,46 +11,55 @@
 
 <html>
 <head>
-    <title>Appoint room</title>
+    <fmt:setLocale value="${sessionScope.lang}"/>
+    <fmt:setBundle basename="localization.locale" var="loc"/>
+    <fmt:message bundle="${loc}" key="appointRoom.title" var="appointRoomTitle"/>
+    <title>${appointRoomTitle}</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container">
 
-    <h1>Order</h1>
+    <fmt:message bundle="${loc}" key="order.table" var="orderTable"/>
+    <h1>${orderTable}</h1>
     <table class="table table-striped">
-        <th>
-            <tr>
-                <td>#</td>
-                <td>Beds</td>
-                <td>Stars</td>
-                <td>Check-in date</td>
-                <td>Check-out date</td>
-                <td>Comment</td>
-            </tr>
-        <th>
+        <tr>
+            <td>#</td>
+            <fmt:message bundle="${loc}" key="beds" var="beds"/>
+            <td>${beds}</td>
+            <fmt:message bundle="${loc}" key="stars" var="stars"/>
+            <td>${stars}</td>
+            <fmt:message bundle="${loc}" key="checkInDate" var="checkInDate"/>
+            <td>${checkInDate}</td>
+            <fmt:message bundle="${loc}" key="checkOutDate" var="checkOutDate"/>
+            <td>${checkOutDate}</td>
+            <fmt:message bundle="${loc}" key="comment" var="comment"/>
+            <td>${comment}</td>
+        </tr>
             <tr>
                 <td>${request.number}</td>
                 <td>${request.beds}</td>
                 <td>${request.classID}</td>
-                <td><fmt:formatDate value="${request.dateFrom}" pattern="yyyy-MM-dd" /></td>
-                <td><fmt:formatDate value="${request.dateTo}" pattern="yyyy-MM-dd" /></td>
+                <td>${request.dateFrom}</td>
+                <td>${request.dateTo}</td>
                 <td>${request.comments}</td>
             </tr>
-        </th>
     </table>
-    <h1>Available rooms</h1>
+    <fmt:message bundle="${loc}" key="availableRooms.table" var="availableRoomsTable"/>
+    <h1>${availableRoomsTable}</h1>
 
     <form style="width:200px" action="/bill" method="post">
         <table class="table table-striped">
             <tr>
-                <td>Number</td>
-                <td>Beds</td>
-                <td>Stars</td>
-                <td>Choose</td>
-
+                <fmt:message bundle="${loc}" key="number" var="number"/>
+                <td>${number}</td>
+                <fmt:message bundle="${loc}" key="beds" var="beds"/>
+                <td>${beds}</td>
+                <fmt:message bundle="${loc}" key="stars" var="stars"/>
+                <td>${stars}</td>
+                <fmt:message bundle="${loc}" key="choose.row" var="choose"/>
+                <td>${choose}</td>
             </tr>
             <c:forEach var="room" items="${availableRooms}">
                 <tr>
@@ -61,8 +70,9 @@
                 </tr>
             </c:forEach>
         </table>
-       <button type="submit" class="btn btn-primary btn-md">Bill</button>
-   </form>
+        <fmt:message bundle="${loc}" key="bill.button" var="bill"/>
+        <button type="submit" class="btn btn-primary btn-md">${bill}</button>
+    </form>
 
 </div>
 </body>
