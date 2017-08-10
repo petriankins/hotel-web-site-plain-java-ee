@@ -35,9 +35,12 @@
     <div class="container">
         <fmt:message bundle="${loc}" key="home.welcome" var="welcome"/>
         <h1>${welcome}</h1>
+        <fmt:message bundle="${loc}" key="home.page.text" var="homePageText"/>
+        <p>${homePageText}</p>
         <fmt:message bundle="${loc}" key="home.description" var="description"/>
         <h2>${description}</h2>
     </div>
+
     <c:if test="${sessionScope.user != null}">
         <div class="container">
             <form action="/order" method="post">
@@ -68,7 +71,6 @@
                 <label>${form_checkInLabel}</label>
                 <input type="date" name="checkIn" class="form-control">
 
-
                 <fmt:message bundle="${loc}" key="order.form.check_out.label" var="form_checkOutLabel"/>
                 <label>${form_checkOutLabel}</label>
                 <input type="date" name="checkOut" class="form-control">
@@ -87,7 +89,6 @@
                 <div class="alert alert-warning" role="alert" style="display:none" id="empty dates">${form_noDatesAlertcommentsLabel}</div>
 
                 <br/>
-
                 <fmt:message bundle="${loc}" key="button.order_page" var="btn_orderPage"/>
 
                 <button type="button" class="btn btn-success"
