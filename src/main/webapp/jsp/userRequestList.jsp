@@ -3,19 +3,23 @@
 <fmt:setBundle basename="localization.locale" var="loc"/>
 <fmt:message bundle="${loc}" key="date_pattern" var="datePattern"/>
 <div class="container">
-    <%--<fmt:message bundle="${loc}" key="unhandledRequests.table" var="unhandledReqTable"/>--%>
-    <h1>My requests</h1>
+    <fmt:message bundle="${loc}" key="home.my_requests.tablix.title" var="tablixTitle"/>
+    <h1>${tablixTitle}</h1>
     <table class="table table-striped">
         <tr>
             <th>#</th>
-            <th>Beds</th>
-            <th>Class</th>
-            <th>From</th>
-            <th>To</th>
+            <fmt:message bundle="${loc}" key="request.tablix.beds" var="requestBeds"/>
+            <th>${requestBeds}</th>
+            <fmt:message bundle="${loc}" key="request.tablix.class" var="requestClass"/>
+            <th>${requestClass}</th>
+            <fmt:message bundle="${loc}" key="request.tablix.date_from" var="requestCheckIn"/>
+            <th>${requestCheckIn}</th>
+            <fmt:message bundle="${loc}" key="request.tablix.date_to" var="requestCheckOut"/>
+            <th>${requestCheckOut}</th>
         </tr>
         <c:forEach var="request" items="${userRequests}">
             <tr>
-                <td>${request.number}</td>
+                <td><a href="/request?num=${request.number}&action=view">${request.number}</a></td>
                 <td>${request.beds}</td>
                 <td>${request.classID}</td>
                 <td><fmt:formatDate pattern="${datePattern}" value="${request.dateFrom}"/></td>
