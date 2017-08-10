@@ -1,6 +1,7 @@
 package com.epam.javalab.hotelproject.repository;
 
 import com.epam.javalab.hotelproject.model.Bill;
+import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
 import com.epam.javalab.hotelproject.utils.DateHelper;
@@ -82,5 +83,29 @@ public class BillRepository implements BillDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public int getBillId(Request request) {
+        if(request == null){
+            return 0;
+        }
+        int requestId = request.getId();
+
+        ResultSet resultSet = null;
+        try (Connection connection = databaseService.takeConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT * FROM sql11188080.bills WHERE id_request = ?"))
+        {
+            preparedStatement.setInt(1, requestId);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.first()){
+                return resultSet.getInt("id");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
