@@ -77,7 +77,7 @@ public class HeaderTag extends TagSupport {
                   requestService.findAll().size() + "</span></button>");*/
         out.write("<a href=\"/administrator\" class=\"btn btn-danger btn-md\">" +
                   resourceBundle.getString("statusbar.request.text") + " <span class=\"badge\">" +
-                  requestService.findAll().size() + "</span></button>");
+                  requestService.findAllUnhandledRequests().size() + "</span></button>");
         out.write("<td class=\"navbar-info-container-item\">");
         out.write("<a href=\"/logout\" class=\"btn btn-danger btn-md\">" + resourceBundle.getString("button.logout") +
                   "</a>");
