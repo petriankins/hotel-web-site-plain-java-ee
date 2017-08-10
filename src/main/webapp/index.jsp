@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ht" uri="/WEB-INF/headerTag.tld" %>
+<%@ taglib prefix="h1" uri="/WEB-INF/headerTag.tld" %>
 <html>
 <head>
     <fmt:setLocale value="${sessionScope.lang}"/>
@@ -21,6 +22,15 @@
             ${loginErrorMessage}
     </div>
 </c:if>
+<c:if test="${not empty successMessage}">
+    <div class="alert alert-success alert-dismissible info-alert" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <fmt:message bundle="${loc}" key="registration.successful.key" var="successMsg"/>
+            ${successMsg}
+    </div>
+</c:if>
+
 <div class="jumbotron">
     <div class="container">
         <fmt:message bundle="${loc}" key="home.welcome" var="welcome"/>

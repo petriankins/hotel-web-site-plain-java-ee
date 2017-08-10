@@ -12,11 +12,6 @@
 </head>
 <body>
 <div class="container">
-    <c:if test="${not empty message}">
-        <div class="alert alert-danger">
-                ${message}
-        </div>
-    </c:if>
     <form action="/registration" method="post">
         <div class="form-group">
             <label>First name:</label>

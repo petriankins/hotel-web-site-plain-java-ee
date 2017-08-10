@@ -37,16 +37,17 @@ public class RegistrationController extends HttpServlet {
         if (userService.registerUser(user)) {
             userService.authenticate(user);
             message = "You have been successfully registered!";
-            req.setAttribute("message", message);
+            req.setAttribute("successMsg", message);
 
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
 
-            resp.sendRedirect("/");
+            req.setAttribute("successMessage", "1");
+            req.getRequestDispatcher("/").forward(req, resp);
 
         } else {
-            message = "Something has gone wrong! Try again.";
-            req.setAttribute("message", message);
+            message = "Something went wrong! Try again.";
+            req.setAttribute("successMsg", message);
             req.getRequestDispatcher("/jsp/registration.jsp").forward(req, resp);
         }
     }
