@@ -142,7 +142,7 @@ public class RequestRepository implements RequestDAO {
                 preparedStatement.setInt(3, request.getBeds());
                 preparedStatement.setInt(4, request.getClassID());
                 preparedStatement.setDate(5, DateHelper.javaToSQLDdate(request.getDateFrom()));
-                preparedStatement.setDate(6, DateHelper.javaToSQLDdate(request.getDateFrom()));
+                preparedStatement.setDate(6, DateHelper.javaToSQLDdate(request.getDateTo()));
                 preparedStatement.setString(7, request.getComments());
                 return preparedStatement.executeUpdate() == 1;
 
