@@ -34,6 +34,8 @@
     <div class="container">
         <fmt:message bundle="${loc}" key="home.welcome" var="welcome"/>
         <h1>${welcome}</h1>
+        <fmt:message bundle="${loc}" key="home.description" var="description"/>
+        <h2>${description}</h2>
     </div>
     <c:if test="${sessionScope.user != null}">
         <div class="container">
