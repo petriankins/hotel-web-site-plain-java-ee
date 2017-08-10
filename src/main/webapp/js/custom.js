@@ -20,3 +20,21 @@ function checkForm(form) {
     alert("You entered a valid password!");
     document.getElementById('submitBtn').click();
 }
+function checkDates(form) {
+    var checkInDate = new Date(form.checkIn.value);
+    var checkOutDate = new Date(form.checkOut.value);
+    if (checkInDate != null && checkOutDate != null) {
+
+        if (checkInDate.getTime() > checkOutDate.getTime()) {
+            alert("The first date is after the second date!");
+            form.checkIn.focus();
+            return false;
+        }
+    }
+    else {
+        alert("Please fill the dates ");
+        form.checkInt.focus();
+        return false;
+    }
+    document.getElementById('submitBtn').click();
+}
