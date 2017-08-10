@@ -14,4 +14,6 @@ public interface DatabaseService {
     void closeConnection(Connection connection);
 
     void dispose();
+
+    String getDatabaseName();
 }

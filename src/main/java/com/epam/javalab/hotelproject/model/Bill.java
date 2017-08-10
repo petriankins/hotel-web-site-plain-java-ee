@@ -3,13 +3,17 @@ package com.epam.javalab.hotelproject.model;
 import java.util.Date;
 
 public class Bill {
-    private int id;
-    private int number;
-    private int sum;
-    private int paid;
-    private int idRequest;
+    private int  id;
+    private int  number;
+    private int  sum;
+    private int  paid;
+    private int  idRequest;
     private Date dateOfCreation;
-    private int idRoom;
+    private int  idRoom;
+
+    public Bill() {
+        this(0, 0, 0, 0, 0, new Date(), 0);
+    }
 
     public Bill(int id, int number, int sum, int paid, int idRequest, Date dateOfCreation, int idRoom) {
         this.id = id;

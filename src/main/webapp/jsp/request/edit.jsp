@@ -21,8 +21,8 @@
                     <div class="row">
                         <fmt:message bundle="${loc}" key="request.view.tablix.title" var="tablixTitle"/>
                         <div class="col-lg-6">${tablixTitle} №${request.number}</div>
-                        <fmt:message bundle="${loc}" key="request.view.tablix.status" var="requestStatus"/>
-                        <div class="col-lg-6 text-right">${requestStatus}: новый</div>
+                        <fmt:message bundle="${loc}" key="request.view.tablix.status" var="requestStatusText"/>
+                        <div class="col-lg-6 text-right">${requestStatusText}: новый</div>
                     </div>
                 </h3>
             </div>

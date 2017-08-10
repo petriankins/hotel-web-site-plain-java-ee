@@ -15,6 +15,7 @@ import java.util.concurrent.Executor;
  * @version 1.0
  */
 public class DatabaseServiceImpl implements DatabaseService {
+    private final String DB_NAME = "sql11188080";
     /**
      * Array of available connections from Connection pool
      */
@@ -27,10 +28,10 @@ public class DatabaseServiceImpl implements DatabaseService {
      * JDBC driver for MySQL
      */
     private final        String              driverName = "com.mysql.jdbc.Driver";
-    private final        String              url        = "jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11188080";
+    private final        String              url        = "jdbc:mysql://sql11.freemysqlhosting.net:3306/" + DB_NAME;
     private final        String              user       = "sql11188080";
     private final        String              password   = "WFJLwRnBBE";
-    private final        int                 poolSize   = 5;
+    private final        int                 poolSize   = 2;
     /**
      * Singleton instance of Connection pool
      */
@@ -52,6 +53,11 @@ public class DatabaseServiceImpl implements DatabaseService {
         } catch (ClassNotFoundException e1) {
             System.out.println(e1.getMessage());
         }
+    }
+
+    @Override
+    public String getDatabaseName() {
+        return DB_NAME;
     }
 
     /**

@@ -2,10 +2,7 @@ package com.epam.javalab.hotelproject.controller;
 
 import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.User;
-import com.epam.javalab.hotelproject.service.RequestService;
-import com.epam.javalab.hotelproject.service.RequestServiceImpl;
-import com.epam.javalab.hotelproject.service.SecurityService;
-import com.epam.javalab.hotelproject.service.SecurityServiceImpl;
+import com.epam.javalab.hotelproject.service.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -28,6 +25,7 @@ public class RequestController extends HttpServlet {
     private final static Logger          LOGGER          = Logger.getLogger(RequestController.class);
     private final        RequestService  requestService  = new RequestServiceImpl();
     private final        SecurityService securityService = new SecurityServiceImpl();
+    private final        BillService     billService     = new BillServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -57,22 +55,25 @@ public class RequestController extends HttpServlet {
         LOGGER.info("Trying to update request!");
         Request userRequest = extractUserRequestFromHttpRequest(req);
         LOGGER.info("Request number: " + userRequest.getNumber());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        int beds = 0;
-        int stars = 0;
-        Date defaultDate = new Date();
-        Date dateFrom = defaultDate;
-        Date dateTo = defaultDate;
+        // TODO Message that u can't edit it!
+        if (requestService.getRequestStatus(userRequest).equals("1")) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            int beds = 0;
+            int stars = 0;
+            Date defaultDate = new Date();
+            Date dateFrom = defaultDate;
+            Date dateTo = defaultDate;
 
-        try {
-            userRequest.setBeds(Integer.parseInt(getRequestParameter(req, "beds")));
-            userRequest.setClassID(Integer.parseInt(getRequestParameter(req, "stars")));
-            userRequest.setDateFrom(dateFormat.parse(getRequestParameter(req, "checkIn")));
-            userRequest.setDateTo(dateFormat.parse(getRequestParameter(req, "checkOut")));
-            userRequest.setComments(getRequestParameter(req, "comments"));
-            requestService.updateRequest(userRequest);
-        } catch (ParseException e) {
-            e.printStackTrace();
+            try {
+                userRequest.setBeds(Integer.parseInt(getRequestParameter(req, "beds")));
+                userRequest.setClassID(Integer.parseInt(getRequestParameter(req, "stars")));
+                userRequest.setDateFrom(dateFormat.parse(getRequestParameter(req, "checkIn")));
+                userRequest.setDateTo(dateFormat.parse(getRequestParameter(req, "checkOut")));
+                userRequest.setComments(getRequestParameter(req, "comments"));
+                requestService.updateRequest(userRequest);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         resp.sendRedirect("/");
@@ -85,6 +86,10 @@ public class RequestController extends HttpServlet {
             resp.sendRedirect("/");
         } else {
             req.setAttribute("request", userRequest);
+            String requestStatus = requestService.getRequestStatus(userRequest);
+            LOGGER.debug("Request #" + userRequest.getNumber() + " status is " + requestStatus);
+            req.setAttribute("requestStatus", requestStatus);
+
             req.getRequestDispatcher("/jsp/request/view.jsp").forward(req, resp);
         }
     }
@@ -103,7 +108,9 @@ public class RequestController extends HttpServlet {
     private void deleteRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Request userRequest;
 
-        if ((userRequest = extractUserRequestFromHttpRequest(req)).getId() != 0) {
+        if ((userRequest = extractUserRequestFromHttpRequest(req)).getId() != 0 &&
+            !requestService.getRequestStatus(userRequest).equals("3")) {
+            LOGGER.debug("Trying to delete Request# " + userRequest.getNumber());
             requestService.deleteRequest(userRequest);
         }
 

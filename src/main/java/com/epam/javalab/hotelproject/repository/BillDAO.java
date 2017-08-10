@@ -16,5 +16,5 @@ public interface BillDAO {
 
     int getBillId(Request request);
 
-
+    Bill findById(int id);
 }

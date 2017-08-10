@@ -19,4 +19,6 @@ public interface RequestService {
     boolean updateRequest(Request request);
 
     List<Request> findAllUnhandledRequests();
+
+    String getRequestStatus(Request request);
 }

@@ -6,12 +6,14 @@ import com.epam.javalab.hotelproject.model.Room;
 import com.epam.javalab.hotelproject.repository.BillDAO;
 import com.epam.javalab.hotelproject.repository.BillRepository;
 import com.epam.javalab.hotelproject.utils.DateHelper;
+import org.apache.log4j.Logger;
 
 import java.util.Date;
 import java.util.List;
 
 public class BillServiceImpl implements BillService {
-    BillDAO billDAO = new BillRepository();
+    private final static Logger  LOGGER  = Logger.getLogger(BillServiceImpl.class);
+    private final BillDAO billDAO = new BillRepository();
 
     @Override
     public List<Bill> findAll() {
@@ -20,7 +22,8 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Bill createBill(Request request, Room room) {
-        Bill createdBill = new Bill(request.getNumber(), calculatePrice(request), 0, request.getId(), new Date(System.currentTimeMillis()), room.getId());
+        Bill createdBill = new Bill(request.getNumber(), calculatePrice(request), 0, request.getId(),
+                                    new Date(System.currentTimeMillis()), room.getId());
         saveBill(createdBill);
         return createdBill;
     }
@@ -37,6 +40,19 @@ public class BillServiceImpl implements BillService {
     @Override
     public int getBillId(Request request) {
         return billDAO.getBillId(request);
+    }
+
+    @Override
+    public Bill getRequestBill(Request request) {
+        LOGGER.debug("Looking up bill for Request#" + request.getNumber());
+        int bilId = billDAO.getBillId(request);
+        LOGGER.debug("Received billId " + bilId);
+        if (bilId == 0) {
+            LOGGER.debug("Sending empty bill");
+            return new Bill();
+        }
+
+        return billDAO.findById(bilId);
     }
 
     private int calculatePrice(Request request) {

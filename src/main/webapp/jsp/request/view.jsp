@@ -21,9 +21,23 @@
                 <div class="row">
                     <fmt:message bundle="${loc}" key="request.view.tablix.title" var="tablixTitle"/>
                     <div class="col-lg-6">${tablixTitle} №${request.number}</div>
-                    <fmt:message bundle="${loc}" key="request.view.tablix.status" var="requestStatus"/>
+                    <fmt:message bundle="${loc}" key="request.view.tablix.status" var="requestStatusText"/>
                     <%--TODO take actual status based on database info!--%>
-                    <div class="col-lg-6 text-right">${requestStatus}: новый</div>
+                    <c:choose>
+                        <c:when test="${requestStatus == '1'}">
+                            <fmt:message bundle="${loc}" key="request.view.status.new" var="requestStatusLoc"/>
+                        </c:when>
+                        <c:when test="${requestStatus == '2'}">
+                            <fmt:message bundle="${loc}" key="request.view.status.billed" var="requestStatusLoc"/>
+                        </c:when>
+                        <c:when test="${requestStatus == '3'}">
+                            <fmt:message bundle="${loc}" key="request.view.status.paid" var="requestStatusLoc"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="requestStatus" value=""/>
+                        </c:otherwise>
+                    </c:choose>
+                    <div class="col-lg-6 text-right">${requestStatusText}: ${requestStatusLoc}</div>
                 </div>
             </h3>
         </div>
@@ -53,11 +67,14 @@
             </div>
         </div>
         <div class="panel-footer text-right">
-            <fmt:message bundle="${loc}" key="button.edit" var="btnEdit"/>
-            <a href="/request?num=${request.number}&action=edit" class="btn btn-primary btn-md">${btnEdit}</a>
-            <fmt:message bundle="${loc}" key="button.delete" var="btnDelete"/>
-            <%--TODO hide delete button if status is not "new"--%>
-            <a href="/request?num=${request.number}&action=delete" class="btn btn-danger btn-md">${btnDelete}</a>
+            <c:if test="${requestStatus == '1'}">
+                <fmt:message bundle="${loc}" key="button.edit" var="btnEdit"/>
+                <a href="/request?num=${request.number}&action=edit" class="btn btn-primary btn-md">${btnEdit}</a>
+            </c:if>
+            <c:if test="${requestStatus != '3'}">
+                <fmt:message bundle="${loc}" key="button.delete" var="btnDelete"/>
+                <a href="/request?num=${request.number}&action=delete" class="btn btn-danger btn-md">${btnDelete}</a>
+            </c:if>
             <fmt:message bundle="${loc}" key="button.back" var="btnBack"/>
             <a href="/" class="btn btn-primary btn-md">${btnBack}</a>
         </div>
