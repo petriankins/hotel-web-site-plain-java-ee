@@ -35,7 +35,10 @@
     <div class="container">
         <fmt:message bundle="${loc}" key="home.welcome" var="welcome"/>
         <h1>${welcome}</h1>
+        <fmt:message bundle="${loc}" key="home.page.text" var="homePageText"/>
+        <p>${homePageText}</p>
     </div>
+
     <c:if test="${sessionScope.user != null}">
         <div class="container">
             <form action="/order" method="post">
