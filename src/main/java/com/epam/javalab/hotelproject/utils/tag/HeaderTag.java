@@ -3,6 +3,8 @@ package com.epam.javalab.hotelproject.utils.tag;
 import com.epam.javalab.hotelproject.model.User;
 import com.epam.javalab.hotelproject.service.RequestService;
 import com.epam.javalab.hotelproject.service.RequestServiceImpl;
+import com.epam.javalab.hotelproject.service.UserService;
+import com.epam.javalab.hotelproject.service.UserServiceImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpSession;
@@ -14,11 +16,12 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class HeaderTag extends TagSupport {
-    private static final Logger LOGGER = Logger.getLogger(HeaderTag.class);
+    private static final Logger         LOGGER         = Logger.getLogger(HeaderTag.class);
+    private final        RequestService requestService = new RequestServiceImpl();
+    private final        UserService    userService    = new UserServiceImpl();
     private ResourceBundle resourceBundle;
     private HttpSession    session;
     private User           user;
-    private RequestService requestService = new RequestServiceImpl();
 
     @Override
     public int doStartTag() throws JspException {
@@ -27,7 +30,7 @@ public class HeaderTag extends TagSupport {
             printHeaderTop();
             if (user == null) {
                 printLoginForm();
-            } else if (user.getLogin().equals("info@hotel.project")) {
+            } else if (userService.isAdmin(user)) {
                 printAdminStatusBar();
             } else {
                 printUserStatusBar();
@@ -64,7 +67,6 @@ public class HeaderTag extends TagSupport {
                   "</a>");
         out.write("</td></tr></table></div>");
     }
-    //TODO findAll to findNewRequests!
 
     private void printAdminStatusBar() throws IOException {
         LOGGER.info("Current user is admin, printing admin status bar!");

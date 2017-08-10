@@ -5,6 +5,9 @@ import com.epam.javalab.hotelproject.repository.UserDAO;
 import com.epam.javalab.hotelproject.repository.UserRepository;
 import org.apache.log4j.Logger;
 
+import java.util.Properties;
+import java.util.Scanner;
+
 import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
 
 /**
@@ -15,7 +18,7 @@ import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
  * @since 1.0
  */
 public class UserServiceImpl implements UserService {
-    private static final Logger          LOGGER          = Logger.getLogger(UserServiceImpl.class);
+    private final static Logger          LOGGER          = Logger.getLogger(UserServiceImpl.class);
     private final        SecurityService securityService = new SecurityServiceImpl();
     private final        UserDAO         userDAO         = new UserRepository();
 
@@ -55,6 +58,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByLogin(User user) {
         return userDAO.findByLogin(user.getLogin());
+    }
+
+    // TODO move to property file!
+    @Override
+    public boolean isAdmin(User user) {
+        return user.getLogin().equals("info@hotel.project");
     }
 
     private boolean loginIsAvailable(String login) {

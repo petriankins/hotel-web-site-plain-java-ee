@@ -38,7 +38,7 @@ public class Main {
         }
         LOGGER.info("Stopping Tomcat");
         tomcat.stop();
-        LOGGER.info("Good Bye!");
+        LOGGER.info("Goodbye!");
         System.exit(0);
     }
 }
