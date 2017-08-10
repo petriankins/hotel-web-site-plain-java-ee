@@ -21,7 +21,7 @@
                 <div class="row">
                     <fmt:message bundle="${loc}" key="request.view.tablix.title" var="tablixTitle"/>
                     <div class="col-lg-6">${tablixTitle} №${request.number}</div>
-                    <fmt:message bundle="${loc}" key="request.view.tablix.status" var="requestStatusText"/>
+                    <fmt:message bundle="${loc}" key="request.tablix.status" var="requestStatusText"/>
                     <%--TODO take actual status based on database info!--%>
                     <c:choose>
                         <c:when test="${requestStatus == '1'}">
@@ -43,18 +43,18 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <fmt:message bundle="${loc}" key="request.view.tablix.beds" var="requestBeds"/>
+                <fmt:message bundle="${loc}" key="request.tablix.beds" var="requestBeds"/>
                 <div class="col-lg-3">${requestBeds}:</div>
                 <div class="col-lg-3">${request.beds}</div>
-                <fmt:message bundle="${loc}" key="request.view.tablix.class" var="requestClass"/>
+                <fmt:message bundle="${loc}" key="request.tablix.class" var="requestClass"/>
                 <div class="col-lg-3">${requestClass}:</div>
                 <div class="col-lg-3">${request.classID}</div>
             </div>
             <div class="row">
-                <fmt:message bundle="${loc}" key="request.view.tablix.date_from" var="requestCheckIn"/>
+                <fmt:message bundle="${loc}" key="request.tablix.date_from" var="requestCheckIn"/>
                 <div class="col-lg-3">${requestCheckIn}:</div>
                 <div class="col-lg-3"><fmt:formatDate pattern="${datePattern}" value="${request.dateFrom}"/></div>
-                <fmt:message bundle="${loc}" key="request.view.tablix.date_to" var="requestCheckOut"/>
+                <fmt:message bundle="${loc}" key="request.tablix.date_to" var="requestCheckOut"/>
                 <div class="col-lg-3">${requestCheckOut}:</div>
                 <div class="col-lg-3"><fmt:formatDate pattern="${datePattern}" value="${request.dateTo}"/></div>
             </div>

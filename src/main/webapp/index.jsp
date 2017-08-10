@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ht" uri="/WEB-INF/headerTag.tld" %>
 <html>
 <head>
@@ -98,9 +99,10 @@
                         style="display: none;">${btn_orderPage}</button>
             </form>
         </div>
-        <c:if test="${userRequests.size > 0}">
+        <c:if test="${fn:length(userRequests) gt 0}">
             <div class="container">
-                <jsp:include page="jsp/userRequestList.jsp"/>
+                <%@include file="jsp/userRequestList.jsp"%>
+                <%--<jsp:include page="jsp/userRequestList.jsp"/>--%>
             </div>
         </c:if>
     </c:if>
