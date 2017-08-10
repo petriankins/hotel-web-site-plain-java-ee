@@ -39,6 +39,6 @@ function checkDates(form) {
         document.getElementById("empty dates").setAttribute("style", "");
         return false;
     }
-    document.getElementById("successful").setAttribute("style", "");
+    document.getElementById("success").setAttribute("style", "");
     document.getElementById('submitBtn').click();
 }

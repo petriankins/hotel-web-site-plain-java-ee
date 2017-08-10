@@ -61,13 +61,18 @@
                 <label>${form_checkOutLabel}</label>
                 <input type="date" name="checkOut" class="form-control">
 
-                <fmt:message bundle="${loc}" key="order.form.comments" var="form_commentsLabel"/>
+                <fmt:message bundle="${loc}" key="order.form.comments.label" var="form_commentsLabel"/>
                 <label>${form_commentsLabel}</label>
                 <textarea rows="3" name="comments" class="form-control"></textarea>
 
-                <div class="alert alert-warning" role="alert" style="display:none" id="date in past">Some of the dates you choose is in the past.</div>
-                <div class="alert alert-warning" role="alert" style="display:none" id="dates not valid">The date of check out should be after the date of check in.</div>
-                <div class="alert alert-warning" role="alert" style="display:none" id="empty dates">Please, fill the dates.</div>
+                <fmt:message bundle="${loc}" key="order.form.pastdate.alert" var="form_pastDateAlert"/>
+                <div class="alert alert-warning" role="alert" style="display:none" id="date in past">${form_pastDateAlert}</div>
+
+                <fmt:message bundle="${loc}" key="order.form.notvaliddates.alert" var="form_notValidDatesAlert"/>
+                <div class="alert alert-warning" role="alert" style="display:none" id="dates not valid">${form_notValidDatesAlert}</div>
+
+                <fmt:message bundle="${loc}" key="order.form.nodates.alert" var="form_noDatesAlertcommentsLabel"/>
+                <div class="alert alert-warning" role="alert" style="display:none" id="empty dates">${form_noDatesAlertcommentsLabel}</div>
 
                 <br/>
 
