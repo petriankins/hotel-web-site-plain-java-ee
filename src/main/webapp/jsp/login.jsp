@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <html>
 <head>
     <title>Окно логина</title>
@@ -23,10 +24,12 @@
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-right" action="/login" method="post">
                 <div class="form-group">
-                    <input type="email" name="login" placeholder="Email" class="form-control">
+                    <fmt:message bundle="${loc}" key="email" var="email"/>
+                    <input type="email" name="login" placeholder="${email}" class="form-control">
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Password" class="form-control">
+                    <fmt:message bundle="${loc}" key="login.password_label" var="pass"/>
+                    <input type="password" name="password" placeholder="${pass}" class="form-control">
                 </div>
 
                 <fmt:message bundle="${loc}" key="button.sign_in" var="btn_signIn"/>
@@ -56,5 +59,6 @@
         <button type="submit" class="btn btn-primary btn-md">Log In</button>
     </form>
 </div>
+<script src="../js/custom.js"></script>
 </body>
 </html>

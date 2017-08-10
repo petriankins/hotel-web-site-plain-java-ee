@@ -10,11 +10,13 @@ import com.epam.javalab.hotelproject.utils.Validator;
 import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RequestRepository implements RequestDAO {
     private static final DatabaseService databaseService = DatabaseServiceImpl.getInstance();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
     @Override
     public List<Request> findAll() {

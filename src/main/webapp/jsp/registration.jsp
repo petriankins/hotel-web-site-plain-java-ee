@@ -18,28 +18,36 @@
     <div class="container">
         <form action="/registration" method="post">
             <div class="form-group">
-                <label>First name:</label>
-                <input type="text" name="name" class="form-control" placeholder="First Name">
+                <fmt:message bundle="${loc}" key="first.name" var="firstName"/>
+                <label>${firstName}</label>
+                <input type="text" name="name" class="form-control" placeholder="${firstName}">
             </div>
             <div class="form-group">
-                <label>Last name:</label>
-                <input type="text" name="lastName" class="form-control" placeholder="Last Name">
+                <fmt:message bundle="${loc}" key="last.name" var="lastName"/>
+                <label>${lastName}</label>
+                <input type="text" name="lastName" class="form-control" placeholder="${lastName}">
             </div>
             <div class="form-group">
-                <label>Email:</label>
-                <input type="email" name="login" class="form-control" placeholder="Type your email">
+                <fmt:message bundle="${loc}" key="email" var="email"/>
+                <label>${email}</label>
+                <input type="email" name="login" class="form-control" placeholder="${email}">
             </div>
             <div class="form-group">
-                <label>Password:</label>
-                <input type="password" name="password" class="form-control" placeholder="Password"/>
+                <fmt:message bundle="${loc}" key="login.password_label" var="pass"/>
+                <label>${pass}</label>
+                <input type="password" name="password" class="form-control" placeholder="${pass}"/>
             </div>
             <div class="form-group">
-                <label>Password confirm:</label>
-                <input type="password" name="passwordConfirm" class="form-control" placeholder="Password"/>
+                <fmt:message bundle="${loc}" key="password.confirm" var="passConf"/>
+                <label>${passConf}</label>
+                <fmt:message bundle="${loc}" key="login.password_label" var="pass"/>
+                <input type="password" name="passwordConfirm" class="form-control" placeholder="${pass}"/>
             </div>
-            <button type="button" class="btn btn-success btn-md" onclick="checkForm(this.parentNode);">Sign up</button>
-            <button type="submit" class="btn btn-success btn-md" id="submitBtn" style="display: none;">Sign up</button>
-            <a class="btn btn-primary btn-md" href="/" role="button">Back</a>
+            <fmt:message bundle="${loc}" key="button.sign_up" var="signUp"/>
+            <button type="button" class="btn btn-success btn-md" onclick="checkForm(this.parentNode);">${signUp}</button>
+            <button type="submit" class="btn btn-success btn-md" id="submitBtn" style="display: none;">${signUp}</button>
+            <fmt:message bundle="${loc}" key="button.back" var="back"/>
+            <a class="btn btn-primary btn-md" href="/" role="button">${back}</a>
         </form>
     </div>
 </div>
