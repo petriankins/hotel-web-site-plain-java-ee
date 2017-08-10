@@ -66,12 +66,22 @@
                     <td>${room.number}</td>
                     <td>${room.beds}</td>
                     <td>${room.roomClass}</td>
-                    <td><input type="radio" name="roomNumber" value="${room.number}"/></td>
+                    <td><input type="radio" id="radButton" name="roomNumber" onchange="activateButton()" value="${room.number}"/></td>
                 </tr>
             </c:forEach>
         </table>
         <fmt:message bundle="${loc}" key="bill.button" var="bill"/>
-        <button type="submit" class="btn btn-primary btn-md">${bill}</button>
+        <button type="submit" id="subButton" class="btn btn-primary btn-md" disabled="true">${bill}</button>
+        <script>
+            function activateButton() {
+                var radios = document.getElementsByTagName('input');
+                for(var i = 0; i < radios.length; i++) {
+                    if(radios[i].type === 'radio' && radios[i].checked){
+                        document.getElementById('subButton').disabled = false;
+                    }
+                }
+            }
+        </script>
     </form>
 
 </div>
