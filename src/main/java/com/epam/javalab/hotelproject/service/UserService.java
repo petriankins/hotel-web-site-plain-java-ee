@@ -8,4 +8,6 @@ public interface UserService {
     boolean authenticate(User user);
 
     User findByLogin(User user);
+
+    boolean isAdmin(User user);
 }
