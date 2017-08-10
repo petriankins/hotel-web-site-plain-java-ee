@@ -85,6 +85,8 @@
             }
         </script>
     </form>
+    <fmt:message bundle="${loc}" key="bakToOrderListBtn" var="bakToOrderListBtn"/>
+    <p><a class="btn btn-primary btn-md" href="/administrator" role="button">${bakToOrderListBtn}</a></p>
 
 </div>
 </body>
