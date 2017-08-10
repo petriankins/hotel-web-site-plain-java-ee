@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ht" uri="/WEB-INF/headerTag.tld" %>
 
 <html>
 <head>
@@ -16,9 +17,10 @@
     <fmt:message bundle="${loc}" key="appointRoom.title" var="appointRoomTitle"/>
     <title>${appointRoomTitle}</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/custom.css">
 </head>
 <body>
+<ht:HeaderTag/>
 <div class="container">
 
     <fmt:message bundle="${loc}" key="order.table" var="orderTable"/>
