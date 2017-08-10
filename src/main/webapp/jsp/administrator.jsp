@@ -46,8 +46,8 @@
                         <td>${request.number}</td>
                         <td>${request.beds}</td>
                         <td>${request.classID}</td>
-                        <td>${request.dateFrom}</td>
-                        <td>${request.dateTo}</td>
+                        <td><fmt:formatDate type="date" value="${request.dateFrom}"/></td>
+                        <td><fmt:formatDate type="date" value="${request.dateTo}"/></td>
                         <td>${request.comments}</td>
                         <fmt:message bundle="${loc}" key="appointRoom_btn" var="appointRoom"/>
                         <td><a href="/appointRoom?requestNumber=${request.number}">${appointRoom}</a></td>
@@ -81,8 +81,8 @@
                     <td>${request.number}</td>
                     <td>${request.beds}</td>
                     <td>${request.classID}</td>
-                    <td>${request.dateFrom}</td>
-                    <td>${request.dateTo}</td>
+                    <td><fmt:formatDate type="date" value="${request.dateFrom}"/></td>
+                    <td><fmt:formatDate type="date" value="${request.dateTo}"/></td>
                     <td>${request.comments}</td>
                 </form>
 
