@@ -41,6 +41,9 @@ public class BillServiceImpl implements BillService {
 
     private int calculatePrice(Request request) {
         int daysRatio = DateHelper.calculateDaysBetweenDates(request.getDateFrom(), request.getDateTo());
+        if (daysRatio < 1) {
+            daysRatio = 1;
+        }
         int bedsRatio = request.getBeds();
         int classRatio = request.getClassID();
         int totalSum = ((daysRatio * 10) + bedsRatio) * classRatio;

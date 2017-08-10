@@ -34,11 +34,22 @@
 
                 <fmt:message bundle="${loc}" key="order.form.beds.label" var="form_BedsLabel"/>
                 <label>${form_BedsLabel}</label>
-                <input type="number" name="beds" class="form-control">
+                <select name="beds" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
 
                 <fmt:message bundle="${loc}" key="order.form.class.label" var="form_classLabel"/>
                 <label>${form_classLabel}</label>
-                <input type="number" name="stars" class="form-control">
+                <select name="stars" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
 
                 <fmt:message bundle="${loc}" key="order.form.check_in.label" var="form_checkInLabel"/>
                 <label>${form_checkInLabel}</label>
@@ -47,6 +58,10 @@
                 <fmt:message bundle="${loc}" key="order.form.check_out.label" var="form_checkOutLabel"/>
                 <label>${form_checkOutLabel}</label>
                 <input type="date" name="checkOut" class="form-control">
+
+                <fmt:message bundle="${loc}" key="order.form.comments" var="form_commentsLabel"/>
+                <label>${form_commentsLabel}</label>
+                <textarea rows="3" name="comments" class="form-control"></textarea>
 
                 <br/>
                 <fmt:message bundle="${loc}" key="button.order_page" var="btn_orderPage"/>
