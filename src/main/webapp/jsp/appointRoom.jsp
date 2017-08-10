@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ht" uri="/WEB-INF/headerTag.tld" %>
 
 <html>
 <head>
@@ -16,11 +17,12 @@
     <fmt:message bundle="${loc}" key="appointRoom.title" var="appointRoomTitle"/>
     <title>${appointRoomTitle}</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <script src="../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/custom.css">
 </head>
 <body>
-<div class="container">
+<ht:HeaderTag/>
 
+<div class="container container-main">
     <fmt:message bundle="${loc}" key="order.table" var="orderTable"/>
     <h1>${orderTable}</h1>
     <table class="table table-striped">
@@ -41,8 +43,8 @@
                 <td>${request.number}</td>
                 <td>${request.beds}</td>
                 <td>${request.classID}</td>
-                <td>${request.dateFrom}</td>
-                <td>${request.dateTo}</td>
+                <td><fmt:formatDate value="${request.dateFrom}" pattern="dd-MM-yyyy" /></td>
+                <td><fmt:formatDate value="${request.dateTo}" pattern="dd-MM-yyyy" /></td>
                 <td>${request.comments}</td>
             </tr>
     </table>
@@ -66,14 +68,26 @@
                     <td>${room.number}</td>
                     <td>${room.beds}</td>
                     <td>${room.roomClass}</td>
-                    <td><input type="radio" name="roomNumber" value="${room.number}"/></td>
+                    <td><input type="radio" id="radButton" name="roomNumber" onchange="activateButton()" value="${room.number}"/></td>
                 </tr>
             </c:forEach>
         </table>
         <fmt:message bundle="${loc}" key="bill.button" var="bill"/>
-        <button type="submit" class="btn btn-primary btn-md">${bill}</button>
+        <button type="submit" id="subButton" class="btn btn-primary btn-md" disabled="true">${bill}</button>
+        <script>
+            function activateButton() {
+                var radios = document.getElementsByTagName('input');
+                for(var i = 0; i < radios.length; i++) {
+                    if(radios[i].type === 'radio' && radios[i].checked){
+                        document.getElementById('subButton').disabled = false;
+                    }
+                }
+            }
+        </script>
     </form>
-
+    <fmt:message bundle="${loc}" key="bakToOrderListBtn" var="bakToOrderListBtn"/>
+    <p><a class="btn btn-primary btn-md" href="/administrator" role="button">${bakToOrderListBtn}</a></p>
+    <script src="../js/custom.js"></script>
 </div>
 </body>
 </html>
