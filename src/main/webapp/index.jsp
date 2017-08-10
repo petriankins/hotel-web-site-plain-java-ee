@@ -51,9 +51,11 @@
                     <option value="5">5</option>
                 </select>
 
+
                 <fmt:message bundle="${loc}" key="order.form.check_in.label" var="form_checkInLabel"/>
                 <label>${form_checkInLabel}</label>
                 <input type="date" name="checkIn" class="form-control">
+
 
                 <fmt:message bundle="${loc}" key="order.form.check_out.label" var="form_checkOutLabel"/>
                 <label>${form_checkOutLabel}</label>
@@ -63,11 +65,19 @@
                 <label>${form_commentsLabel}</label>
                 <textarea rows="3" name="comments" class="form-control"></textarea>
 
+                <div class="alert alert-warning" role="alert" style="display:none" id="date in past">Some of the dates you choose is in the past.</div>
+                <div class="alert alert-warning" role="alert" style="display:none" id="dates not valid">The date of check out should be after the date of check in.</div>
+                <div class="alert alert-warning" role="alert" style="display:none" id="empty dates">Please, fill the dates.</div>
+
                 <br/>
+
                 <fmt:message bundle="${loc}" key="button.order_page" var="btn_orderPage"/>
 
                 <button type="button" class="btn btn-success"
                         onclick="checkDates(this.parentNode)">${btn_orderPage}</button>
+
+                <div class="alert alert-success" role="alert" style="display:none" id="success">The order was successful. Thank you.</div>
+
                 <button type="submit" class="btn btn-success" id="submitBtn"
                         style="display: none;">${btn_orderPage}</button>
             </form>
