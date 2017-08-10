@@ -3,6 +3,7 @@ function switchLang(node) {
     window.location.href="/locale?lang=" + node.value + "&redirectTo=" + currentPath;
 }
 
+
 function checkForm(form) {
 
     if (form.password.value != "" && form.password.value == form.passwordConfirm.value) {
@@ -16,8 +17,6 @@ function checkForm(form) {
         form.password.focus();
         return false;
     }
-
-    alert("You entered a valid password!");
     document.getElementById('submitBtn').click();
 }
 function checkDates(form) {
