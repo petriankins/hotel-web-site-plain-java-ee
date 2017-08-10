@@ -39,7 +39,6 @@ public class RequestRepository implements RequestDAO {
             e.printStackTrace();
 
         }
-
         return requests;
     }
 
