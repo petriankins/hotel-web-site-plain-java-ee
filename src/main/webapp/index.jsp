@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ht" uri="/WEB-INF/headerTag.tld" %>
-<%@ taglib prefix="h1" uri="/WEB-INF/headerTag.tld" %>
 <html>
 <head>
     <fmt:setLocale value="${sessionScope.lang}"/>
@@ -67,6 +66,11 @@
                         style="display: none;">${btn_orderPage}</button>
             </form>
         </div>
+        <c:if test="${userRequests.size > 0}">
+            <div class="container">
+                <jsp:include page="jsp/userRequestList.jsp"/>
+            </div>
+        </c:if>
     </c:if>
 </div>
 <script src="http://code.jquery.com/jquery-3.2.1.min.js"
