@@ -21,8 +21,8 @@
 </head>
 <body>
 <ht:HeaderTag/>
-<div class="container">
 
+<div class="container container-main">
     <fmt:message bundle="${loc}" key="order.table" var="orderTable"/>
     <h1>${orderTable}</h1>
     <table class="table table-striped">
@@ -87,7 +87,7 @@
     </form>
     <fmt:message bundle="${loc}" key="bakToOrderListBtn" var="bakToOrderListBtn"/>
     <p><a class="btn btn-primary btn-md" href="/administrator" role="button">${bakToOrderListBtn}</a></p>
-
+    <script src="../js/custom.js"></script>
 </div>
 </body>
 </html>
