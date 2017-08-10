@@ -46,21 +46,23 @@ public class OrderController extends HttpServlet {
         Date defaultDate = new Date();
         Date dateFrom = defaultDate;
         Date dateTo = defaultDate;
+        String comments = "";
 
         try {
             beds = Integer.parseInt(req.getParameter("beds").trim());
             stars = Integer.parseInt(req.getParameter("stars").trim());
             dateFrom = dateFormat.parse(req.getParameter("checkIn").trim());
             dateTo = dateFormat.parse(req.getParameter("checkOut").trim());
+            comments = req.getParameter("comments").trim();
             System.out.println("From: " + dateFrom);
             System.out.println("To: " + dateTo);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        Request request = new Request(user.getId(), beds, stars, dateFrom, dateTo, "");
+        Request request = new Request(user.getId(), beds, stars, dateFrom, dateTo, comments);
 
-        String message = null;
+        String message;
 
         if (request.getBeds() == 0 || request.getClassID() == 0 || request.getDateFrom().equals(defaultDate) ||
             request.getDateTo().equals(defaultDate)) {

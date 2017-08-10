@@ -23,17 +23,21 @@ function checkDates(form) {
     var checkInDate = new Date(form.checkIn.value);
     var checkOutDate = new Date(form.checkOut.value);
     if (checkInDate != null && checkOutDate != null) {
-
+        var currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+        if (checkInDate < currentDate || checkOutDate < currentDate) {
+            document.getElementById("date in past").setAttribute("style", "");
+            return false;
+        }
         if (checkInDate.getTime() > checkOutDate.getTime()) {
-            alert("The first date is after the second date!");
-            form.checkIn.focus();
+            document.getElementById("dates not valid").setAttribute("style", "");
             return false;
         }
     }
     else {
-        alert("Please fill the dates ");
-        form.checkInt.focus();
+        document.getElementById("empty dates").setAttribute("style", "");
         return false;
     }
+    document.getElementById("success").setAttribute("style", "");
     document.getElementById('submitBtn').click();
 }
