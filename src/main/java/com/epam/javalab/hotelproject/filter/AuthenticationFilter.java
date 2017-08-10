@@ -35,7 +35,7 @@ public class AuthenticationFilter implements Filter {
 
         //        session.setAttribute("user", new User(1,"Test User","test","test","test last name"));
         if (requestURI.equals("/") || requestURI.equals("/registration") || requestURI.equals("/login") ||
-            requestURI.contains("/css") || requestURI.contains("/js") || requestURI.contains("/fonts") ||
+            requestURI.contains("/css") || requestURI.contains("/js/") || requestURI.contains("/fonts") ||
             requestURI.contains("/locale") || requestURI.equals("/favicon.ico")) {
 
             filterChain.doFilter(servletRequest, servletResponse);
