@@ -9,6 +9,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Provides API for working with rooms.
+ *
+ * @author Iaichnikov Denis,
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class RoomServiceImpl implements RoomService {
     private static final RoomComparator roomComparator = new RoomComparator();
     private final RoomDAO roomDAO = new RoomRepository();

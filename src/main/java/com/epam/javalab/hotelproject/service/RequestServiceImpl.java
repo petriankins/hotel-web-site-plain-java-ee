@@ -12,6 +12,12 @@ import static com.epam.javalab.hotelproject.utils.Validator.validateRequestBean;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Provides API for working with requests.
+ *
+ * @author Iaichnikov Denis,
+ * @version 1.0
+ * @since 1.0*/
 public class RequestServiceImpl implements RequestService {
     private final static Logger      LOGGER      = Logger.getLogger(RequestServiceImpl.class);
     private final        RequestDAO  requestDAO  = new RequestRepository();

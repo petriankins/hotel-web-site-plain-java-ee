@@ -13,6 +13,7 @@ import java.security.MessageDigest;
  *
  * @author Maksim Starshinov, Sergei Petriankin
  * @version 1.0
+ * @since 1.0
  */
 
 public class SecurityServiceImpl implements SecurityService {

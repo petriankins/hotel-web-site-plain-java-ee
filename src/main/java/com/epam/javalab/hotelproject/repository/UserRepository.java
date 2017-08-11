@@ -9,6 +9,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides API for finding, inserting, deleting, updating etc. rooms in/from database.
+ *
+ * @author
+ * @version 1.0
+ * @since 1.0
+ */
 // TODO
 public class UserRepository implements UserDAO {
     private final DatabaseService databaseService = DatabaseServiceImpl.getInstance();

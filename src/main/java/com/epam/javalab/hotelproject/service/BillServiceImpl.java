@@ -10,7 +10,12 @@ import org.apache.log4j.Logger;
 
 import java.util.Date;
 import java.util.List;
-
+/**
+ * Provided API for working with bills stored in DB.
+ *
+ * @author Petriankin Sergey
+ * @version 1.0
+ * @since 1.0*/
 public class BillServiceImpl implements BillService {
     private final static Logger  LOGGER  = Logger.getLogger(BillServiceImpl.class);
     private final BillDAO billDAO = new BillRepository();
