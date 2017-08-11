@@ -33,7 +33,7 @@ public class RegistrationController extends HttpServlet {
         String password = req.getParameter("password");
 
         User user = new User(firstName, lastName, login, password);
-        String message = null;
+        String message;
         if (userService.registerUser(user)) {
             userService.authenticate(user);
             message = "You have been successfully registered!";

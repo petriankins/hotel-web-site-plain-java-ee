@@ -51,7 +51,7 @@ public class LoginController extends HttpServlet {
             LOGGER.info("Error in login or password. Login: " + user.getLogin() + ";Password: " + user.getPassword());
 
             req.setAttribute("message", "1");
-            req.getRequestDispatcher("/").forward(req, resp);
+            req.getRequestDispatcher("/index.jsp").forward(req, resp);
         }
 
         resp.sendRedirect("/");
