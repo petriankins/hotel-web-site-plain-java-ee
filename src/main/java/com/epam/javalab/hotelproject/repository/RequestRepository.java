@@ -181,11 +181,18 @@ public class RequestRepository implements RequestDAO {
     public boolean deleteRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
             try (Connection connection = databaseService.takeConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(
-                         "DELETE FROM sql11188080.requests " +
-                                 "WHERE number = ?")) {
-                preparedStatement.setInt(1, request.getNumber());
-                return preparedStatement.executeUpdate() == 1;
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM sql11188080.bills WHERE id_request = ?");
+                PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM sql11188080.requests WHERE id = ?")
+            ) {
+                connection.setAutoCommit(false);
+                preparedStatement.setInt(1, request.getId());
+                preparedStatement.executeUpdate();
+
+                preparedStatement1.setInt(1, request.getId());
+
+                connection.commit();
+                System.out.println(preparedStatement1.executeUpdate() == 1);
+                return preparedStatement1.executeUpdate() == 1;
             } catch (SQLException e) {
                 e.printStackTrace();
             }

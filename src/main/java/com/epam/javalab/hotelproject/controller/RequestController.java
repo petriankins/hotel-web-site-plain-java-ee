@@ -116,6 +116,7 @@ public class RequestController extends HttpServlet {
 
         //TODO add message
         resp.sendRedirect("/");
+
     }
 
     private Request extractUserRequestFromHttpRequest(HttpServletRequest req) {
