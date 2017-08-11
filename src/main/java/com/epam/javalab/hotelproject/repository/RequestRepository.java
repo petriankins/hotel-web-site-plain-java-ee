@@ -27,13 +27,13 @@ public class RequestRepository implements RequestDAO {
             while (resultSet.next()) {
                 requests.add(
                         new Request(resultSet.getInt("id"),
-                                resultSet.getInt("number"),
-                                resultSet.getInt("id_user"),
-                                resultSet.getInt("beds"),
-                                resultSet.getInt("id_class"),
-                                resultSet.getDate("date_from"),
-                                resultSet.getDate("date_to"),
-                                resultSet.getString("comments")));
+                                    resultSet.getInt("number"),
+                                    resultSet.getInt("id_user"),
+                                    resultSet.getInt("beds"),
+                                    resultSet.getInt("id_class"),
+                                    resultSet.getDate("date_from"),
+                                    resultSet.getDate("date_to"),
+                                    resultSet.getString("comments")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,13 +55,13 @@ public class RequestRepository implements RequestDAO {
                 while (resultSet.next()) {
                     requests.add(
                             new Request(resultSet.getInt("id"),
-                                    resultSet.getInt("number"),
-                                    resultSet.getInt("id_user"),
-                                    resultSet.getInt("beds"),
-                                    resultSet.getInt("id_class"),
-                                    resultSet.getDate("date_from"),
-                                    resultSet.getDate("date_to"),
-                                    resultSet.getString("comments"))
+                                        resultSet.getInt("number"),
+                                        resultSet.getInt("id_user"),
+                                        resultSet.getInt("beds"),
+                                        resultSet.getInt("id_class"),
+                                        resultSet.getDate("date_from"),
+                                        resultSet.getDate("date_to"),
+                                        resultSet.getString("comments"))
                     );
                 }
             } catch (SQLException e) {
@@ -77,9 +77,9 @@ public class RequestRepository implements RequestDAO {
         try (Connection connection = databaseService.takeConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT requests.*, bills.number " +
-                                                                "FROM requests " +
-                                                                "LEFT JOIN bills ON requests.id = bills.id_request " +
-                                                                "WHERE bills.id_request IS null;")) {
+                                                          "FROM requests " +
+                                                          "LEFT JOIN bills ON requests.id = bills.id_request " +
+                                                          "WHERE bills.id_request IS null;")) {
             while (resultSet.next()) {
                 handledRequests.add(new Request(resultSet.getInt("number"),
                                                 resultSet.getInt("id_user"),
@@ -108,13 +108,13 @@ public class RequestRepository implements RequestDAO {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
                 return new Request(resultSet.getInt("id"),
-                        resultSet.getInt("number"),
-                        resultSet.getInt("id_user"),
-                        resultSet.getInt("beds"),
-                        resultSet.getInt("id_class"),
-                        DateHelper.javaToSQLDdate(resultSet.getDate("date_from")),
-                        DateHelper.javaToSQLDdate(resultSet.getDate("date_to")),
-                        resultSet.getString("comments"));
+                                   resultSet.getInt("number"),
+                                   resultSet.getInt("id_user"),
+                                   resultSet.getInt("beds"),
+                                   resultSet.getInt("id_class"),
+                                   DateHelper.javaToSQLDdate(resultSet.getDate("date_from")),
+                                   DateHelper.javaToSQLDdate(resultSet.getDate("date_to")),
+                                   resultSet.getString("comments"));
             }
 
         } catch (SQLException e) {
@@ -137,7 +137,7 @@ public class RequestRepository implements RequestDAO {
             try (Connection connection = databaseService.takeConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(
                          "INSERT INTO `sql11188080`.`requests` (`number`, `id_user`, `beds`, `id_class`, `date_from`, `date_to`, `comments`) " +
-                                 "VALUES (?, ?, ?, ?, ?, ?, ?);")) {
+                         "VALUES (?, ?, ?, ?, ?, ?, ?);")) {
                 preparedStatement.setInt(1, request.getNumber());
                 preparedStatement.setInt(2, request.getUserId());
                 preparedStatement.setInt(3, request.getBeds());
@@ -160,8 +160,8 @@ public class RequestRepository implements RequestDAO {
             try (Connection connection = databaseService.takeConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(
                          "UPDATE `sql11188080`.`requests` " +
-                                 "SET `id_user` = ?, `beds` = ?, `id_class` = ?, `date_from` = ?, `date_to` = ?, `comments` = ? " +
-                                 "WHERE number = ?")) {
+                         "SET `id_user` = ?, `beds` = ?, `id_class` = ?, `date_from` = ?, `date_to` = ?, `comments` = ? " +
+                         "WHERE number = ?")) {
                 preparedStatement.setInt(1, request.getUserId());
                 preparedStatement.setInt(2, request.getBeds());
                 preparedStatement.setInt(3, request.getClassID());
@@ -181,18 +181,22 @@ public class RequestRepository implements RequestDAO {
     public boolean deleteRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
             try (Connection connection = databaseService.takeConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM sql11188080.bills WHERE id_request = ?");
-                PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM sql11188080.requests WHERE id = ?")
+                 PreparedStatement preparedStatement = connection.prepareStatement(
+                         "DELETE FROM sql11188080.bills WHERE id_request = ?");
+                 PreparedStatement preparedStatement1 = connection.prepareStatement(
+                         "DELETE FROM sql11188080.requests WHERE id = ?")
             ) {
                 connection.setAutoCommit(false);
                 preparedStatement.setInt(1, request.getId());
                 preparedStatement.executeUpdate();
 
                 preparedStatement1.setInt(1, request.getId());
+                boolean result = preparedStatement1.executeUpdate() == 1;
 
                 connection.commit();
-                System.out.println(preparedStatement1.executeUpdate() == 1);
-                return preparedStatement1.executeUpdate() == 1;
+                connection.setAutoCommit(true);
+
+                return result;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -209,7 +213,7 @@ public class RequestRepository implements RequestDAO {
         ResultSet resultSet = null;
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(number) " +
-                                                                                    "FROM sql11188080.requests ")) {
+                                                                               "FROM sql11188080.requests ")) {
             resultSet = preparedStatement.executeQuery();
             if (resultSet.first()) {
                 return resultSet.getInt("MAX(number)");
