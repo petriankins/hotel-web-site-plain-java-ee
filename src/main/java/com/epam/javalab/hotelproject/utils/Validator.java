@@ -2,6 +2,7 @@ package com.epam.javalab.hotelproject.utils;
 
 import com.epam.javalab.hotelproject.model.Request;
 import com.epam.javalab.hotelproject.model.Room;
+import com.epam.javalab.hotelproject.model.RoomStatus;
 import com.epam.javalab.hotelproject.model.User;
 import org.apache.log4j.Logger;
 
@@ -81,6 +82,11 @@ public class Validator {
             return false;
         }
 
+        return true;
+    }
+
+    // TODO
+    public static boolean validateRoomStatusBean(RoomStatus roomStatus) {
         return true;
     }
 }

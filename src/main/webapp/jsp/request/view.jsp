@@ -67,9 +67,12 @@
             </div>
         </div>
         <div class="panel-footer text-right">
+            <c:if test="${requestStatus != '1'}">
+                <fmt:message bundle="${loc}" key="button.bill" var="btnBill"/>
+                <a href="/bill?request=${request.number}" class="btn btn-primary btn-md">${btnBill}</a>
+            </c:if>
             <c:if test="${requestStatus == '1'}">
                 <fmt:message bundle="${loc}" key="button.edit" var="btnEdit"/>
-                <a href="/request?num=${request.number}&action=edit" class="btn btn-primary btn-md">${btnEdit}</a>
             </c:if>
             <c:if test="${requestStatus != '3'}">
                 <fmt:message bundle="${loc}" key="button.delete" var="btnDelete"/>
