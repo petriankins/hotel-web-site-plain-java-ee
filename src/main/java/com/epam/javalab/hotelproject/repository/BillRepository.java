@@ -27,16 +27,10 @@ public class BillRepository implements BillDAO {
              ResultSet resultSet = statement.executeQuery(
                      "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME)) {
             while (resultSet.next()) {
-                allBills.add(new Bill(resultSet.getInt("id"),
-                                      resultSet.getInt("number"),
-                                      resultSet.getInt("sum"),
-                                      resultSet.getInt("paid"),
-                                      resultSet.getInt("id_request"),
-                                      resultSet.getDate("created"),
-                                      resultSet.getInt("id_room")));
+                allBills.add(createBill(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return allBills;
     }
@@ -54,9 +48,10 @@ public class BillRepository implements BillDAO {
             preparedStatement.setInt(4, bill.getIdRequest());
             preparedStatement.setDate(5, javaToSQLDdate(bill.getDateOfCreation()));
             preparedStatement.setInt(6, bill.getIdRoom());
-            return preparedStatement.executeUpdate() == 1 ? true : false;
+
+            return preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return false;
     }
@@ -74,9 +69,10 @@ public class BillRepository implements BillDAO {
             preparedStatement.setDate(4, javaToSQLDdate(bill.getDateOfCreation()));
             preparedStatement.setInt(5, bill.getIdRoom());
             preparedStatement.setInt(6, bill.getNumber());
-            return preparedStatement.executeUpdate() == 1 ? true : false;
+
+            return preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return false;
     }
@@ -99,6 +95,7 @@ public class BillRepository implements BillDAO {
         if (request == null) {
             return 0;
         }
+
         int requestId = request.getId();
 
         ResultSet resultSet = null;
@@ -108,21 +105,30 @@ public class BillRepository implements BillDAO {
                      " WHERE id_request = ?")) {
             preparedStatement.setInt(1, requestId);
             resultSet = preparedStatement.executeQuery();
+
             if (resultSet.first()) {
                 return resultSet.getInt("id");
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
+        } finally {
+            try {
+                if (resultSet != null && !resultSet.isClosed()) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
         }
+
         return 0;
     }
 
     @Override
     public Bill findById(int id) {
-        if (id == 0) return new Bill();
+        if (id == 0) return emptyBill();
 
-        ResultSet rs;
+        ResultSet rs = null;
         try (Connection con = databaseService.takeConnection();
              PreparedStatement ps = con.prepareStatement(
                      "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME + " WHERE id = ?")) {
@@ -130,14 +136,34 @@ public class BillRepository implements BillDAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 LOGGER.debug("Found bill for id: " + id);
-                return new Bill(rs.getInt("id"), rs.getInt("number"), rs.getInt("sum"), rs.getInt("paid"),
-                                rs.getInt("id_request"),
-                                rs.getDate("created"), rs.getInt("id_room"));
+                return createBill(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
+        } finally {
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
         }
 
+        return emptyBill();
+    }
+
+    private Bill emptyBill() {
         return new Bill();
+    }
+
+    private Bill createBill(ResultSet resultSet) throws SQLException {
+        return new Bill(resultSet.getInt("id"),
+                        resultSet.getInt("number"),
+                        resultSet.getInt("sum"),
+                        resultSet.getInt("paid"),
+                        resultSet.getInt("id_request"),
+                        resultSet.getDate("created"),
+                        resultSet.getInt("id_room"));
     }
 }
