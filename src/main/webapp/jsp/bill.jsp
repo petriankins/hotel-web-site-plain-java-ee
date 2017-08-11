@@ -35,8 +35,16 @@
         <fmt:message bundle="${loc}" key="totalPrice" var="totalPrice"/>
         <tr><td>${totalPrice}</td><td>${bill.sum}</td></tr>
     </table>
-    <fmt:message bundle="${loc}" key="bakToOrderListBtn" var="bakToOrderListBtn"/>
-    <p><a class="btn btn-primary btn-md" href="/administrator" role="button">${bakToOrderListBtn}</a></p>
+    <c:choose>
+        <c:when test="${isAdmin == 'true'}">
+            <fmt:message bundle="${loc}" key="bakToOrderListBtn" var="bakToOrderListBtn"/>
+            <p><a class="btn btn-primary btn-md" href="/administrator" role="button">${bakToOrderListBtn}</a></p>
+        </c:when>
+        <c:otherwise>
+            <fmt:message bundle="${loc}" key="button.back" var="btnBack"/>
+            <p><a class="btn btn-primary btn-md" href="#" role="button" onclick="window.history.back();">${btnBack}</a></p>
+        </c:otherwise>
+    </c:choose>
 
 </div>
 

@@ -79,7 +79,7 @@
                 <a href="/request?num=${request.number}&action=delete" class="btn btn-danger btn-md">${btnDelete}</a>
             </c:if>
             <fmt:message bundle="${loc}" key="button.back" var="btnBack"/>
-            <a href="/" class="btn btn-primary btn-md">${btnBack}</a>
+            <a href="#" class="btn btn-primary btn-md" onclick="window.history.back()">${btnBack}</a>
         </div>
     </div>
 </div>

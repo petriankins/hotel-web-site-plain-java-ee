@@ -43,7 +43,7 @@
             <c:forEach var="request" items="${unhandledRequests}">
                 <tr>
                     <form action="/administrator" method="post">
-                        <td>${request.number}</td>
+                        <td><a href="/request?num=${request.number}&action=view">${request.number}</a></td>
                         <td>${request.beds}</td>
                         <td>${request.classID}</td>
                         <td><fmt:formatDate type="date" value="${request.dateFrom}"/></td>
@@ -78,7 +78,7 @@
         <c:forEach var="request" items="${allRequests}">
             <tr>
                 <form action="/administrator" method="post">
-                    <td>${request.number}</td>
+                    <td><a href="/request?num=${request.number}&action=view">${request.number}</a></td>
                     <td>${request.beds}</td>
                     <td>${request.classID}</td>
                     <td><fmt:formatDate type="date" value="${request.dateFrom}"/></td>

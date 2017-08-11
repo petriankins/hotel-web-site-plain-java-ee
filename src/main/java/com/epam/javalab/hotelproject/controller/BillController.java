@@ -31,12 +31,15 @@ public class BillController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
         String requestNumber = req.getParameter("request").trim();
         Request userRequest = requestService.findByNumber(Integer.parseInt(requestNumber));
         Bill bill = billService.getRequestBill(userRequest);
 
         req.setAttribute("request", userRequest);
         req.setAttribute("bill", bill);
+        req.setAttribute("isAdmin", userService.isAdmin(user));
 
         req.getRequestDispatcher("/jsp/bill.jsp").forward(req, resp);
     }
@@ -48,6 +51,7 @@ public class BillController extends HttpServlet {
         req.setAttribute("room", room);
 
         HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
         Request request = (Request) session.getAttribute("request");
 
         System.out.println("request # " + request.getNumber());
@@ -59,6 +63,7 @@ public class BillController extends HttpServlet {
         }
         System.out.println("Request ID: " + billService.getBillId(request));
         req.setAttribute("bill", bill);
+        req.setAttribute("isAdmin", userService.isAdmin(user));
         req.getRequestDispatcher("/jsp/bill.jsp").forward(req, resp);
     }
 }
