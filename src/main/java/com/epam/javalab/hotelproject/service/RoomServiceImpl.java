@@ -36,6 +36,13 @@ public class RoomServiceImpl implements RoomService {
         return roomDAO.findAvailableRooms(request);
     }
 
+    /**
+     * Finds the most relevant to the request room list. First, it finds rooms with equal or greater quantity
+     * of beds than in request. Then comparator sorts the obtained results.
+     *
+     * @param request is the customer request
+     * @return list of sorted relevant rooms
+     * */
     @Override
     public List<Room> findTheMostRelevant(Request request) {
         List<Room> roomList = getAvailableRooms(request);
