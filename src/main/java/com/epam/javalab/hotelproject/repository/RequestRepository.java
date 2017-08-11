@@ -25,9 +25,9 @@ public class RequestRepository implements RequestDAO {
     public List<Request> findAll() {
         List<Request> requests = new ArrayList<>();
 
+        String query = "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME;
         try (Connection connection = databaseService.takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME);
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 requests.add(createRequest(resultSet));
@@ -44,10 +44,10 @@ public class RequestRepository implements RequestDAO {
         List<Request> requests = new ArrayList<>();
         ResultSet resultSet = null;
         if (validateUserBean(user)) {
+            String query =
+                    "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME + " WHERE id_user = ?";
             try (Connection connection = databaseService.takeConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(
-                         "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME +
-                         " WHERE id_user = ?")) {
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, user.getId());
                 resultSet = preparedStatement.executeQuery();
 
@@ -73,9 +73,11 @@ public class RequestRepository implements RequestDAO {
     @Override
     public List<Request> findAllUnhandledRequests() {
         List<Request> handledRequests = new ArrayList<>();
+
         String query = "SELECT " + TABLE_NAME + ".*, bills.number " + "FROM " + databaseService.getDatabaseName() +
                        "." + TABLE_NAME + " " + "LEFT JOIN bills ON " + TABLE_NAME + ".id = bills.id_request " +
                        "WHERE bills.id_request IS null;";
+
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -94,26 +96,34 @@ public class RequestRepository implements RequestDAO {
         if (number == 0) {
             return emptyRequest();
         }
+
         ResultSet resultSet = null;
-        String query = "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME + " WHERE number = ?";
+        String query = "SELECT * FROM sql11188080.requests WHERE number = ?";
+
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, number);
             resultSet = preparedStatement.executeQuery();
-
             if (resultSet.first()) {
-                return createRequest(resultSet);
+                return new Request(resultSet.getInt("id"),
+                                   resultSet.getInt("number"),
+                                   resultSet.getInt("id_user"),
+                                   resultSet.getInt("beds"),
+                                   resultSet.getInt("id_class"),
+                                   DateHelper.javaToSQLDdate(resultSet.getDate("date_from")),
+                                   DateHelper.javaToSQLDdate(resultSet.getDate("date_to")),
+                                   resultSet.getString("comments"));
             }
 
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
+            e.printStackTrace();
         } finally {
             try {
                 if (resultSet != null && !resultSet.isClosed()) {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                LOGGER.error(e.getMessage(), e);
+                e.printStackTrace();
             }
         }
 
@@ -123,9 +133,10 @@ public class RequestRepository implements RequestDAO {
     @Override
     public boolean insertRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
-            String query = "INSERT INTO `" + databaseService.getDatabaseName() + "`.`" + TABLE_NAME +
-                           "` (`number`, `id_user`, `beds`, `id_class`, `date_from`, `date_to`, `comments`) " +
-                           "VALUES (?, ?, ?, ?, ?, ?, ?);";
+            String query =
+                    "INSERT INTO `sql11188080`.`requests` (`number`, `id_user`, `beds`, `id_class`, `date_from`, `date_to`, `comments`) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?);";
+
             try (Connection connection = databaseService.takeConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, request.getNumber());
@@ -148,7 +159,7 @@ public class RequestRepository implements RequestDAO {
     @Override
     public boolean updateRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
-            String query = "UPDATE `" + databaseService.getDatabaseName() + "`.`" + TABLE_NAME + "` " +
+            String query = "UPDATE `sql11188080`.`requests` " +
                            "SET `id_user` = ?, `beds` = ?, `id_class` = ?, `date_from` = ?, `date_to` = ?, `comments` = ? " +
                            "WHERE number = ?";
             try (Connection connection = databaseService.takeConnection();
@@ -173,13 +184,13 @@ public class RequestRepository implements RequestDAO {
     @Override
     public boolean deleteRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
+            String billQuery = "DELETE FROM sql11188080.bills WHERE id_request = ?";
+            String requestQuery = "DELETE FROM sql11188080.requests WHERE id = ?";
             try (Connection connection = databaseService.takeConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(
-                         "DELETE FROM sql11188080.bills WHERE id_request = ?");
-                 PreparedStatement preparedStatement1 = connection.prepareStatement(
-                         "DELETE FROM sql11188080.requests WHERE id = ?")
-            ) {
+                 PreparedStatement preparedStatement = connection.prepareStatement(billQuery);
+                 PreparedStatement preparedStatement1 = connection.prepareStatement(requestQuery)) {
                 connection.setAutoCommit(false);
+
                 preparedStatement.setInt(1, request.getId());
                 preparedStatement.executeUpdate();
 
@@ -193,7 +204,6 @@ public class RequestRepository implements RequestDAO {
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage(), e);
             }
-
         }
 
         return false;
@@ -203,6 +213,7 @@ public class RequestRepository implements RequestDAO {
     public static int returnMaxRequestNumber() {
         ResultSet resultSet = null;
         String query = "SELECT MAX(number) FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME;
+
         try (Connection connection = databaseService.takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             resultSet = preparedStatement.executeQuery();
