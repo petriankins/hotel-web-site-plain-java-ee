@@ -5,12 +5,13 @@ import com.epam.javalab.hotelproject.model.Room;
 import com.epam.javalab.hotelproject.repository.RoomDAO;
 import com.epam.javalab.hotelproject.repository.RoomRepository;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class RoomServiceImpl implements RoomService {
     private static final RoomComparator roomComparator = new RoomComparator();
-    private final        RoomDAO        roomDAO        = new RoomRepository();
+    private final RoomDAO roomDAO = new RoomRepository();
 
     @Override
     public List<Room> findAll() {
@@ -30,27 +31,47 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<Room> findTheMostRelevant(Request request) {
         List<Room> roomList = getAvailableRooms(request);
-        roomList.sort(roomComparator);
-        return roomList;
+        List<Room> newRoomList1 = new ArrayList<>();
+        List<Room> newRoomList2 = new ArrayList<>();
+
+        List<Room> finalRoomList;
+
+        for (Room room : roomList) {
+            if (request.getBeds() == room.getBeds()) {
+                newRoomList1.add(room);
+            } else if (request.getBeds() < room.getBeds()){
+                newRoomList2.add(room);
+            }
+        }
+        if (!newRoomList1.isEmpty()) {
+            finalRoomList = newRoomList1;
+        } else {
+            finalRoomList = newRoomList2;
+        }
+
+        finalRoomList.sort(roomComparator);
+        return finalRoomList;
     }
 }
 
 class RoomComparator implements Comparator<Room> {
     @Override
     public int compare(Room o1, Room o2) {
-        int result;
+        int result = 0;
         int bedsSubstraction = o1.getBeds() - o2.getBeds();
-        int roomClassSubstraction = o1.getRoomClass() - o2.getRoomClass();
-        if (bedsSubstraction == 0 && roomClassSubstraction == 0) {
-            return 0;
-        } else if (bedsSubstraction == 0 && roomClassSubstraction > 0) {
-            result = roomClassSubstraction;
+        int starsSubstraction = o1.getRoomClass() - o2.getRoomClass();
+
+        if (bedsSubstraction == 0 && starsSubstraction == 0) {
             return result;
-        } else if (bedsSubstraction > 0 && roomClassSubstraction == 0) {
+        } else if (bedsSubstraction == 0 && starsSubstraction != 0) {
+            result = starsSubstraction;
+            return result;
+        } else if (bedsSubstraction != 0 && starsSubstraction == 0) {
+            result = bedsSubstraction;
+            return result;
+        } else {
             result = bedsSubstraction;
             return result;
         }
-        result = bedsSubstraction;
-        return result;
     }
 }
