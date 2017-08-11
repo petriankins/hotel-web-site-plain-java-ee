@@ -46,7 +46,7 @@ public class SecurityServiceImpl implements SecurityService {
             return false;
         }
 
-        if (comparePasswords(hash(user.getPassword()), registeredUser.getPassword())) {
+        if (comparePasswords(user.getPassword(), registeredUser.getPassword())) {
             user.setId(registeredUser.getId());
             user.setName(registeredUser.getName());
             user.setLastName(registeredUser.getLastName());

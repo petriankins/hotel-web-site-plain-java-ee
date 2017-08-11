@@ -1,6 +1,8 @@
 package com.epam.javalab.hotelproject.controller;
 
 import com.epam.javalab.hotelproject.model.User;
+import com.epam.javalab.hotelproject.service.SecurityService;
+import com.epam.javalab.hotelproject.service.SecurityServiceImpl;
 import com.epam.javalab.hotelproject.service.UserService;
 import com.epam.javalab.hotelproject.service.UserServiceImpl;
 import org.apache.log4j.Logger;
@@ -27,8 +29,9 @@ import java.io.IOException;
         urlPatterns = {"/login"}
 )
 public class LoginController extends HttpServlet {
-    private static final Logger      LOGGER      = Logger.getLogger(LoginController.class);
-    private final        UserService userService = new UserServiceImpl();
+    private static final Logger          LOGGER          = Logger.getLogger(LoginController.class);
+    private final        UserService     userService     = new UserServiceImpl();
+    private final        SecurityService securityService = new SecurityServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,7 +42,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login").trim();
         String pass = req.getParameter("password").trim();
-        User user = new User(login, pass);
+        User user = new User(login, securityService.hash(pass));
 
         if (userService.authenticate(user)) {
             HttpSession session = req.getSession();
