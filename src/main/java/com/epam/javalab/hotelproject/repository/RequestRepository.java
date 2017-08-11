@@ -6,6 +6,7 @@ import com.epam.javalab.hotelproject.service.DatabaseService;
 import com.epam.javalab.hotelproject.service.DatabaseServiceImpl;
 import com.epam.javalab.hotelproject.utils.DateHelper;
 import com.epam.javalab.hotelproject.utils.Validator;
+import org.apache.log4j.Logger;
 
 import static com.epam.javalab.hotelproject.utils.Validator.validateUserBean;
 
@@ -15,30 +16,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestRepository implements RequestDAO {
-    private static final DatabaseService databaseService = DatabaseServiceImpl.getInstance();
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    private final static Logger           LOGGER          = Logger.getLogger(RequestRepository.class);
+    private final static DatabaseService  databaseService = DatabaseServiceImpl.getInstance();
+    private static final String           TABLE_NAME      = "requests";
+    private final        SimpleDateFormat sdf             = new SimpleDateFormat("dd-MM-yyyy");
 
     @Override
     public List<Request> findAll() {
         List<Request> requests = new ArrayList<>();
+
         try (Connection connection = databaseService.takeConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM sql11188080.requests")) {
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                requests.add(
-                        new Request(resultSet.getInt("id"),
-                                resultSet.getInt("number"),
-                                resultSet.getInt("id_user"),
-                                resultSet.getInt("beds"),
-                                resultSet.getInt("id_class"),
-                                resultSet.getDate("date_from"),
-                                resultSet.getDate("date_to"),
-                                resultSet.getString("comments")));
+                requests.add(createRequest(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-
+            LOGGER.error(e.getMessage(), e);
         }
+
         return requests;
     }
 
@@ -49,49 +46,46 @@ public class RequestRepository implements RequestDAO {
         if (validateUserBean(user)) {
             try (Connection connection = databaseService.takeConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(
-                         "SELECT * FROM sql11188080.requests WHERE id_user = ?")) {
+                         "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME +
+                         " WHERE id_user = ?")) {
                 preparedStatement.setInt(1, user.getId());
                 resultSet = preparedStatement.executeQuery();
+
                 while (resultSet.next()) {
-                    requests.add(
-                            new Request(resultSet.getInt("id"),
-                                    resultSet.getInt("number"),
-                                    resultSet.getInt("id_user"),
-                                    resultSet.getInt("beds"),
-                                    resultSet.getInt("id_class"),
-                                    resultSet.getDate("date_from"),
-                                    resultSet.getDate("date_to"),
-                                    resultSet.getString("comments"))
-                    );
+                    requests.add(createRequest(resultSet));
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
+            } finally {
+                try {
+                    if (resultSet != null && !resultSet.isClosed()) {
+                        resultSet.close();
+                    }
+                } catch (SQLException e) {
+                    LOGGER.error(e.getMessage(), e);
+                }
             }
         }
+
         return requests;
     }
 
     @Override
     public List<Request> findAllUnhandledRequests() {
         List<Request> handledRequests = new ArrayList<>();
+        String query = "SELECT " + TABLE_NAME + ".*, bills.number " + "FROM " + databaseService.getDatabaseName() +
+                       "." + TABLE_NAME + " " + "LEFT JOIN bills ON " + TABLE_NAME + ".id = bills.id_request " +
+                       "WHERE bills.id_request IS null;";
         try (Connection connection = databaseService.takeConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT requests.*, bills.number " +
-                                                                "FROM requests " +
-                                                                "LEFT JOIN bills ON requests.id = bills.id_request " +
-                                                                "WHERE bills.id_request IS null;")) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                handledRequests.add(new Request(resultSet.getInt("number"),
-                                                resultSet.getInt("id_user"),
-                                                resultSet.getInt("beds"),
-                                                resultSet.getInt("id_class"),
-                                                resultSet.getDate("date_from"),
-                                                resultSet.getDate("date_to"),
-                                                resultSet.getString("comments")));
+                handledRequests.add(createRequest(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
+
         return handledRequests;
     }
 
@@ -101,43 +95,39 @@ public class RequestRepository implements RequestDAO {
             return emptyRequest();
         }
         ResultSet resultSet = null;
+        String query = "SELECT * FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME + " WHERE number = ?";
         try (Connection connection = databaseService.takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT * FROM sql11188080.requests WHERE number = ?")) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, number);
             resultSet = preparedStatement.executeQuery();
+
             if (resultSet.first()) {
-                return new Request(resultSet.getInt("id"),
-                        resultSet.getInt("number"),
-                        resultSet.getInt("id_user"),
-                        resultSet.getInt("beds"),
-                        resultSet.getInt("id_class"),
-                        DateHelper.javaToSQLDdate(resultSet.getDate("date_from")),
-                        DateHelper.javaToSQLDdate(resultSet.getDate("date_to")),
-                        resultSet.getString("comments"));
+                return createRequest(resultSet);
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         } finally {
             try {
                 if (resultSet != null && !resultSet.isClosed()) {
                     resultSet.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
         }
+
         return emptyRequest();
     }
 
     @Override
     public boolean insertRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
+            String query = "INSERT INTO `" + databaseService.getDatabaseName() + "`.`" + TABLE_NAME +
+                           "` (`number`, `id_user`, `beds`, `id_class`, `date_from`, `date_to`, `comments`) " +
+                           "VALUES (?, ?, ?, ?, ?, ?, ?);";
             try (Connection connection = databaseService.takeConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(
-                         "INSERT INTO `sql11188080`.`requests` (`number`, `id_user`, `beds`, `id_class`, `date_from`, `date_to`, `comments`) " +
-                                 "VALUES (?, ?, ?, ?, ?, ?, ?);")) {
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, request.getNumber());
                 preparedStatement.setInt(2, request.getUserId());
                 preparedStatement.setInt(3, request.getBeds());
@@ -145,23 +135,24 @@ public class RequestRepository implements RequestDAO {
                 preparedStatement.setDate(5, DateHelper.javaToSQLDdate(request.getDateFrom()));
                 preparedStatement.setDate(6, DateHelper.javaToSQLDdate(request.getDateTo()));
                 preparedStatement.setString(7, request.getComments());
-                return preparedStatement.executeUpdate() == 1;
 
+                return preparedStatement.executeUpdate() == 1;
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
         }
+
         return false;
     }
 
     @Override
     public boolean updateRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
+            String query = "UPDATE `" + databaseService.getDatabaseName() + "`.`" + TABLE_NAME + "` " +
+                           "SET `id_user` = ?, `beds` = ?, `id_class` = ?, `date_from` = ?, `date_to` = ?, `comments` = ? " +
+                           "WHERE number = ?";
             try (Connection connection = databaseService.takeConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(
-                         "UPDATE `sql11188080`.`requests` " +
-                                 "SET `id_user` = ?, `beds` = ?, `id_class` = ?, `date_from` = ?, `date_to` = ?, `comments` = ? " +
-                                 "WHERE number = ?")) {
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, request.getUserId());
                 preparedStatement.setInt(2, request.getBeds());
                 preparedStatement.setInt(3, request.getClassID());
@@ -169,55 +160,72 @@ public class RequestRepository implements RequestDAO {
                 preparedStatement.setDate(5, DateHelper.javaToSQLDdate(request.getDateTo()));
                 preparedStatement.setString(6, request.getComments());
                 preparedStatement.setInt(7, request.getNumber());
+
                 return preparedStatement.executeUpdate() == 1;
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
         }
+
         return false;
     }
 
     @Override
     public boolean deleteRequest(Request request) {
         if (Validator.validateRequestBean(request)) {
+            String query = "DELETE FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME + " " +
+                           "WHERE number = ?";
             try (Connection connection = databaseService.takeConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(
-                         "DELETE FROM sql11188080.requests " +
-                                 "WHERE number = ?")) {
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, request.getNumber());
+
                 return preparedStatement.executeUpdate() == 1;
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
-
         }
+
         return false;
     }
 
-    private Request emptyRequest() {
-        return new Request();
-    }
 
     public static int returnMaxRequestNumber() {
         ResultSet resultSet = null;
+        String query = "SELECT MAX(number) FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME;
         try (Connection connection = databaseService.takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(number) " +
-                                                                                    "FROM sql11188080.requests ")) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             resultSet = preparedStatement.executeQuery();
+
             if (resultSet.first()) {
                 return resultSet.getInt("MAX(number)");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         } finally {
             try {
                 if (resultSet != null || !resultSet.isClosed()) {
                     resultSet.close();
                 }
             } catch (SQLException | NullPointerException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
         }
+
         return 0;
+    }
+
+    private Request emptyRequest() {
+        return new Request();
+    }
+
+    private Request createRequest(ResultSet resultSet) throws SQLException {
+        return new Request(resultSet.getInt("id"),
+                           resultSet.getInt("number"),
+                           resultSet.getInt("id_user"),
+                           resultSet.getInt("beds"),
+                           resultSet.getInt("id_class"),
+                           resultSet.getDate("date_from"),
+                           resultSet.getDate("date_to"),
+                           resultSet.getString("comments"));
     }
 }
