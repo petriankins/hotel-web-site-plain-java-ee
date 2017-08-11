@@ -52,11 +52,11 @@ public class RequestController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User user = (User) req.getSession().getAttribute("user");
         LOGGER.info("Trying to update request!");
         Request userRequest = extractUserRequestFromHttpRequest(req);
         LOGGER.info("Request number: " + userRequest.getNumber());
-        // TODO Message that u can't edit it!
-        if (requestService.getRequestStatus(userRequest).equals("1")) {
+        if (requestService.getRequestStatus(userRequest).equals("1") && securityService.authorize(user, userRequest)) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             int beds = 0;
             int stars = 0;
@@ -106,10 +106,11 @@ public class RequestController extends HttpServlet {
     }
 
     private void deleteRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        User user = (User) req.getSession().getAttribute("user");
         Request userRequest;
 
         if ((userRequest = extractUserRequestFromHttpRequest(req)).getId() != 0 &&
-            !requestService.getRequestStatus(userRequest).equals("3")) {
+            !requestService.getRequestStatus(userRequest).equals("3") && securityService.authorize(user, userRequest)) {
             LOGGER.debug("Trying to delete Request# " + userRequest.getNumber());
             requestService.deleteRequest(userRequest);
         }

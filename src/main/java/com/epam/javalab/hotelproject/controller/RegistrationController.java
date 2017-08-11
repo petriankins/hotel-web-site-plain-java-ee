@@ -43,7 +43,7 @@ public class RegistrationController extends HttpServlet {
             session.setAttribute("user", user);
 
             req.setAttribute("successMessage", "1");
-            req.getRequestDispatcher("/").forward(req, resp);
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
 
         } else {
             message = "Something went wrong! Try again.";
