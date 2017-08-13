@@ -13,7 +13,13 @@ import java.util.Date;
 import java.util.List;
 
 import static com.epam.javalab.hotelproject.utils.DateHelper.*;
-
+/**
+ * Provides API for finding, inserting, deleting, updating etc. bills in/from database.
+ *
+ * @author Petriankin Sergey, Iaichnikov Denis
+ * @version 1.0
+ * @since 1.0
+ */
 public class BillRepository implements BillDAO {
     private final static Logger          LOGGER          = Logger.getLogger(BillRepository.class);
     private final        String          TABLE_NAME      = "bills";

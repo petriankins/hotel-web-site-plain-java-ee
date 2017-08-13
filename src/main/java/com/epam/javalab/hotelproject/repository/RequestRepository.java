@@ -15,6 +15,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides API for finding, inserting, deleting, updating etc. requests in/from database.
+ *
+ * @author Iaichnikov Denis,
+ * @version 1.0
+ * @since 1.0
+ */
 public class RequestRepository implements RequestDAO {
     private final static Logger           LOGGER          = Logger.getLogger(RequestRepository.class);
     private final static DatabaseService  databaseService = DatabaseServiceImpl.getInstance();

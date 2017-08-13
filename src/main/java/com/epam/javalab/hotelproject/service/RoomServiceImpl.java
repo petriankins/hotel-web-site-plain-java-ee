@@ -9,6 +9,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Provides API for working with rooms.
+ *
+ * @author Iaichnikov Denis,
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class RoomServiceImpl implements RoomService {
     private static final RoomComparator roomComparator = new RoomComparator();
     private final RoomDAO roomDAO = new RoomRepository();
@@ -28,6 +36,13 @@ public class RoomServiceImpl implements RoomService {
         return roomDAO.findAvailableRooms(request);
     }
 
+    /**
+     * Finds the most relevant to the request room list. First, it finds rooms with equal or greater quantity
+     * of beds than in request. Then comparator sorts the obtained results.
+     *
+     * @param request is the customer request
+     * @return list of sorted relevant rooms
+     * */
     @Override
     public List<Room> findTheMostRelevant(Request request) {
         List<Room> roomList = getAvailableRooms(request);

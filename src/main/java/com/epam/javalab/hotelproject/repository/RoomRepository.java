@@ -12,6 +12,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Provides API for finding, inserting, deleting, updating etc. rooms in/from database.
+ *
+ * @author Iaichnikov Denis,
+ * @version 1.0
+ * @since 1.0
+ */
 public class RoomRepository implements RoomDAO {
     private final DatabaseService databaseService = DatabaseServiceImpl.getInstance();
     private final Room emptyRoom = new Room();
