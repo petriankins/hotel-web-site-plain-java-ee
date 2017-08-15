@@ -89,7 +89,7 @@ public class BillRepository implements BillDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "DELETE FROM " + databaseService.getDatabaseName() + "." + TABLE_NAME + " WHERE number = ?;")) {
             preparedStatement.setInt(1, bill.getNumber());
-            return preparedStatement.executeUpdate() == 1 ? true : false;
+            return preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
